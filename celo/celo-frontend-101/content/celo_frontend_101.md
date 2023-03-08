@@ -296,6 +296,9 @@ function App({ Component, pageProps }: AppProps) {
 
 export default App;
 ```
+Throughout the tutorial, we will link to the code of larger files. Below you can find the code for the `_app.tsx` file:
+
+[Code _app.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/_app.tsx)
 
 That's it for the setup. We are now ready to connect to the Celo network and interact with our smart contract.
 
@@ -313,12 +316,11 @@ The contract has the following features:
 
 For this tutorial, we will be using the ABI and bytecode of the smart contract that we have already deployed on the Celo Alfajores testnet.
 
-<!-- TODO: Add correct address -->
-You can view the smart contract on the Celo Explorer [here](https://alfajores-blockscout.celo-testnet.org/address/0x8e0b7e6062272B5eF4524250bFFF8e5Bd3497753/contracts).
+You can view the smart contract on the Celo Explorer [here](https://alfajores-blockscout.celo-testnet.org/address/0x67d87837504C5f271ef0561CBC80bE08114E127C/contracts).
 
 You can find the commented code for the smart contract below:
 
-[Code Marketplace.sol](https://github.com/dacadeorg/celo-frontend-101/blob/main/code/marketplace.sol)
+[Code marketplace.sol](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/marketplace.sol)
 
 Next, we need to add the ABI(Application Binary Interface) of the contract in order to interact with it. The ABI is a JSON object that contains information about the functions in our smart contract and the parameters and return types of these functions.
 
@@ -335,8 +337,8 @@ We will then create a file called `Marketplace.json` in the `packages/react-app/
 ```
 
 Add the following code to the `Marketplace.json` file:
-<!-- Todo: Update link -->
-[Code Marketplace.json](https://github.com/dacadeorg/celo-101-section-1/blob/main/packages/react-app/abi/Marketplace.json)
+
+[Code Marketplace.json](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/abi/Marketplace.json)
 
 Next we create another file inside our `abi` folder called `erc20.json`.
 ```markdown
@@ -348,8 +350,7 @@ Next we create another file inside our `abi` folder called `erc20.json`.
 This file will contain the ABI of an ERC20 token, because we will be using cUSD stablecoin as our token to buy products from the marketplace, and cUSD is an ERC20 token.
 
 Add the following code to the `erc20.json` file:
-<!-- Todo: Update link -->
-[Code erc20.json](https://github.com/dacadeorg/celo-101-section-1/blob/main/packages/react-app/abi/erc20.json)
+[Code erc20.json](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/abi/erc20.json)
 
 ### 2.2 Hook for Contract Read
 Now that we have our smart contract and its ABI, we can create hooks to interact with it. First, we will create a hook to make read calls to our smart contract.
@@ -524,11 +525,11 @@ To keep this tutorial short we will not explain all the code here but we link to
 
 Add the following code to the alert components:
 
-[Code ErrorAlert.tsx](https://github.com/dacadeorg/celo-frontend-101/blob/main/code/ErrorAlert.tsx)
+[Code ErrorAlert.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/alerts/ErrorAlert.tsx)
 
-[Code LoadingAlert.tsx](https://github.com/dacadeorg/celo-frontend-101/blob/main/code/LoadingAlert.tsx)
+[Code LoadingAlert.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/alerts/LoadingAlert.tsx)
 
-[Code SuccessAlert.tsx](https://github.com/dacadeorg/celo-frontend-101/blob/main/code/SuccessAlert.tsx)
+[Code SuccessAlert.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/alerts/SuccessAlert.tsx)
 
 ### 3.2 Product Component
 Now let us create our Product component. This component will display our product details and also allow us to buy the product.
@@ -738,6 +739,8 @@ And finally, we return the JSX for our component and export it:
 export default Product;
 ```
 
+[Code Product.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/Product.tsx)
+
 In the `Product.tsx` file, we also display an identicon of the product owner's wallet address that will also link to the address in the Celo explorer. We will use the `react-blockies` package to generate the identicon.
 
 Let us create our `identiconTemplate` helper function. This function will take in an address and return an identicon image.
@@ -753,8 +756,17 @@ It should look like this:
 ```
 
 Add the following code to the `index.tsx` file:
+```typescript
+import Blockies from 'react-blockies';
 
-[Code Identicon](https://github.com/dacadeorg/celo-frontend-101/blob/main/code/helpers/index.tsx)
+export const identiconTemplate = (address : string) => {
+    return <Blockies size={14} // number of pixels square
+    scale={4} // width/height of each 'pixel'
+    className="identicon border-2 border-white rounded-full" // optional className
+    seed={address} // seed used to generate icon data, default: random
+    />
+}
+```
 
 Let's also create an icon for the location of the product.
 Let us create a file called `location.svg` in the public folder.
@@ -870,6 +882,7 @@ And finally, we return the JSX for the component and export it:
 
 export default ProductList;
 ```
+[Code ProductList.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/ProductList.tsx)
 
 That's it! Now we can display our products in the marketplace. In the next section, we will cover how to add products to our marketplace.
 
@@ -1176,6 +1189,8 @@ Finally, we return the JSX of the modal and the balance and export the component
 export default AddProductModal;
 ```
 
+[Code AddProductModal.tsx](https://github.com/dacadeorg/tutorials/blob/main/celo/celo-frontend-101/code/AddProductModal.tsx)
+
 ### 3.6 Connecting our Components
 
 Now we have created all the necessary components for our marketplace. Let's connect them in our `index.tsx` file.
@@ -1275,7 +1290,6 @@ If you refresh the page, you will see that your current balance has decreased by
 
 The whole process should look like this:
 ![](https://i.imgur.com/oNcDpPC.gif)
-
 
 ## 5. Conclusion
 Great job! You have now created a decentralized marketplace application on the Celo blockchain. 
