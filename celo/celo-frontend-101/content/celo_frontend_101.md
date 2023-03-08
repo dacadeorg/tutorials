@@ -1263,6 +1263,7 @@ To create a new account, we will click on the account icon in the top right corn
 We will repeat this process to create a second account.
 
 The process should look like this:
+
 ![](https://i.imgur.com/qTBq1Rd.gif)
 
 Now that we have two accounts, we can get some testnet tokens for each account. You can get some testnet tokens from the [Celo faucet](https://celo.org/developers/faucet). You should then be able to see a Celo balance if you click on your wallet address on the top right corner of the page.
@@ -1277,6 +1278,7 @@ Once you have clicked on the create button, you will be prompted to sign a trans
 Once the transaction is signed, we will be redirected to the product page where we can see the product we just created.
 
 This process should look like the following:
+
 ![](https://i.imgur.com/G0xmIxK.gif)
 
 ### 4.3 Testing the Buy Product functionality
@@ -1289,6 +1291,7 @@ With the buyer account selected, we can now buy the product we just created. Cli
 If you refresh the page, you will see that your current balance has decreased by the product price and the seller's balance has increased by the product price.
 
 The whole process should look like this:
+
 ![](https://i.imgur.com/oNcDpPC.gif)
 
 ## 5. Conclusion
