@@ -1,6 +1,9 @@
 # CELO Frontend 101
 In this tutorial, we will be building the frontend for a simple marketplace dapp on the Celo blockchain. The decentralized marketplace application will allow users to list their items for sale, purchase items, and view listed items.
 
+This is how the dapp will look like:
+![Celo Frontend 101](https://i.imgur.com/valeGKm.png)
+
 ### Prerequisites
 - [Node JS](https://nodejs.org/en/download/) - Please make sure you have Node.js v16 or higher installed.
 - [Git](https://git-scm.com/downloads) - Please make sure you have Git v2.38 or higher installed. 
