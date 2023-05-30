@@ -9,25 +9,27 @@ While having some prior coding experience is beneficial, it is not a hard requir
 - **Familiarity with IDEs** - This tutorial utilizes the web version of VSCode. If you're unfamiliar with IDEs or need a refresher, watch this beginner tutorial on how to use VSCode: [Learn Visual Studio Code in 7min (Official Beginner Tutorial)](https://www.youtube.com/watch?v=B-s71n0dHUk).
 
 ### Tech Stack
-- [NextJS](https://nextjs.org/) - A popular open-source framework for building React applications with server-side rendering, automatic code splitting, and optimized performance.
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
+- [NextJS](https://nextjs.org/) - A popular open-source framework for building React applications with server-side rendering, automatic code splitting, and optimized performance.
 - [OpenAI API](https://openai.com/) - A powerful API that can be applied to virtually any task that involves understanding or generating natural language, code, or images.
 - [ChatGPT](https://chat.openai.com/) - A tool that allows you to have a conversation with GPT-4/3.5. It is a great tool to ideate, plan your project and also to generate code.
 - [Codespaces](https://github.com/features/codespaces) - A feature of GitHub that allows you to develop entirely in the cloud. It is a great tool to get started quickly without having to install anything on your computer.
 
 ### Overview
 
-1. [Setup](#1-setup) - This section will guide you through the necessary steps to set up your project.
-2. [Ideation](#2-ideation) - Here, we will employ ChatGPT to brainstorm and outline what we aim to construct.
-3. [Building the MVP](#3-building-the-mvp) - In this section, we are going to use to build the MVP of our project with ChatGPT
-4. [Prompts](#4-prompts) - In this section, we will compile a list of all prompts that we used throughout this tutorial.
-5. [Conclusion](#5-conclusion) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
+1. [Setup](#1-setup) (10 min) - This section will guide you through the necessary steps to set up your project.
+2. [Ideation](#2-ideation) (15 min) - Here, we will employ ChatGPT to brainstorm and outline what we aim to construct.
+3. [Building the MVP](#3-building-the-mvp) (45 min) - In this section, we are going to use to build the MVP of our project with ChatGPT
+4. [Prompts](#4-prompts) (5 min) - In this section, we will compile a list of all prompts that we used throughout this tutorial.
+5. [Conclusion](#5-conclusion) (2 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 
 ## 1. Setup
-In this initial section, we are going to set up our with the boilerplate code, the OpenAI API key and run it in a Codespace.
+In this initial section, we are going to set up our boilerplate code, the OpenAI API key and run it in a Codespace.
 
 ### 1.1 Create a Codespace from the boilerplate
+If you don't have a GitHub account yet, create one at [github.com](https://github.com/). GitHub is a platform where developers can collaborate on projects and share code. It is also the platform where the boilerplate code is hosted and that we will use to create a Codespace.
+
 Visit the repository of the [Next.js OpenAI Boilerplate](https://github.com/dacadeorg/nextjs-openai-boilerplate/) and click on the "Use this template" button. Next, select "Open with Codespaces". This action will spawn a new Codespace with the boilerplate code and install all the necessary dependencies.
 
 ### 1.2 Create an OpenAI API key
@@ -38,7 +40,7 @@ Within your Codespace, create a `.env` file and input your API key into it. The 
 ```
 OPENAI_API_KEY=your_openai_api_key_here
 ```
-Alternatively, you can utilize the `.env.example` file as a template—simply rename it to `.env` and insert your API key.
+Alternatively, you can utilize the `.env.example` file as a template simply rename it to `.env` and insert your API key.
 
 ### 1.4 Test the boilerplate
 To test the boilerplate, input the following command in your terminal:
@@ -47,9 +49,9 @@ npm run dev
 ```
 You should see a notification appearing at the bottom of your screen, prompting you to open the application in a browser. Upon clicking, you should be greeted by a page that looks like this:
 
-![](https://hackmd.io/_uploads/HkwBnXM8n.png)
+![](https://i.imgur.com/QUECo91.png)
 
-In our example, we used "dolphin" as the input and received the depicted response. Feel free to experiment with different inputs and observe the corresponding outputs.
+In our example, we used "dolphin" as the input and received the depicted response. Feel free to experiment with different inputs and observe the corresponding responses.
 
 Congratulations! You've successfully set up the project and verified the boilerplate's functionality. In the next phase, we will employ ChatGPT to brainstorm and draft our project.
 
@@ -60,7 +62,8 @@ Before we begin to generate code, we need to come up with an idea of what we wan
 You can find the whole conversation with ChatGPT [here](https://chat.openai.com/share/81f2f250-2c5b-480e-b2f2-1b4541afadee).
 
 ### 2.1 Initial broad ideas
-To initiate our brainstorming process, we start a new thread in ChatGPT, utilizing the GPT4 model for this case. However, the GPT-3.5 model is also a viable choice. Our first step involves providing general instructions and asking for broad ideas. We also include the project's code in the prompt to provide contextual information to the AI.
+To initiate our brainstorming process, we start a new thread in ChatGPT, we are utilizing the GPT4 model in this case. However, if you have only access to the GPT-3.5 model, this is also a viable choice. 
+Our first step involves providing general instructions and asking for broad ideas. We also include the project's code in the prompt to provide contextual information to the AI.
 
 We will collate all the prompts we use throughout this tutorial in a generic format towards the end of this guide, making it convenient for you to copy and paste: [4. Prompts](#4-prompts).
 
@@ -73,7 +76,7 @@ We will collate all the prompts we use throughout this tutorial in a generic for
 
 Replace `PROJECTCODE` with the code from the boilerplate.
 
-You can retrieve the entire project's code by entering the command `npm run generateTXT` in your terminal. The complete code will be generated in a `projectCode.txt` file. This feature makes it convenient for you to quickly copy and paste the current code into ChatGPT, providing it with ample context for generating useful responses.
+You can retrieve the entire project's code by entering the command `npm run generateTXT` in your terminal. The project's code will be generated in the `projectCode.txt` file. This feature makes it convenient for you to quickly copy and paste the current code of the project into ChatGPT, providing it with context for generating useful responses to your project.
 
 For this prompt, simply copy the entire code and paste it in place of "`PROJECTCODE`".
 
@@ -132,8 +135,6 @@ To generate more ideas within a specific domain, we continue the conversation wi
 Having sifted through various concepts, we've decided to proceed with the initial idea of the Recipe Suggestion Assistant. Before proceeding to build the entire project, it's helpful to first test whether we can generate useful responses to prompts on this subject.
 
 In this step, we ask ChatGPT to generate a prompt for our chosen idea.
-
-We ask ChatGPT to generate a prompt for it.
 
 **Prompt**:
 > I want to create this: "Recipe Suggestion Assistant: Users enter the ingredients they have, and the application generates recipe ideas based on the ingredients entered."
@@ -217,7 +218,7 @@ In the first step, we are going to create a user flow that will guide the functi
 > 
 > Suggest a user flow for the web app only high level don't show any code. Focus only on MVP functionality, not more.
 
-Once more, replace `PROJECTCODE` with the code from the boilerplate. This time, we assign a name to our idea, "Recipe Generator", and provide a brief description. This is slightly different from the description we created in the previous section, as we have now enhanced it with the additional concept that the user can select from various ingredient groups.
+Once more, replace `PROJECTCODE` with the code from the boilerplate. This time, we assign a name to our idea, "Recipe Generator", and provide a brief description. This is slightly different from the description we created in the previous section, as we have now enhanced it with the additional concept that the user can select from various ingredient groups, the expected output, and the fact that it should be a single-screen web application.
 
 **ChatGPT response**:
 > Sure, here's a proposed user flow for the "Recipe Generator" web app:
@@ -238,7 +239,7 @@ Once more, replace `PROJECTCODE` with the code from the boilerplate. This time, 
 > 
 > Please note that this user flow focuses only on the core functionality for the MVP and does not include potential additional features like user accounts, saving favorite recipes, sharing recipes, etc. The focus is on providing a simple and smooth experience for the user to generate a recipe based on their selection of protein, vegetable, and carbohydrate.
 
-Although there's room to iterate on this user flow, we're content with its current state and aim to keep it straightforward. We'll move forward using this version.
+Although there's room to iterate on this user flow, we're happy with its current state and want to keep it simple. We'll move forward using this version.
 
 ### 3.2 First code planning
 
@@ -257,7 +258,7 @@ Now that we have a clearer idea of how our web app should function, we can start
 > - Do the API calls via the useApi.js hook.
 > - Create new components if needed but try to reuse them.
 
-We've experimented with various prompts, and the following rules proved helpful for working with this boilerplate code. However, feel free to modify them and experiment as per your needs.
+We've experimented with various prompts, and the following rules proved helpful for working with this boilerplate code. However, feel free to modify and experiment with them as you see fit.
 
 **ChatGPT response**:
 > Sure, here is a high-level step-by-step guide of what files to create or change to implement the Recipe Generator feature.
@@ -288,7 +289,7 @@ We are again happy with this response and will use it as it is. But you could fu
 
 ### 3.3 Implementing the new prompt
 
-In this step, we are going to implement the first step of our code planning. We are going to use ChatGPT to generate the code for us. As outlined in the instructions, we are first going to adjust the prompt so we can generate a recipe instead of a pet name.
+In this step, we are going to implement the first step of our code planning. We are going to use ChatGPT to generate the code for us. As per the instructions outlined earlier, our first task will be to modify the prompt, so it generates a recipe rather than a pet name.
 
 **Prompt**:
 > I want you to modify the code to create our new web app, as we previously outlined.
@@ -308,9 +309,9 @@ In this step, we are going to implement the first step of our code planning. We 
 > 
 > This is the current file content: "FILECONTENT"
 
-We pasted the instructions from the previous code planning step into the prompt. And we will also need to paste the code of our current `promptUtils.js` file into the prompt. 
+We'll insert the instructions from the previous code planning step into the prompt. We'll also need to copy and paste the content of our current promptUtils.js file into the prompt, replacing "FILECONTENT".
 
-We paste the code of the file that ChatGPT should adjust into the prompt because this will prevent it from hallucinating and generating code that is different from the file.
+The reason we paste the exact code of the file that ChatGPT is expected to modify is to prevent it from generating code that differs from our target file – an occurrence known as hallucination in AI terms.
 
 **ChatGPT response**:
 > Sure, let's update the functions in the "prompts/promptUtils.js" file.
@@ -388,7 +389,7 @@ We paste the code of the file that ChatGPT should adjust into the prompt because
 The new `promptUtils.js` looks good. In this case, we didn't do the suggested testing in this step, since we will see in the next step if the code works as expected.
 
 ### 3.4 Implementing the index page and dropdown menu
-In this step, we are going to implement the index page and the dropdown menu as outlined in the code planning step. With this implementation done, we will be able to already test the basic functionality of our web app.
+In this step, we are going to implement the index page and the dropdown menu as outlined in the code planning step. Once this step is complete, we'll be in a position to test the basic functionality of our web application.
 
 **Prompt**:
 > I want you to modify the code to create our new web app, as we previously outlined.
@@ -410,7 +411,7 @@ In this step, we are going to implement the index page and the dropdown menu as 
 > 
 > This is the current file content: "FILECONTENT"
 
-As before, we pasted the instructions from the previous code planning step into the prompt. And we will also need to paste the code of our current `index.js` file into the prompt.
+Just like in the previous step, we will insert the instructions from our earlier code planning phase into the prompt. We'll also need to copy and paste the content of our current index.js file into the prompt.
 
 **ChatGPT response**:
 > Okay, let's add drop-down menu components for protein, vegetable, and carbohydrate selection, and modify the handleSubmit function accordingly. Since the boilerplate doesn't have a dropdown component, we'll create one for this.
@@ -497,7 +498,7 @@ As before, we pasted the instructions from the previous code planning step into 
 > 
 > To test, run your Next.js server and navigate to the homepage. You should see three dropdowns for protein, vegetable, and carbohydrate. Once you select
 
-Sometimes, if the response is too long, ChatGPT will stop the response mid-sentence. In this case, we can just instruct ChatGPT to continue the response.
+Sometimes, if the response is too long, ChatGPT will stop the response mid-sentence. In such cases, you can simply instruct ChatGPT to continue with the response.
 
 **Prompt**:
 > continue
@@ -519,10 +520,17 @@ Sometimes, if the response is too long, ChatGPT will stop the response mid-sente
 > 
 > Also note that in a real-world application, you would likely want to fetch the options for your dropdown menus from an API or database. In this example, we have hard-coded some example options for simplicity. You may need to adjust this based on the specifics of your use case.
 
-This looks good, we can now already test the basic functionality of our web app. We can select the ingredients and submit the form. We will see the loading state and then the response from the API. We can also see the console log of the selected ingredients.
+At this point, your screen should look something like this:
+![](https://i.imgur.com/VplKnXN.png)
+
+In your terminal, you should receive a JSON response from the API, similar to this:
+![](https://i.imgur.com/TkiNosm.png)
+
+
+This looks good! We're now able to test the basic functionality of our web app. We can select ingredients, submit the form, observe the loading state, and then see the API response. The only remaining task is to refine how the response is displayed.
 
 ### 3.5 Implementing the response display
-In the last step, for our basic MVP, we are going to adjust the display of the response.
+As the final step in creating our basic MVP, we're going to adapt the response display. We'll modify the ResponseDisplay.js file to showcase the recipe name, ingredients, and steps instead of the pet name and description.
 
 > **Prompt**:
 > I want you to modify the code to create our new web app, as we previously outlined.
@@ -594,7 +602,7 @@ As before, we pasted the instructions from the previous code planning step into 
 > 
 > Ensure that you have your browser console open while testing, as the `console.log` will output the data from the API response, which will be helpful for debugging.
 
-Nice, this already works but we can improve the display of the ingredients. We can adjust the `ResponseDisplay.js` file to display the ingredients on one line.
+Great, this is already functional, but we can further enhance the presentation of the ingredients. We'll modify the `ResponseDisplay.js` file to display each ingredient on a single line.
 
 **Prompt**:
 > "Name: Beef
@@ -604,7 +612,7 @@ Nice, this already works but we can improve the display of the ingredients. We c
 > Notes: sliced into thin strips"
 > For each ingredient could be all on the same line and we dont need to write name, quantity and notes each time before the it. Tis makes it harder to read.
 
-We just copy what we see from the screen and write a slopy prompt. You will need to try out what works best for you. If the code of `ResponseDisplay.js` gets changed unintentionally you might need to add the code of the file to the prompt.
+For this step, we'll simply copy what we see on the screen and create a very informal prompt. You might need to experiment to see what works best for you. If the code in `ResponseDisplay.js` gets changed unexpectedly, you might need to include the code of the file in the prompt.
 
 **ChatGPT response**:
 > Sure! Here's the updated `ResponseDisplay.js` file that formats the ingredients on a single line:
@@ -649,7 +657,7 @@ We just copy what we see from the screen and write a slopy prompt. You will need
 > 
 > Remember to test this by running the web app, selecting the options from the dropdown menus on the index page, and submitting the form to make the OpenAI API call. The ingredients and steps should now be more readable.
 
-Ok, this looks good, we are happy with it for now, although we could further improve the display of the steps. But we want to keep things simple.
+Ok, this looks good, we are happy with it for now, although we could further improve the display of the steps. But we want to keep things simple for this tutorial.
 
 ### 3.6 Adding more options to the dropdown menus
 We make some more adjustments, in this case, we want to add more options to the dropdown menus.
@@ -684,9 +692,9 @@ We make some more adjustments, in this case, we want to add more options to the 
 > ```
 > After updating these arrays, you should see the new options in the dropdown menus on the web page. Try selecting these new options and submit the form to see how the recipe changes based on your selection.
 
-If we test this we now get an error. You can see what happens when you don't provide the code of the current file along with the instructions in the prompt.
+If we test this now, we encounter an error. This demonstrates what can happen when the current file's code isn't included with the instructions in the prompt.
 
-### 3.7 Debugging the dropdown menu
+### 3.7 Debugging the dropdown selection
 Let's debug this problem.
 
 **Prompt**:
@@ -709,7 +717,7 @@ Let's debug this problem.
 > 
 > This the file: "FILECONTENT"
 
-For debugging it is always good to post the error message and the content of the file in which the error occurred.
+For debugging purposes, it's always good to share the error message and the content of the file where the error occurred.
 
 **ChatGPT response**:
 > I see, you have accidentally used `proteins`, `vegetables`, and `carbohydrates` instead of `proteinOptions`, `vegetableOptions`, and `carbohydrateOptions` when initializing the state and when passing the options to the `Dropdown` component.
@@ -748,10 +756,10 @@ For debugging it is always good to post the error message and the content of the
 > 
 > This should fix the error you're encountering. When you run the app now, you should see the dropdown menus filled with the provided options and the first option of each being pre-selected.
 
-Ok, the error is fixed.
+Great, the error is fixed.
 
 ### 3.8 Design adjustments
-Now in the last step, we are going to adjust the design of our web app.
+In this final step, we're going to enhance the design of our web application.
 
 **Prompt**:
 > I want you to make the design of the dropdowns nicer.
@@ -761,7 +769,7 @@ Now in the last step, we are going to adjust the design of our web app.
 > 
 > This is the global.css: "FILECONTENT"
 
-In this case, we just do all the styling in the global.css file to make things simpler.
+In this case, we'll apply all styling modifications directly to the `global.css` file to simplify the process.
 
 **ChatGPT response**:
 > Let's update the `global.css` file to add styles for our dropdown component. We'll follow the minimal and clean design aesthetic, similar to the Apple software design by Jonathan Ive:
@@ -850,7 +858,7 @@ In this case, we just do all the styling in the global.css file to make things s
 > 
 > This will style your dropdowns in a minimal and clean design, which is consistent with the style of Jonathan Ive's Apple software design. The dropdown will now have a comfortable margin around it, a rounded border, and colors that match with the rest of the application. Please replace your current files with the above versions and refresh your page.
 
-This looks good, but we don't want to change the background color of the response display and let's make the button black. Let's create a new prompt to adjust this.
+This looks good, but we don't want to change the background color of the response display. Additionally, we'd like to change the button color to black. Let's create a new prompt to make these adjustments.
 
 **Prompt**:
 > It looks weird that the output response now has a grey background. Make it white again. Also, make the submit button black.
@@ -923,9 +931,13 @@ This looks good, but we don't want to change the background color of the respons
 > 
 > Now your submit button will be black and your response display will have a white background. This design keeps the clean and minimal aesthetic associated with Jonathan Ive's design philosophy. Please replace your current global.css file with the updated one and refresh your page.
 
-This looks good for a rough prototype! We got our basic functionality we could now add more features, improve further the design or refactor our code to make it more efficient, but for the scope of this tutorial, we will stop here. 
+Our web app now looks like this:
+![](https://i.imgur.com/PIZopbu.png)
+
+This looks good for a rough prototype!  We've implemented our basic functionalities. We could now enhance our design further, add more features, or refactor our code for efficiency, but for the purpose of this tutorial, we'll stop here.
 
 ## 4. Prompts
+In this section, we will go over the prompts we used in this tutorial. You can use these prompts as a template for your own projects.
 
 ### 4.1 Prompt for ideation
 > You are the world's greatest product manager. You are like a modern Steve Jobs specialized in AI web app development with deep knowledge of GPT.
@@ -994,7 +1006,18 @@ This is a general prompt for debugging, usually you should be fine with just pas
 >
 >This is the global.css: "`GLOBALCSSCODE`"
 
-## 5. Conclusion
-We have seen how we can use ChatGPT to generate code for our web app. We have seen how we can use ChatGPT to generate prompts for ideation, user flows, code planning, code implementation, debugging, and design adjustments. 
+## 5. FAQ
 
-Now you should have the necessary knowledge and tools to create your own web app with ChatGPT.
+**Q: I don't have ChatGPT Plus, can I still do the tutorial?**
+A: Yes, you can do the tutorial with the free version of ChatGPT. You will not have access to the GPT-4 model in the ChatGPT free version, your responses and the code might not be working as well as with the GPT-4 model. Alternatively, you can also use GPT-4 in the Playground to do the tutorial.
+
+**Q: I have problems with the returned data from the API, what can I do?**
+A: You can use the `console.log` statement to debug the data. Try to match the JSON response that you get from the API with the JSON response that your ResponseDisplay component expects.
+
+**Q: Do I need to pay for Codespaces?**
+A: No, you can use the free version of Codespaces. You will have 60 hours each month for free after that you will need to pay 0.18$ per hour. Once your project progresses you might want to switch to a local development environment, where you can also use VSCode.
+
+## 6. Conclusion
+We've explored how we can utilize ChatGPT to generate code for our web applications. This involves leveraging ChatGPT to generate prompts for ideation, user flows, code planning, code implementation, debugging, and design adjustments.
+
+With this knowledge and these tools at your disposal, you're now equipped to create your own web app using ChatGPT. Remember, practice and experimentation are key to mastering these skills. Happy coding!
