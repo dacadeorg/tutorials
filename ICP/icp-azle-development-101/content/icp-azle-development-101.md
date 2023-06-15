@@ -65,15 +65,21 @@ If you prefer to set up your development environment locally, start by navigatin
 
 In your terminal, navigate to the directory where you want to store your project, then clone the repository to your local machine by running:
 
-```git clone https://github.com/dacadeorg/ICP-azle-boilerplate.git```
+```Bash
+git clone https://github.com/dacadeorg/ICP-azle-boilerplate.git
+```
 
 Next, move into the cloned repository's directory with:
 
-```cd ICP-azle-boilerplate```
+```bash
+cd ICP-azle-boilerplate
+```
 
 Finally, install the project's dependencies by running:
 
-```npm install```
+```bash
+npm install
+```
 
 This command will install all the necessary dependencies for the project. Once the installation is complete, you're ready to start building your canisters!
 
@@ -81,16 +87,24 @@ This command will install all the necessary dependencies for the project. Once t
 In this section, we will prepare our terminal environment by installing key tools: Node Version Manager (nvm) and DFX. Please note that the following instructions are specifically for Unix-like systems such as Linux and macOS. If you're on a Windows system, you would need to set up the Windows Subsystem for Linux (WSL) to follow along, or alternatively, you could use GitHub Codespaces. Let's get started.
 
 1. **Install Node Version Manager (nvm)**: Nvm is a useful tool that allows for the management of multiple active Node.js versions. With nvm, switching between different Node.js versions is a breeze. For this tutorial, we'll utilize Node.js version 18. To install nvm, execute the following command in your terminal:
-```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash```
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+```
 
 2. **Switch to Node.js version 18**: Node.js is a JavaScript runtime that enables the execution of JavaScript outside of a browser environment, and it's necessary for running our Azle project. To switch to Node.js version 18 using nvm, use the following command: 
-``` nvm use 18```
+```bash
+nvm use 18
+```
 
 3. **Install DFX**: DFX is the command-line interface for the Internet Computer, and we'll use it to create our Azle project. To install DFX, execute this command:
-  ```DFX_VERSION=0.14.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"```
+```bash
+DFX_VERSION=0.14.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+```
 
 4. **Add DFX to your path**: Add DFX to your PATH: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
-  ```echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"```
+```bash
+echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
+```
 
 5. **Reload your terminal (if using GitHub Codespaces)**: Reload your terminal (if using GitHub Codespaces): If you're using GitHub Codespaces for this tutorial, you'll need to reload your terminal to ensure all changes are properly applied. You can do this by clicking on the "Reload" button located in the top-right corner of your terminal.
 
@@ -99,7 +113,7 @@ The boilerplate code we've prepared serves as a basic Azle project. It is design
 
 **1. TypeScript Configuration File** (`tsconfig.json`): Located in the root directory of your project, this file sets up the TypeScript compiler options. Here is what it looks like:
 
-```TypeScript
+```JSON
 {
     "compilerOptions": {
         "strict": true,
@@ -112,14 +126,13 @@ The boilerplate code we've prepared serves as a basic Azle project. It is design
         "allowSyntheticDefaultImports": true
     }
 }
-
 ```
 
 You can learn more about these options in the [TypeScript documentation](https://www.typescriptlang.org/tsconfig).
 
 **2. DFX Configuration File** (`dfx.json`): Also in the root directory, this file configures DFX and includes the following:
 
-```TypeScript
+```JSON
 {
   "canisters": {
     "message_board": {
@@ -148,7 +161,7 @@ This configuration file communicates vital aspects of your canister to the DFINI
 
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
-```TypeScript
+```JSON
 {
   "name": "dfinity_project",
   "version": "1.0.0",
@@ -222,7 +235,7 @@ Here's a brief rundown of what each of these imported items does:
 ### 2.3 Defining Message Type
 
 Before we start writing the logic of our canister, it's important to define the structure of the data we'll be working with. In our case, this is the 'Message' that will be posted on the board. This definition will help us ensure consistency and clarity when dealing with messages in our smart contract.
-```TypeScript
+```JavaScript
 /**
  * This type represents a message that can be listed on a board.
  */
@@ -244,13 +257,12 @@ After defining the structure of a Message, we need to specify what kind of data 
 
 Incorporate the following code into your `index.ts` file:
 
-```TypeScript
+```JavaScript
 type MessagePayload = Record<{
     title: string;
     body: string;
     attachmentURL: string;
 }>
-
 ```
 
 This 'MessagePayload' type outlines the structure of the data that will be sent to our smart contract when a new message is created. Each payload consists of a title, a body, and an attachment URL.
@@ -274,7 +286,7 @@ Let's break down the `new StableBTreeMap` constructor:
 ### 2.6 Creating the Get Messages Function
 
 The next step is to create a function that retrieves all messages stored within our canister. To accomplish this, add the following code to your index.ts file:
-```
+```JavaScript
 $query;
 export function getMessages(): Result<Vec<Message>, string> {
     return Result.Ok(messageStorage.values());
@@ -288,7 +300,7 @@ The function returns a `Result` type, which can hold either a value or an error.
 
 The next step involves creating a function to retrieve a specific message using its unique identifier (ID). Add the following code to your `index.ts` file:
 
-```
+```JavaScript
 $query;
 export function getMessage(id: string): Result<Message, string> {
     return match(messageStorage.get(id), {
@@ -312,7 +324,7 @@ This function, therefore, allows us to specifically query a message by its uniqu
 ### 2.8 Creating the Add Message Function
 
 Following on, we will create a function to add new messages. Input the following code into your index.ts file:
-```TypeScript
+```JavaScript
 $update;
 export function addMessage(payload: MessagePayload): Result<Message, string> {
     const message: Message = { id: uuidv4(), created_at: ic.time(), updated_at: Opt.None, ...payload };
@@ -336,7 +348,7 @@ This function thus facilitates the creation of new messages within our canister,
 
 ### 2.9 Developing the Delete Message Function
 Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file:
-```TypeScript
+```JavaScript
 $update;
 export function deleteMessage(id: string): Result<Message, string> {
     return match(messageStorage.remove(id), {
@@ -358,7 +370,7 @@ This `updateMessage` function thus enables us to update the contents of an exist
 ### 2.10 Creating a Function to Delete a Message
 
 The final step in our canister development is to create a function that allows for message deletion. Insert the following code into your `index.ts` file:
-```TypeScript
+```JavaScript
 $update;
 export function deleteMessage(id: string): Result<Message, string> {
     return match(messageStorage.remove(id), {
@@ -376,7 +388,7 @@ This function, marked by the `$update` decorator, further extends our canister's
 ### 2.11 Configuring the UUID Package
 
 A notable point is that the uuidV4 package may not function correctly within our canister. To address this, we need to apply a workaround that ensures compatibility with Azle. Insert the following code at the end of your index.ts file:
-```TypeScript
+```JavaScript
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
     getRandomValues: () => {
@@ -403,7 +415,7 @@ By adding this block of code, we ensure that the `uuidV4` package works smoothly
 
 ### 2.12 The Final Code
 At the end of this step, your `index.ts` file should look like this:
-```TypeScript
+```JavaScript
 import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -646,7 +658,9 @@ Now you can use the web interface to interact with the same functions we used in
 
 To conclude your work session, you can stop your local Azle replica by executing the following command in your terminal:
 
-```dfx stop```
+```Bash
+dfx stop
+```
 
 This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources."
 
