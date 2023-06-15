@@ -3,7 +3,7 @@ Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to 
 
 ### What you'll learn
 - Setting up your development environment: Understand the necessary tools for ICP development, such as Node.js, Node Version Manager (nvm), and DFX, and learn how to install and use them​.
-- Grasping the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files
+- Grasping the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
 - Building and interacting with a messaging canister: Learn how to construct a simple messaging canister that performs CRUD (Create, Read, Update, Delete) operations. You will also learn how to interact with the canister, calling its methods and handling responses. This knowledge will allow you to build a simple message board application, enabling users to create, update, delete, and view messages​.
 
 ### What is a Canister?
@@ -36,10 +36,10 @@ Here are the key technologies and tools we'll be using:
 
 ### Overview
 
-1. [Setup](#1-setup) (10 min) - This section will guide you through the necessary steps to set up your project.
-2. [Constructing the Messaging Canister](#2-constructing-the-messaging-canister) (30 min) - In this section, we will build a messaging canister with basic CRUD(Create, Read, Update Delete) functionality.
-3. [Deploying and Interacting with our Canister](#3-deploying-and-interacting-with-our-canister) (10 min) - In this section, we will interact with the messaging canister via our command line and the Candid web interface.
-4. [Conclusion](#4-conclusion) (2 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
+1. [Setup](#1-setup) (15 min) - This section will guide you through the necessary steps to set up your project.
+2. [Constructing the Messaging Canister](#2-constructing-the-messaging-canister) (45 min) - In this section, we will build a messaging canister with basic CRUD(Create, Read, Update Delete) functionality.
+3. [Deploying and Interacting with our Canister](#3-deploying-and-interacting-with-our-canister) (15 min) - In this section, we will interact with the messaging canister via our command line and the Candid web interface.
+4. [Conclusion](#4-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 
 ## 1. Setup
@@ -65,15 +65,15 @@ If you prefer to set up your development environment locally, start by navigatin
 
 In your terminal, navigate to the directory where you want to store your project, then clone the repository to your local machine by running:
 
-`git clone https://github.com/dacadeorg/ICP-azle-boilerplate.git`
+```git clone https://github.com/dacadeorg/ICP-azle-boilerplate.git```
 
 Next, move into the cloned repository's directory with:
 
-`cd ICP-azle-boilerplate`
+```cd ICP-azle-boilerplate```
 
 Finally, install the project's dependencies by running:
 
-`npm install`
+```npm install```
 
 This command will install all the necessary dependencies for the project. Once the installation is complete, you're ready to start building your canisters!
 
@@ -99,7 +99,7 @@ The boilerplate code we've prepared serves as a basic Azle project. It is design
 
 **1. TypeScript Configuration File** (`tsconfig.json`): Located in the root directory of your project, this file sets up the TypeScript compiler options. Here is what it looks like:
 
-```
+```TypeScript
 {
     "compilerOptions": {
         "strict": true,
@@ -119,7 +119,7 @@ You can learn more about these options in the [TypeScript documentation](https:/
 
 **2. DFX Configuration File** (`dfx.json`): Also in the root directory, this file configures DFX and includes the following:
 
-```
+```TypeScript
 {
   "canisters": {
     "message_board": {
@@ -148,7 +148,7 @@ This configuration file communicates vital aspects of your canister to the DFINI
 
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
-```
+```TypeScript
 {
   "name": "dfinity_project",
   "version": "1.0.0",
@@ -222,7 +222,7 @@ Here's a brief rundown of what each of these imported items does:
 ### 2.3 Defining Message Type
 
 Before we start writing the logic of our canister, it's important to define the structure of the data we'll be working with. In our case, this is the 'Message' that will be posted on the board. This definition will help us ensure consistency and clarity when dealing with messages in our smart contract.
-```
+```TypeScript
 /**
  * This type represents a message that can be listed on a board.
  */
@@ -244,7 +244,7 @@ After defining the structure of a Message, we need to specify what kind of data 
 
 Incorporate the following code into your `index.ts` file:
 
-```
+```TypeScript
 type MessagePayload = Record<{
     title: string;
     body: string;
@@ -312,7 +312,7 @@ This function, therefore, allows us to specifically query a message by its uniqu
 ### 2.8 Creating the Add Message Function
 
 Following on, we will create a function to add new messages. Input the following code into your index.ts file:
-```
+```TypeScript
 $update;
 export function addMessage(payload: MessagePayload): Result<Message, string> {
     const message: Message = { id: uuidv4(), created_at: ic.time(), updated_at: Opt.None, ...payload };
@@ -336,7 +336,7 @@ This function thus facilitates the creation of new messages within our canister,
 
 ### 2.9 Developing the Delete Message Function
 Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file:
-```
+```TypeScript
 $update;
 export function deleteMessage(id: string): Result<Message, string> {
     return match(messageStorage.remove(id), {
@@ -358,7 +358,7 @@ This `updateMessage` function thus enables us to update the contents of an exist
 ### 2.10 Creating a Function to Delete a Message
 
 The final step in our canister development is to create a function that allows for message deletion. Insert the following code into your `index.ts` file:
-```
+```TypeScript
 $update;
 export function deleteMessage(id: string): Result<Message, string> {
     return match(messageStorage.remove(id), {
@@ -376,7 +376,7 @@ This function, marked by the `$update` decorator, further extends our canister's
 ### 2.11 Configuring the UUID Package
 
 A notable point is that the uuidV4 package may not function correctly within our canister. To address this, we need to apply a workaround that ensures compatibility with Azle. Insert the following code at the end of your index.ts file:
-```
+```TypeScript
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
     getRandomValues: () => {
@@ -403,7 +403,7 @@ By adding this block of code, we ensure that the `uuidV4` package works smoothly
 
 ### 2.12 The Final Code
 At the end of this step, your `index.ts` file should look like this:
-```
+```TypeScript
 import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -486,13 +486,13 @@ Having completed the coding of our canister, it's now time to deploy and interac
 
 The first step is to initialize our local Internet Computer replica, which is essentially an instance of the Internet Computer blockchain where our canister will run. We'll start this replica in the background to allow for other operations. This can be done by executing the following command in your terminal:
 
-```
+```Bash
 dfx start --background
 ```
 
 Upon successful execution, your terminal will display an output similar to the one below. This output confirms that a local instance of the Internet Computer is running, and it also provides a link to a dashboard where you can monitor the status of your local instance.
 
-```
+```Bash
 Running dfx start for version 0.14.0
 Using the default definition for the 'local' shared network because /Users/<username>/.config/dfx/networks.json does not exist.
 Dashboard: http://localhost:49846/_/dashboard
@@ -508,7 +508,7 @@ If you need to make any changes to these elements of the StableBTreeMap, you wil
 
 Here's how you can do it:
 
-```
+```Bash
 dfx start --background --clean
 ```
 
@@ -517,7 +517,7 @@ Remember, only use the `--clean` flag if you have made changes to the configurat
 ### 3.2. Deploying the Canister
 Next, we will compile our canister code and install it on the local network using the `dfx deploy` command:
 
-```
+```Bash
 dfx deploy
 ```
 
@@ -528,7 +528,7 @@ The `dfx deploy` command is a convenient way to register, build, and deploy a ca
 3.  Installing the canister (`dfx canister install --all`)
 
 Executing the `dfx deploy` command should result in an output similar to:
-```
+```Bash
 Creating the "default" identity.
 WARNING: The "default" identity is not stored securely. Do not use it to control a lot of cycles/ICP.
 To create a more secure identity, create and use an identity that is protected by a password using the following commands:
@@ -543,7 +543,7 @@ Your seed phrase:
 Note: If this is your first time running the `dfx deploy` command, it may take a moment to register, build, and deploy your application. Take this time to relax as the system does its work.
 
 Once the command completes, you should see a message indicating the successful deployment of your canisters. The output will include URLs for interacting with your backend canister through the Candid interface. For example:
-```
+```Bash
 Deployed canisters.
 URLs:
   Backend canister via Candid interface:
@@ -563,12 +563,12 @@ To interact with our canister through the CLI, we'll be using the `dfx canister 
 
 **1. Adding a message**
 First, let's invoke the addMessage function from our canister file, which we created earlier. This function will add a message to our canister. Execute the following command in your terminal:
-```
+```Bash
 dfx canister call message_board addMessage '(record {"title"= "Welcome"; "body"= "Hello World"; "attachmentURL"= "url/path/to/some/photo/attachment"})'
 ```
 
 If the function call is successful, you should receive a response similar to this:
-```
+```Bash
 (
   variant {
     Ok = record {
@@ -624,7 +624,7 @@ Note: In Codespaces, the web interface might sometimes not be displayed correctl
 In the interface, click on the `getMessage` function. Then, enter the ID of the message you wish to retrieve. In this instance, we'll be retrieving the message we just created, hence we'll need to input the ID that we received from the `addMessage` function response. Please note, your message ID will differ from the example given here.
 
 After entering the ID, click on the `Call` button. If done correctly, you should receive a response similar to this:
-```
+```Bash
 (
   variant {
     Ok = record {
