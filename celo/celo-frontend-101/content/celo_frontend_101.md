@@ -987,7 +987,7 @@ Next, we create some functions that check if the input fields are filled and cle
 
   // Convert the product price to wei
   const productPriceInWei = ethers.utils.parseEther(
-    debouncedProductPrice.toString()
+    `${debouncedProductPrice.toString() || 0}`
   );
 ```
 
