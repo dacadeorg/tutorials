@@ -987,7 +987,7 @@ Next, we create some functions that check if the input fields are filled and cle
 
   // Convert the product price to wei
   const productPriceInWei = ethers.utils.parseEther(
-    debouncedProductPrice.toString()
+    `${debouncedProductPrice.toString() || 0}`
   );
 ```
 
@@ -1303,6 +1303,6 @@ Great job! You have now created a decentralized marketplace application on the C
 You have learned:
 - How to create a project with the Celo Composer
 - How to connect to a smart contract on the Celo blockchain
-- How to React hooks and components to interact with the smart contract
+- How to use React hooks and components to interact with the smart contract
 
 Now you can start to build your own decentralized applications on the Celo blockchain.
