@@ -1,4 +1,3 @@
-# How to Build an AI Web App with OpenAI API and ChatGPT
 In this tutorial, we are going to create a web app that uses the OpenAI API to generate recipes based on a list of ingredients provided by the user. We are going to use ChatGPT to ideate and plan the project, and then use it to generate the code for the project. We will use the [Next.js OpenAI Boilerplate](https://github.com/dacadeorg/nextjs-openai-boilerplate).
 
 ### Prerequisites

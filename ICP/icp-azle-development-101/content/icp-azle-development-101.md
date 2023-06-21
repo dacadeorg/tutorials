@@ -1,4 +1,3 @@
-# Building and Interacting with Decentralized Azle Canisters: An ICP Development Guide
 Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with decentralized Azle canisters. By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
 
 ### What you'll learn
