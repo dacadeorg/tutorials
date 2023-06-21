@@ -16,13 +16,11 @@ While having some prior coding experience is beneficial, it is not a hard requir
 - [Codespaces](https://github.com/features/codespaces) - A feature of GitHub that allows you to develop entirely in the cloud. It is a great tool to get started quickly without having to install anything on your computer.
 
 ### Overview
-
 1. [Setup](#1-setup) (10 min) - This section will guide you through the necessary steps to set up your project.
 2. [Ideation](#2-ideation) (15 min) - Here, we will employ ChatGPT to brainstorm and outline what we aim to construct.
 3. [Building the MVP](#3-building-the-mvp) (45 min) - In this section, we are going to use to build the MVP of our project with ChatGPT
 4. [Prompts](#4-prompts) (5 min) - In this section, we will compile a list of all prompts that we used throughout this tutorial.
 5. [Conclusion](#5-conclusion) (2 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
-
 
 ## 1. Setup
 In this initial section, we are going to set up our boilerplate code, the OpenAI API key and run it in a Codespace.
