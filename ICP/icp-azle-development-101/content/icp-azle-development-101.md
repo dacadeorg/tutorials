@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: MIT -->
+<!-- Copyright (c) 2023 Dacade.org -->
+
 Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with decentralized Azle canisters. By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
 
 ### What you'll learn
@@ -11,7 +14,7 @@ A canister is a fundamental building block and execution environment for deployi
 ### What is Azle?
 Azle is a TypeScript Canister Development Kit (CDK) for the Internet Computer (IC). It provides a set of libraries and tools that make it easy to build and deploy canisters on the IC platform. Azle allows web developers to bring their TypeScript/JavaScript skills to the IC and use various npm packages and VS Code intellisense. In this tutorial, you will use Azle to create and deploy your canisters.
 
-Azle is still in development and does not yet have many live, successful, continuously operating applications deployed to the IC. 
+It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't yet have many live, successful, continuously operating applications deployed to the IC. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
 
 If you want to learn more about Azle, check out the [Azle documentation](https://demergent-labs.github.io/azle/the_azle_book.html).
 
@@ -20,13 +23,13 @@ While having prior coding experience is necessary, you do not need to have any p
 
 - **Knowledge of TypeScript and Node.js**: Familiarity with TypeScript and Node.js is vital, as the tutorial involves building an application using these technologies. If you're new to TypeScript or Node.js, consider going through basic tutorials for both.
 - **Text Editor**: You will need a text editor to write and edit code. Visual Studio Code is recommended due to its excellent support for TypeScript and Node.js development, but feel free to use a text editor of your choice.
-- **Node.js**: Make sure you have Node.js (version 18 or higher) installed on your computer. This is necessary for running the DFINITY SDK and the project itself. If you don't have Node.js installed, you can download it from [here](https://nodejs.org/).
+- **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 18 or higher) will be necessary for running the DFINITY SDK and the project itself."
 
 ### Tech Stack
 Here are the key technologies and tools we'll be using:
 
 1.  Internet Computer Protocol (ICP): ICP is a decentralized computing platform that facilitates the creation of software, computation, and data that can run on the public internet. It's the platform we'll be building our application on.
-2.  Azle: Azle is a framework used for developing decentralized applications on ICP. It aids in writing, deploying, and interacting with canisters - the basic unit of computation on ICP.
+2.  Azle: Azle is a TypeScript framework for creating and managing smart contracts, or "canisters," on the Internet Computer Protocol (ICP).
 3.  Node.js: Node.js is a JavaScript runtime that allows for the execution of JavaScript outside of a web browser. We'll be using Node.js version 18 for this tutorial.
 4.  Node Version Manager (nvm): Nvm is a tool that enables management and switching between different Node.js versions. We'll be using it to manage our Node.js environment.
 5.  DFX: DFX is the command-line interface for the Internet Computer. We'll be using it to create and manage our Azle project.
@@ -44,7 +47,7 @@ Here are the key technologies and tools we'll be using:
 ## 1. Setup
 In this section, we will help you set up the boilerplate code for our project. By the end of this section, you'll have a development environment pre-configured with all the necessary tools and dependencies, and you'll be ready to start building your canisters.
 
-### 1.1 Preparing your Development Environment
+### 1.1 Preparing Your Development Environment
 
 You can set up your development environment either locally on your machine or in the cloud using GitHub Codespaces.
 
@@ -130,12 +133,10 @@ The boilerplate code we've prepared serves as a basic Azle project. It is design
 You can learn more about these options in the [TypeScript documentation](https://www.typescriptlang.org/tsconfig).
 
 **2. DFX Configuration File** (`dfx.json`): Also in the root directory, this file configures DFX and includes the following:
-
 ```JSON
 {
   "canisters": {
-    "message_board": {
-      "main": "src/index.ts",
+     "message_board": {
       "type": "custom",
       "build": "npx azle message_board",
       "root": "src",
@@ -151,7 +152,6 @@ This configuration file communicates vital aspects of your canister to the DFINI
 
 -   "canisters": The parent property for defining our canister, `message_board` in this case.
 -   "message_board": The name of our canister, used for interacting with it.
--   "main": Specifies the entry point of our canister (`src/index.ts`), where we write our TypeScript code.
 -   "type": Describes the framework/language that is used in this canister. It can be Rust, Motoko, or custom (for Azle).
 -   "build": Instructs DFX to use the Azle CLI to build the `message_board` canister.
 -   "root" and "ts": Direct DFX to the `src` folder and `src/index.ts` file respectively for our code.
@@ -161,37 +161,22 @@ This configuration file communicates vital aspects of your canister to the DFINI
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
 ```JSON
-{
   "name": "dfinity_project",
-  "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "dependencies": {
-    "@dfinity/agent": "^0.15.6",
-    "@dfinity/candid": "^0.15.6",
     "azle": "0.16.2",
     "uuid": "^9.0.0"
   },
   "engines": {
     "node": "^12 || ^14 || ^16 || ^18"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/uuid": "^9.0.1"
   }
-}
 ```
 
-This file is crucial for managing the project's dependencies and scripts. It contains information about the project such as its name, version, and main file. It also lists the dependencies and devDependencies needed for the project, specifying their versions: 
+This file is crucial for managing the project's dependencies and scripts. It contains information about the project such as its name, version, and main file. It also lists the dependencies and devDependencies needed for the project, specifying their versions:
 
-- `"@dfinity/agent"`: This is the JavaScript client library for the Internet Computer. It enables your application to communicate with canisters running on the Internet Computer. It is responsible for tasks such as sending requests to canisters, handling responses, and managing security and identity.
-
-- `"@dfinity/candid"`: Candid is an interface description language (IDL) for the Internet Computer. It's used to define and describe the public interface of a service, namely its methods and their input/output types. This library provides tools for working with Candid in JavaScript.
 
 - `"azle"`: Azle is a framework for building decentralized applications on the Internet Computer. It provides tools and abstractions that make it easier to write, deploy, and interact with canisters.
 
@@ -206,9 +191,9 @@ If you're familiar with TypeScript, you'll find the Azle syntax quite similar. B
 
 ### 2.1 Setting Up the Directory and Entry Point
 
-First, we need to set up the directory where we'll be writing our code. To do this, create a folder named `src` by using the command `mkdir src` in your terminal or by right-clicking on the left-hand side panel of your terminal and selecting "New Folder".
+First, we need to set up the directory where we'll be writing our code. To do this, create a folder named `src`.
 
-Once the `src` directory is created, we need to establish an entry point for our canister. This will be done by creating a file named `index.ts` inside the `src` folder. You can do this by executing the command `touch src/index.ts` in your terminal or by right-clicking inside the `src` folder in your terminal and selecting "New File". This `index.ts` file will serve as the entry point for our canister - it's where we'll be writing our application code.
+Once the `src` directory is created, we need to establish an entry point for our canister. This will be done by creating a file named `index.ts` inside the `src` folder.
 
 ### 2.2 Importing Dependencies
 
@@ -219,32 +204,34 @@ import { v4 as uuidv4 } from 'uuid';
 ```
 Here's a brief rundown of what each of these imported items does:
 
--   `$query`: Function enabling us to retrieve information from our canister.
--   `$update`: Function facilitating updates to our canister.
+-   `$query`: is an annotation enabling us to retrieve information from our canister.
+-   `$update`:is an annotation facilitating updates to our canister.
 -   `Record`: Type used for creating a record data structure.
 -   `StableBTreeMap`: Type used for creating a map data structure.
 -   `Vec`: Type used for creating a vector data structure.
 -   `match`: Function enabling us to perform pattern matching on a result.
 -   `Result`: Type used for creating a result data structure.
 -   `nat64`: Type used for creating a 64-bit unsigned integer.
--   `ic`: Type used for creating an Internet Computer data structure.
+-   `ic`: is an object that provides access to various APIs of the Internet Computer.
 -   `Opt`: Type used for creating an optional data structure.
 -   `uuidv4`: Function generating a unique identifier for each new message.
 
 ### 2.3 Defining Message Type
 
-Before we start writing the logic of our canister, it's important to define the structure of the data we'll be working with. In our case, this is the 'Message' that will be posted on the board. This definition will help us ensure consistency and clarity when dealing with messages in our smart contract.
+Before we start writing the logic of our canister, it's important to define the structure of the data we'll be working with. In our case, this is the 'Message' that will be posted on the board. This definition will help us ensure consistency and clarity when dealing with messages in our smart contract. Add the following code in the `index.ts` file below the import statements:
+
 ```JavaScript
 /**
  * This type represents a message that can be listed on a board.
  */
+
 type Message = Record<{
     id: string;
     title: string;
     body: string;
     attachmentURL: string;
-    created_at: nat64;
-    updated_at: Opt<nat64>;
+    createdAt: nat64;
+    updatedAt: Opt<nat64>;
 }>
 ```
 
@@ -254,7 +241,7 @@ This code block defines the 'Message' type, where each message is characterized 
 
 After defining the structure of a Message, we need to specify what kind of data will be sent to our smart contract. This is called the payload. In our context, the payload will contain the basic information needed to create a new message.
 
-Incorporate the following code into your `index.ts` file:
+Add the following code in the `index.ts` file below the definition of the message type:
 
 ```JavaScript
 type MessagePayload = Record<{
@@ -268,7 +255,7 @@ This 'MessagePayload' type outlines the structure of the data that will be sent 
 
 ### 2.5 Defining the Message Storage
 
-Now that we've defined our message types, we need a place to store these messages. For this, we'll be creating a storage variable in our `index.ts` file:
+Now that we've defined our message types, we need a place to store these messages. For this, we'll be creating a storage variable in our `index.ts` file below the definition of the message payload type:
 
 ```
 const messageStorage = new StableBTreeMap<string, Message>(0, 44, 1024);
@@ -282,9 +269,11 @@ Let's break down the `new StableBTreeMap` constructor:
 -   The second argument `44` sets the maximum size of the key (in bytes) in this map, it's 44 bytes because uuid_v4 generates identifiers which are exactly 44 bytes each.
 -   The third argument `1024` defines the maximum size of each value within the map, ensuring our messages don't exceed a certain size.
 
+**Note: it is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
+
 ### 2.6 Creating the Get Messages Function
 
-The next step is to create a function that retrieves all messages stored within our canister. To accomplish this, add the following code to your index.ts file:
+The next step is to create a function that retrieves all messages stored within our canister. To accomplish this, add the following code to your `index.ts` file below the definition of the message storage:
 ```JavaScript
 $query;
 export function getMessages(): Result<Vec<Message>, string> {
@@ -295,9 +284,11 @@ This `getMessages` function gives us access to all messages on our message board
 
 The function returns a `Result` type, which can hold either a value or an error. In this case, we're returning a vector of messages (`Vec<Message>`) on successful execution, or a string error message if something goes wrong."
 
+**Note: We do not need to use the Result wrapper to return the response. We use it here just to maintain consistency accross the implementation.**
+
 ### 2.7 Creating the Get Message Function
 
-The next step involves creating a function to retrieve a specific message using its unique identifier (ID). Add the following code to your `index.ts` file:
+The next step involves creating a function to retrieve a specific message using its unique identifier (ID). Add the following code to your `index.ts` file below the `getMessages` function:
 
 ```JavaScript
 $query;
@@ -311,7 +302,7 @@ export function getMessage(id: string): Result<Message, string> {
 
 Here's an in-depth look at what the code does:
 
--   We start by using the `$query` decorator to indicate that this function is a query function. A query function is one that does not alter the state of our canister.
+-   We start by using the `$query` annotation to indicate that this function is a query function. A query function is one that does not alter the state of our canister.
 -   The `getMessage` function is defined, which takes a string parameter `id`. This `id` is the unique identifier for the message we wish to retrieve. The function's return type is `Result<Message, string>`. This means the function either returns a `Message` object if successful or a string error message if unsuccessful.
 -   Inside the function, we use the `match` function from Azle. This function is used to handle possible options from a function that may or may not return a result, in our case, `messageStorage.get(id)`.
 -   `messageStorage.get(id)` attempts to retrieve a message with the given `id` from our `messageStorage`.
@@ -322,7 +313,7 @@ This function, therefore, allows us to specifically query a message by its uniqu
 
 ### 2.8 Creating the Add Message Function
 
-Following on, we will create a function to add new messages. Input the following code into your index.ts file:
+Following on, we will create a function to add new messages. Input the following code into your `index.ts` file below the `getMessage` function:
 ```JavaScript
 $update;
 export function addMessage(payload: MessagePayload): Result<Message, string> {
@@ -333,7 +324,7 @@ export function addMessage(payload: MessagePayload): Result<Message, string> {
 ```
 Here's a detailed exploration of the key components:
 
--   The `$update` decorator is utilized to signify to Azle that this function is an update function. It is labelled as such because it modifies the state of our canister.
+-   The `$update` annotation is utilized to signify to Azle that this function is an update function. It is labelled as such because it modifies the state of our canister.
 
 -   The function `addMessage` is defined, which accepts a parameter `payload` of type `MessagePayload`. This payload will contain the data for the new message to be created.
 
@@ -345,14 +336,18 @@ Here's a detailed exploration of the key components:
 
 This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp."
 
-### 2.9 Developing the Delete Message Function
-Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file:
+### 2.9 Developing the Update Message Function
+Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file below the `addMessage` function:
 ```JavaScript
 $update;
-export function deleteMessage(id: string): Result<Message, string> {
-    return match(messageStorage.remove(id), {
-        Some: (deletedMessage) => Result.Ok<Message, string>(deletedMessage),
-        None: () => Result.Err<Message, string>(`couldn't delete a message with id=${id}. message not found.`)
+export function updateMessage(id: string, payload: MessagePayload): Result<Message, string> {
+    return match(messageStorage.get(id), {
+        Some: (message) => {
+            const updatedMessage: Message = {...message, ...payload, updatedAt: Opt.Some(ic.time())};
+            messageStorage.insert(message.id, updatedMessage);
+            return Result.Ok<Message, string>(updatedMessage);
+        },
+        None: () => Result.Err<Message, string>(`couldn't update a message with id=${id}. message not found`)
     });
 }
 ```
@@ -368,7 +363,7 @@ This `updateMessage` function thus enables us to update the contents of an exist
 
 ### 2.10 Creating a Function to Delete a Message
 
-The final step in our canister development is to create a function that allows for message deletion. Insert the following code into your `index.ts` file:
+The final step in our canister development is to create a function that allows for message deletion. Insert the following code into your `index.ts` file below the `updateMessage` function:
 ```JavaScript
 $update;
 export function deleteMessage(id: string): Result<Message, string> {
@@ -386,7 +381,7 @@ This function, marked by the `$update` decorator, further extends our canister's
 
 ### 2.11 Configuring the UUID Package
 
-A notable point is that the uuidV4 package may not function correctly within our canister. To address this, we need to apply a workaround that ensures compatibility with Azle. Insert the following code at the end of your index.ts file:
+A notable point is that the uuidV4 package may not function correctly within our canister. To address this, we need to apply a workaround that ensures compatibility with Azle. Insert the following code at the end of your `index.ts` file:
 ```JavaScript
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
@@ -414,79 +409,80 @@ By adding this block of code, we ensure that the `uuidV4` package works smoothly
 
 ### 2.12 The Final Code
 At the end of this step, your `index.ts` file should look like this:
+
 ```JavaScript
-import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle'
-import { v4 as uuidv4 } from 'uuid'
+import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle';
+import { v4 as uuidv4 } from 'uuid';
 
 type Message = Record<{
-    id: string
-    title: string
-    body: string
-    attachmentURL: string
-    created_at: nat64
-    updated_at: Opt<nat64>
+    id: string;
+    title: string;
+    body: string;
+    attachmentURL: string;
+    createdAt: nat64;
+    updatedAt: Opt<nat64>;
 }>
 
 type MessagePayload = Record<{
-    title: string
-    body: string
-    attachmentURL: string
+    title: string;
+    body: string;
+    attachmentURL: string;
 }>
 
-const messageStorage = new StableBTreeMap<string, Message>(0, 44, 1024)
+const messageStorage = new StableBTreeMap<string, Message>(0, 44, 1024);
 
-$query
+$query;
 export function getMessages(): Result<Vec<Message>, string> {
-    return Result.Ok(messageStorage.values())
+    return Result.Ok(messageStorage.values());
 }
 
-$query
+$query;
 export function getMessage(id: string): Result<Message, string> {
     return match(messageStorage.get(id), {
         Some: (message) => Result.Ok<Message, string>(message),
         None: () => Result.Err<Message, string>(`a message with id=${id} not found`)
-    })
+    });
 }
 
-$update
+$update;
 export function addMessage(payload: MessagePayload): Result<Message, string> {
-    const message: Message = { id: uuidv4(), created_at: ic.time(), updated_at: Opt.None, ...payload }
-    messageStorage.insert(message.id, message)
-    return Result.Ok(message)
+    const message: Message = { id: uuidv4(), createdAt: ic.time(), updatedAt: Opt.None, ...payload };
+    messageStorage.insert(message.id, message);
+    return Result.Ok(message);
 }
 
-$update
+$update;
 export function updateMessage(id: string, payload: MessagePayload): Result<Message, string> {
     return match(messageStorage.get(id), {
         Some: (message) => {
-            const updatedMessage: Message = {...message, ...payload, updated_at: Opt.Some(ic.time())}
-            messageStorage.insert(message.id, updatedMessage)
-            return Result.Ok<Message, string>(updatedMessage)
+            const updatedMessage: Message = {...message, ...payload, updatedAt: Opt.Some(ic.time())};
+            messageStorage.insert(message.id, updatedMessage);
+            return Result.Ok<Message, string>(updatedMessage);
         },
         None: () => Result.Err<Message, string>(`couldn't update a message with id=${id}. message not found`)
-    })
+    });
 }
 
-$update
+$update;
 export function deleteMessage(id: string): Result<Message, string> {
     return match(messageStorage.remove(id), {
         Some: (deletedMessage) => Result.Ok<Message, string>(deletedMessage),
         None: () => Result.Err<Message, string>(`couldn't delete a message with id=${id}. message not found.`)
-    })
+    });
 }
 
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
     getRandomValues: () => {
-        let array = new Uint8Array(32)
+        let array = new Uint8Array(32);
 
         for (let i = 0; i < array.length; i++) {
-            array[i] = Math.floor(Math.random() * 256)
+            array[i] = Math.floor(Math.random() * 256);
         }
 
-        return array
+        return array;
     }
-}
+};
 ```
 
 ## 3. Deploying and Interacting with our Canister
@@ -579,6 +575,7 @@ dfx canister call message_board addMessage '(record {"title"= "Welcome"; "body"=
 ```
 
 If the function call is successful, you should receive a response similar to this:
+
 ```Bash
 (
   variant {
@@ -586,9 +583,9 @@ If the function call is successful, you should receive a response similar to thi
       id = "79daba82-18ce-4f69-afa1-7b3389368d1f";
       attachmentURL = "url/path/to/some/photo/attachment";
       title = "Welcome";
-      updated_at = null;
+      updatedAt = null;
       body = "Hello World";
-      created_at = 1_685_568_853_915_736_000 : nat64;
+      createdAt = 1_685_568_853_915_736_000 : nat64;
     }
   },
 )
@@ -623,7 +620,7 @@ Now that we've covered the CLI, let's move on to the web interface.
 2. **Getting a message with the web interface**
 Now we are using the web interface to get the message we just created. Let's invoke the `getMessage` function from our canister file. 
 
-To view the message we just added, we can make use of the candid interface that was generated to us when we ran the  "dfx deploy" command.
+To view the message we just added, we can make use of the candid interface that was generated for us when we ran the  "dfx deploy" command.
 
 It should look something like this:
 ```
@@ -635,6 +632,8 @@ Note: In Codespaces, the web interface might sometimes not be displayed correctl
 In the interface, click on the `getMessage` function. Then, enter the ID of the message you wish to retrieve. In this instance, we'll be retrieving the message we just created, hence we'll need to input the ID that we received from the `addMessage` function response. Please note, your message ID will differ from the example given here.
 
 After entering the ID, click on the `Call` button. If done correctly, you should receive a response similar to this:
+
+
 ```Bash
 (
   variant {
@@ -642,9 +641,9 @@ After entering the ID, click on the `Call` button. If done correctly, you should
       id = "79daba82-18ce-4f69-afa1-7b3389368d1f";
       attachmentURL = "url/path/to/some/photo/attachment";
       title = "message list";
-      updated_at = null;
+      updatedAt = null;
       body = "some important things";
-      created_at = 1_685_568_853_915_736_000 : nat64;
+      createdAt = 1_685_568_853_915_736_000 : nat64;
     }
   },
 )
@@ -672,9 +671,11 @@ By working through this tutorial, you have gained hands-on experience with the A
 
 As you continue to explore and experiment, remember that the Internet Computer and its associated technologies offer a wide array of possibilities. Whether you're interested in decentralized finance (DeFi) platforms, social media applications, decentralized autonomous organizations (DAOs), or something else entirely, the tools and techniques you've learned here will serve as a valuable foundation.
 
+Please note that this course is open source and is licensed under the MIT license. You can also contribute to improving the course content by making pull requests if you have suggestions for improvement. You can do this by visiting the course repository [here](https://github.com/dacadeorg/tutorials/blob/main/ICP/icp-azle-development-101/content/icp-azle-development-101.md). We welcome any contributions and improvements from the community.
+
 For additional learning and connecting with like-minded individuals, consider visiting the following resources:
 
-- **Discord**: Join the ICP community on Discord where we discuss various topics, troubleshoot, and collaborate. Follow the [link](https://discord.com/invite/cA7y6ezyE2) to join the conversation.
+- **Discord**: Join the ICP community on Discord where we discuss various topics, troubleshoot, and collaborate. Follow the [link](https://discord.com/invite/cA7y6ezyE2) to join the conversation. Particularly, you can find more focused discussion on Typescript in the specific channel here: [Typescript Channel](https://discord.com/channels/748416164832608337/956466775380336680).
 - **Forum**: The [forum](https://forum.dfinity.org/) is a great place to ask questions, share your projects, and learn about what others are working on.
 - **The Azle Book**: To deepen your understanding of the Azle framework, check out [The Azle Book](https://demergent-labs.github.io/azle/). It's a comprehensive guide that will take you beyond what we've covered in this tutorial.
 
