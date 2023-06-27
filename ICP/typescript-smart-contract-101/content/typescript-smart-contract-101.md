@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: MIT -->
 <!-- Copyright (c) 2023 Dacade.org -->
 
-Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with decentralized Azle canisters. By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
+Welcome to this ICP TypeScript Smart Contract 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with a TypeScript smart contract (Azle canisters). By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
 
 ### What you'll learn
 - Setting up your development environment: Understand the necessary tools for ICP development, such as Node.js, Node Version Manager (nvm), and DFX, and learn how to install and use them​.
