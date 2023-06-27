@@ -199,7 +199,7 @@ This description is sufficient for our purposes. We will adapt it a bit with our
 ## 3. Building the MVP
 In this section, we will start building a Minimum Viable Product (MVP) based on our initial project idea.
 
-We will initiate a new ChatGPT thread. You can view the entire conversation with ChatGPT [here](https://chat.openai.com/share/ffd28040-d85f-47b7-af78-f8f8ef60a9fd).
+We will initiate a new ChatGPT thread. You can view the entire conversation with ChatGPT [here](https://chat.openai.com/share/dd73ab67-ee25-4783-bca9-8283093e095c).
 
 ### 3.1 Create a user flow
 In the first step, we are going to create a user flow that will guide the functionality of our app.
