@@ -508,8 +508,7 @@ Dashboard: http://localhost:49846/_/dashboard
 In this output, the URL for the dashboard (<http://localhost:49846/_/dashboard>) will be particularly helpful for debugging and observing the activity of your local replica.
 
 
-**IMPORTANT NOTE**
-StableBTreeMap, which is the data structure we use for `messageStorage`, has certain constraints that you need to be aware of. Specifically, once a StableBTreeMap is initialized, its configuration becomes immutable. This means that you cannot make changes to aspects such as the data types or sizes of the keys or values.
+**IMPORTANT NOTE**: The StableBTreeMap, which is the data structure we use for `messageStorage`, has certain constraints that you need to be aware of. Specifically, once a StableBTreeMap is initialized, its configuration becomes immutable. This means that you cannot make changes to aspects such as the data types or sizes of the keys or values.
 
 If you need to make any changes to these elements of the StableBTreeMap, you will need to restart your local replica with the `--clean` flag. The `--clean` flag ensures that the replica is started afresh, allowing for the changes in configuration to take effect.
 
@@ -547,7 +546,7 @@ Your seed phrase:
 ...
 ```
 
-Note: If this is your first time running the `dfx deploy` command, it may take a moment to register, build, and deploy your application. Take this time to relax as the system does its work.
+Note: If this is your first time running the `dfx deploy` command, it may take awhile to register, build, and deploy your application.
 
 Once the command completes, you should see a message indicating the successful deployment of your canisters. The output will include URLs for interacting with your backend canister through the Candid interface. For example:
 ```Bash
@@ -565,11 +564,10 @@ You can view a GIF illustrating this process:
 ### 3.3. Interacting with our canister
 There are two primary ways to interact with our canister: through the command line interface (CLI) or the web interface. We'll begin with the CLI.
 
-#### 3.3.1. Interacting with our canister through the CLI
+#### 3.3.1 Interacting with our canister through the CLI
 To interact with our canister through the CLI, we'll be using the `dfx canister call` command. This command allows us to invoke functions on our canister from the terminal. 
 
-**1. Adding a message**
-First, let's invoke the addMessage function from our canister file, which we created earlier. This function will add a message to our canister. Execute the following command in your terminal:
+**1. Adding a message**: First, let's invoke the addMessage function from our canister file, which we created earlier. This function will add a message to our canister. Execute the following command in your terminal:
 ```Bash
 dfx canister call message_board addMessage '(record {"title"= "Welcome"; "body"= "Hello World"; "attachmentURL"= "url/path/to/some/photo/attachment"})'
 ```
@@ -592,32 +590,27 @@ If the function call is successful, you should receive a response similar to thi
 ```
 This output indicates that the `addMessage` function has successfully added a message to your canister. The message includes a unique identifier, attachment URL, title, body, and creation timestamp. The `updated_at` field remains `null` because the message has not been updated since it was created.
 
-**2. Retrieving a single message**
-To retrieve a single message, invoke the `getMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to retrieve. Here's the command:
+**2. Retrieving a single message**: To retrieve a single message, invoke the `getMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to retrieve. Here's the command:
 
 ```dfx canister call message_board getMessage '("79daba82-18ce-4f69-afa1-7b3389368d1f")'```
 
-**3. Updating a message**
-To update a message, use the `updateMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to update. Here's the command:
+**3. Updating a message**: To update a message, use the `updateMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to update. Here's the command:
 
 ```dfx canister call message_board updateMessage '("79daba82-18ce-4f69-afa1-7b3389368d1f", record {"title"= "new title"; "body"= "new message"; "attachmentURL"= "url/path/to/some/photo/attachment"})'```
 
-**4. Retrieving messages**
-To retrieve all messages, invoke the `getMessages` function. In this case, we're not passing any argument to the function. Here's the command:
+**4. Retrieving messages**: To retrieve all messages, invoke the `getMessages` function. In this case, we're not passing any argument to the function. Here's the command:
 
 ```dfx canister call message_board getMessages '()'```
 
-**5. Deleting a message**
-To delete a message, use the `deleteMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to delete. Here's the command:
+**5. Deleting a message**: To delete a message, use the `deleteMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to delete. Here's the command:
 
 ```dfx canister call message_board deleteMessage '("79daba82-18ce-4f69-afa1-7b3389368d1f")'```
 
-
-Try for yourself, to add, retrieve, update, and delete messages using the CLI. 
+Try adding, retrieving, updating and deleting messages for yourself using the CLI.
 
 Now that we've covered the CLI, let's move on to the web interface.
 
-2. **Getting a message with the web interface**
+#### 3.3.2 Getting a message with the web interface
 Now we are using the web interface to get the message we just created. Let's invoke the `getMessage` function from our canister file. 
 
 To view the message we just added, we can make use of the candid interface that was generated for us when we ran the  "dfx deploy" command.
@@ -660,10 +653,10 @@ To conclude your work session, you can stop your local Azle replica by executing
 dfx stop
 ```
 
-This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources."
+This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources.
 
 ## 4. Conclusion
-In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters and then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
+In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters, then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
 
 You learned how to deploy your canister using `dfx deploy` and how to interact with it both through the terminal and the Candid web interface. We explored how to execute various functions like `addMessage`, `getMessages`, `updateMessage`, and `deleteMessage`, and discussed the structure and usage of the commands required.
 
@@ -673,9 +666,9 @@ As you continue to explore and experiment, remember that the Internet Computer a
 
 Please note that this course is open source and is licensed under the MIT license. You can also contribute to improving the course content by making pull requests if you have suggestions for improvement. You can do this by visiting the course repository [here](https://github.com/dacadeorg/tutorials/blob/main/ICP/icp-azle-development-101/content/icp-azle-development-101.md). We welcome any contributions and improvements from the community.
 
-For additional learning and connecting with like-minded individuals, consider visiting the following resources:
+For additional learning and connecting with like-minded individuals, you may consider visiting the following resources:
 
-- **Discord**: Join the ICP community on Discord where we discuss various topics, troubleshoot, and collaborate. Follow the [link](https://discord.com/invite/cA7y6ezyE2) to join the conversation. Particularly, you can find more focused discussion on Typescript in the specific channel here: [Typescript Channel](https://discord.com/channels/748416164832608337/956466775380336680).
+- **Discord**: Join the ICP community on Discord where we discuss various topics, troubleshoot, and collaborate. Follow the [link](https://discord.com/invite/cA7y6ezyE2) to join the conversation. Particularly, you can find Typescript-focused discussions in the specific channel here: [Typescript Channel](https://discord.com/channels/748416164832608337/956466775380336680).
 - **Forum**: The [forum](https://forum.dfinity.org/) is a great place to ask questions, share your projects, and learn about what others are working on.
 - **The Azle Book**: To deepen your understanding of the Azle framework, check out [The Azle Book](https://demergent-labs.github.io/azle/). It's a comprehensive guide that will take you beyond what we've covered in this tutorial.
 
