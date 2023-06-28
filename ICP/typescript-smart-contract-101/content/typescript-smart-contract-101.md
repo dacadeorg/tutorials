@@ -1,11 +1,11 @@
 <!-- SPDX-License-Identifier: MIT -->
 <!-- Copyright (c) 2023 Dacade.org -->
 
-Welcome to this ICP TypeScript Smart Contract 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with a TypeScript smart contract (Azle canisters). By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
+Welcome to this Internet Computer TypeScript Smart Contract 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with a TypeScript smart contract (Azle canisters). By the end of this guide, you will have a solid understanding of developing on the ICP platform and be able to create the foundation for decentralized applications.
 
 ### What you'll learn
 - Setting up your development environment: Understand the necessary tools for ICP development, such as Node.js, Node Version Manager (nvm), and DFX, and learn how to install and use them​.
-- Grasping the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
+- Understanding the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
 - Building and interacting with a messaging canister: Learn how to construct a simple messaging canister that performs CRUD (Create, Read, Update, Delete) operations. You will also learn how to interact with the canister, calling its methods and handling responses. This knowledge will allow you to build a simple message board application, enabling users to create, update, delete, and view messages​.
 
 ### What is a Canister?
@@ -14,7 +14,7 @@ A canister is a fundamental building block and execution environment for deployi
 ### What is Azle?
 Azle is a TypeScript Canister Development Kit (CDK) for the Internet Computer (IC). It provides a set of libraries and tools that make it easy to build and deploy canisters on the IC platform. Azle allows web developers to bring their TypeScript/JavaScript skills to the IC and use various npm packages and VS Code intellisense. In this tutorial, you will use Azle to create and deploy your canisters.
 
-It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't yet have many live, successful, continuously operating applications deployed to the IC. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
+It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't have many live, successful, and continuously operating applications deployed to the IC yet. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
 
 If you want to learn more about Azle, check out the [Azle documentation](https://demergent-labs.github.io/azle/the_azle_book.html).
 
@@ -34,7 +34,7 @@ Here are the key technologies and tools we'll be using:
 4.  Node Version Manager (nvm): Nvm is a tool that enables management and switching between different Node.js versions. We'll be using it to manage our Node.js environment.
 5.  DFX: DFX is the command-line interface for the Internet Computer. We'll be using it to create and manage our Azle project.
 6.  TypeScript: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. We'll be using it for writing our application's code, and our project will include a configuration file (`tsconfig.json`) for setting up the TypeScript compiler options.
-7.  Candid: Candid is an interface description language (IDL) used by Internet Computer for defining and describing the public interfaces of services, i.e., their methods and their input/output types. We'll be using Candid in our project to describe the interface of our canisters.
+7.  Candid: Candid is an interface description language (IDL) used by the Internet Computer for defining and describing the public interfaces of services, i.e., their methods and their input/output types. We'll be using Candid in our project to describe the interface of our canisters.
 
 ### Overview
 
@@ -103,12 +103,12 @@ nvm use 18
 DFX_VERSION=0.14.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
-4. **Add DFX to your path**: Add DFX to your PATH: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
+4. **Add DFX to your path**: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
 ```bash
 echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
 ```
 
-5. **Reload your terminal (if using GitHub Codespaces)**: Reload your terminal (if using GitHub Codespaces): If you're using GitHub Codespaces for this tutorial, you'll need to reload your terminal to ensure all changes are properly applied. You can do this by clicking on the "Reload" button located in the top-right corner of your terminal.
+5. **Reload your terminal (if using GitHub Codespaces)**: If you're using GitHub Codespaces for this tutorial, you'll need to reload your terminal to ensure all changes are properly applied. You can do this by clicking on the "Reload" button located in the top-right corner of your terminal.
 
 ### 1.3 Understanding the Boilerplate Code
 The boilerplate code we've prepared serves as a basic Azle project. It is designed to help you get started quickly by providing the necessary configuration files and dependencies. This code also includes a simple canister that serves as a reference for constructing your own canisters. Let's explore its key components:
@@ -204,8 +204,8 @@ import { v4 as uuidv4 } from 'uuid';
 ```
 Here's a brief rundown of what each of these imported items does:
 
--   `$query`: is an annotation enabling us to retrieve information from our canister.
--   `$update`:is an annotation facilitating updates to our canister.
+-   `$query`: An annotation enabling us to retrieve information from our canister.
+-   `$update`: An annotation facilitating updates to our canister.
 -   `Record`: Type used for creating a record data structure.
 -   `StableBTreeMap`: Type used for creating a map data structure.
 -   `Vec`: Type used for creating a vector data structure.
@@ -269,7 +269,7 @@ Let's break down the `new StableBTreeMap` constructor:
 -   The second argument `44` sets the maximum size of the key (in bytes) in this map, it's 44 bytes because uuid_v4 generates identifiers which are exactly 44 bytes each.
 -   The third argument `1024` defines the maximum size of each value within the map, ensuring our messages don't exceed a certain size.
 
-**Note: it is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
+**Note: It is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
 
 ### 2.6 Creating the Get Messages Function
 
@@ -334,7 +334,7 @@ Here's a detailed exploration of the key components:
 
 -   The function concludes by returning the newly created message, wrapped in a `Result.Ok`. If any errors occurred during the process, the function would return a string error message.
 
-This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp."
+This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp.
 
 ### 2.9 Developing the Update Message Function
 Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file below the `addMessage` function:
@@ -405,7 +405,7 @@ In this block of code, we're extending the `globalThis` object by adding a `cryp
 
 -   Finally, we return this array of random values. This array is used by the `uuidV4` function to create unique IDs for our messages.
 
-By adding this block of code, we ensure that the `uuidV4` package works smoothly with the Azle framework within our canister."
+By adding this block of code, we ensure that the `uuidV4` package works smoothly with the Azle framework within our canister.
 
 ### 2.12 The Final Code
 At the end of this step, your `index.ts` file should look like this:
