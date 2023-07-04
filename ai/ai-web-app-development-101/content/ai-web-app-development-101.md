@@ -367,7 +367,7 @@ The reason we paste the exact code of the file that ChatGPT is expected to modif
 
 The new `promptUtils.js` looks good. We can test this by running the application and entering something in the input field. We should then see a response in our terminal that looks something like this:
 
-![](https://hackmd.io/_uploads/S1FaSNytn.png)
+![](https://i.imgur.com/8E91wLF.png)
 
 It is not fully functional yet, but we can see that the `getUserPrompt` function is working as expected. We can now move on to the next step.
 
@@ -547,8 +547,8 @@ We'll insert the instructions from our earlier code planning phase into the prom
 
 Let's test this by running the application and selecting some options from the dropdown menus. When we do this, we get the following error:
 
-![](https://hackmd.io/_uploads/BJzoLNJF2.png)
-![](https://hackmd.io/_uploads/S10t8VJY2.png)
+![](https://i.imgur.com/Xa34MQX.png)
+![](https://i.imgur.com/a776Aja.png)
 
 Let's ask ChatGPT to help us with this error.
 
@@ -641,7 +641,7 @@ This is not very sophisticated, but let's see if it is enough to get a good resp
 >   ```
 
 Ok, we make the suggested changes and run the application again. This time, we don't get any errors. We can now select some options from the dropdown menus and click the submit button. We should see a loading indicator and then a response in our terminal that looks something like this:
-![](https://hackmd.io/_uploads/H1OJPEJK2.png)
+![](https://i.imgur.com/g1SGA7C.png)
     
 We don't see anything on the screen yet, but we will fix that in the next step.
 
@@ -721,7 +721,7 @@ As before, we pasted the instructions from the previous code planning step into 
 > To test if the component displays the expected data, you should start the app, select a protein, vegetable, and carbohydrate from the dropdown menus and click the Submit button. After the API call finishes, the generated dish name, ingredients, and instructions should be displayed in the `ResponseDisplay` component.
 
 You should see something like this:
-![](https://hackmd.io/_uploads/S1B7D41Y2.png)
+![](https://i.imgur.com/HFU2tL2.png)
 
 Ok, this looks good, but the instruction steps are not very readable. Let's ask ChatGPT to help us with that.
 
@@ -911,7 +911,7 @@ We'll insert the instructions from our earlier code planning phase into the prom
 > To test this, you should select protein, vegetable, and carbohydrate options from the dropdowns and then submit the form. The resulting recipe should be displayed with the dish name, a list of ingredients, and a list of cooking instructions. The cooking instructions should now be displayed as a list, not a single string.
 > 
 You should see something like this:
-![](https://hackmd.io/_uploads/HJu8PEkF3.png)
+![](https://i.imgur.com/3THkkbL.png)
 
 Ok, this looks good. We can now move on to the next step.
 
@@ -1092,7 +1092,7 @@ We give ChatGPT some instructions on how to improve the design of our web applic
 > To test, run your application. You should see a bigger heading for the dish name, a fullscreen black submit button, nicer-looking dropdowns, and a subtle background color for the application. Make sure that the application still remains functional with these design changes.
 
 Now it looks like this:
-![](https://hackmd.io/_uploads/BJCcD4kF2.png)
+![](https://i.imgur.com/ShGUatE.png)
 
 
 That is ok, but the double border of the dropdowns is not very nice. Let's ask ChatGPT to help us with that.
@@ -1125,7 +1125,7 @@ This is a very simple prompt, but we try and see if it is enough to get a good r
 > Again, I want to note that even though our goal is to mimic the style of Jonathan Ive's Apple software design, due to the limitations of web technologies, we may not be able to perfectly recreate the native OS styles and animations that are present in Apple's software.
 
 Now it looks like this:
-![](https://hackmd.io/_uploads/Hy12P41th.png)
+![](https://i.imgur.com/9ISiizZ.png)
 
 This looks good for a rough prototype! We've implemented our basic functionalities. We could now enhance our design further, add more features, or refactor our code for efficiency, but for the purpose of this tutorial, we'll stop here.
 
