@@ -1,4 +1,3 @@
-# CELO Frontend 101
 In this tutorial, we will be building the frontend for a simple marketplace dapp on the Celo blockchain. The decentralized marketplace application will allow users to list their items for sale, purchase items, and view listed items.
 
 This is how the dapp will look like:
