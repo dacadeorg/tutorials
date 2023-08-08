@@ -168,146 +168,86 @@ In Solidity, you use structs to define new types that can group variables. A str
 contract Marketplace {
 
     struct Product {
-        address payable owner;
+        address owner;
         string name;
         string image;
         string description;
         string location;
-        uint price;
-        uint sold;
+        uint256 price;
+        uint256 sold;
     }
 ```
 
 You create a new struct named Product with the `struct` keyword.
 
-The first variable that you will store is of the type `address`. You can then add a `payable` modifier that allows your contract to send tokens to this address. This variable will be named `owner` because it’s the address of the user who submitted the product.
+The first variable that you will store is of the type `address`. This variable will be named `owner` because it’s the address of the user who submitted the product.
 
 Next, create `string` variables for the `name`, `image`, `description` and `location` of the product and the `uint` type for `price` and `sold`, since they will never be negative.
 
-Now you also need to adapt the mapping.
+Next, we create an array of products to store multiple products. We will use the `public` visibility, so we can access it from outside the contract.
+In this case we are no longer using a mapping as this allows us to loop over the products and fetch all of them. ([Learn more about arrays](https://docs.soliditylang.org/en/latest/types.html#arrays))
 
 ```solidity
-	mapping (uint => Product) internal products;
+  Product[] public products;
 ```
-
-Instead of mapping your uint key type to a string value type as you did before, now map the `uint` key type to the `Product` value type that you just created.
-Now you can access a group of variables through an index.
 
 You also need to adapt the `writeProduct` function.
 
 ```solidity
-	function writeProduct(
-		uint _index, 
-		string memory _name,
-		string memory _image,
-		string memory _description, 
-		string memory _location, 
-		uint _price
-	) public {
-		uint _sold = 0;
-		products[_index] = Product(
-			payable(msg.sender),
-			_name,
-			_image,
-			_description,
-			_location,
-			_price,
-			_sold
-		);
-	}
+  function writeProduct(
+    string memory _name,
+    string memory _image,
+    string memory _description,
+    string memory _location,
+    uint256 _price
+) external {
+    products.push(Product(
+        msg.sender,
+        _name,
+        _image,
+        _description,
+        _location,
+        _price,
+        0
+    ));
+   }
+
+}
+
 ```
-You still need an index as a parameter. However, you also need to add `_name`, `_image`, `_description`, and `_location`. They are all a `string` stored in `memory` and the price is an `uint`.
+Because we are no longer using a mapping, we do not need to pass an index to the function. Instead, we will use the `push` function to add a new product to the array. The `push` function will add a new product to the end of the array. ([Learn more about arrays](https://docs.soliditylang.org/en/latest/types.html#arrays))
+
+By default, the items in our array will start at index 0. So the first product will be at index 0, the second at index 1, and so on. This will come in handy when we want to fetch a specific product from the array.
 
 The function stays `public`. When a user adds a new product to your marketplace contract, you set `_sold` to the value `0`, because it tracks the number of times the product was sold. Of course, this is initially always zero, and therefore you don't need a parameter.
-
-Next, map the key `_index` to a new Product `struct` in your products mapping.
 
 The first variable in the struct was the payable owner address. The function `msg.sender` returns the address of the entity that is making the call, it is also `payable`. This is what you are going to save as the owners’ address.
 
 You also need to input the value for the other variables from your parameters.
 
-The changes that you need to make your `readProduct` function work properly are straightforward.
-
-```solidity
-	function readProduct(uint _index) public view returns (
-		address payable,
-		string memory, 
-		string memory, 
-		string memory, 
-		string memory, 
-		uint, 
-		uint
-	) {
-		return (
-			products[_index].owner, 
-			products[_index].name, 
-			products[_index].image, 
-			products[_index].description, 
-			products[_index].location, 
-			products[_index].price,
-			products[_index].sold
-		);
-	}
-```
-
-Your function needs to return the `address` that is `payable`, four `string`s, that are saved in `memory` and two `uint` types.
-
-To return the saved values, specify the key of the struct in the products mapping and the variable name.
+Since we are using an array to store the products and also gave it a public visibility, we do not need to create a new function to read the products. Instead, we can use the `products` array directly.
 
 This is how it should behave:
-![](https://cdn-celo-101-dacade.netlify.app/celo_2_5_save_multiple_variables_with_structs.gif)
+!![](https://hackmd.io/_uploads/S1JoVo133.gif)
+
 
 [Code for this section](https://github.com/dacadeorg/celo-development-101/tree/main/code/celo101-code-chapter_2/2-5-save-multiple-variables-with-structs/marketplace.sol)
 
 ## 2.6 Optimising the Contract (4 min)
 In this section of the tutorial, you will optimise your contract. You will create a state variable that keeps track of how many products are stored in your contract. You will need this later when you want to iterate over all products in the frontend. This variable will also help you to create the indexes for your products, so the users don’t have to take care of that themselves.
 
+Let us add a function to the contract that returns the length of the products array.
+=
 ```solidity
-contract Marketplace {
-
-    uint internal productsLength = 0;
+  function getProductsLength() external view returns (uint256) {
+    return products.length;
+}
 ```
 
-Create a new variable of the type uint with the visibility internal that you can name productsLength and set it to zero when the contract is created.
-
-```solidity
-	function writeProduct(
-		string memory _name,
-		string memory _image,
-		string memory _description, 
-		string memory _location, 
-		uint _price
-	) public {
-		uint _sold = 0;
-		products[productsLength] = Product(
-			payable(msg.sender),
-			_name,
-			_image,
-			_description,
-			_location,
-			_price,
-			_sold
-		);
-		productsLength++;
-	}
-```
-
-In the `writeProduct` function, you delete the `_index` parameter of the type `uint`.
-The key for the mapping of the Product `struct` that you need to save is `productsLength`. 
-When a new product has been stored, you count `productsLength` up by one.
-
-When the first product is created, `productsLength` is 0, so the index where this product is stored is 0. After it is saved, productsLength is set to 1. `productsLength` represents how many products you have stored and you can use it as the index of the next product you will store.
-
-```solidity
-    function getProductsLength() public view returns (uint) {
-        return (productsLength);
-    }
-```
-
-Finally, create a public function to return the number of products stored, which you will iterate over in the frontend.
+The function is `public` and returns a `uint` value. In the function body, you return the length of the products array.
 
 It should work like this:
-![](https://cdn-celo-101-dacade.netlify.app/celo_2_6_optimising_the_contract.gif)
+![](https://hackmd.io/_uploads/B1oO9oynh.gif)
 
 [Code for this section](https://github.com/dacadeorg/celo-development-101/tree/main/code/celo101-code-chapter_2/2-6-optimising-the-contract/marketplace.sol)
 
@@ -327,27 +267,21 @@ You can find the functions and events of the interface in the Celo documentation
 
 pragma solidity >=0.7.0 <0.9.0;
 
-interface IERC20Token {
-  function transfer(address, uint256) external returns (bool);
-  function approve(address, uint256) external returns (bool);
-  function transferFrom(address, address, uint256) external returns (bool);
-  function totalSupply() external view returns (uint256);
-  function balanceOf(address) external view returns (uint256);
-  function allowance(address, address) external view returns (uint256);
-
-  event Transfer(address indexed from, address indexed to, uint256 value);
-  event Approval(address indexed owner, address indexed spender, uint256 value);
+interface ITransferFromToken {
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 }
 
 contract Marketplace {
 ```
-You create an interface using the interface keyword, followed by a name. You can choose `IERC20Token` or another name, and the functionality of the interface. In this case, the functionality of the ERC-20 token.
+You create an interface using the interface keyword, followed by a name. You can choose `ITransferFromToken` or another name, and the functionality of the interface. In this case, the functionality of the ERC-20 token.
 
 ```solidity
 contract Marketplace {
-
-    uint internal productsLength = 0;
-    address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
+    // rest of code
+        uint256 sold;
+    }
+    
+    address public cUsdTokenAddress;
 ```
 
 Next, you need to know the address of the cUSD ERC-20 token on the Celo alfajores test network so you can interact with it ([See the cUSD contract on the blockchain explorer](https://alfajores-blockscout.celo-testnet.org/address/0x874069fa1eb16d44d622f2e0ca25eea172369bc1/transactions)).
@@ -355,17 +289,20 @@ Next, you need to know the address of the cUSD ERC-20 token on the Celo alfajore
 Now you need to create a function to buy products from your contract.
 
 ```solidity
-	function buyProduct(uint _index) public payable  {
-		require(
-		  IERC20Token(cUsdTokenAddress).transferFrom(
-			msg.sender,
-			products[_index].owner,
-			products[_index].price
-		  ),
-		  "Transfer failed."
-		);
-		products[_index].sold++;
-	}
+	function buyProduct(uint256 _index) external {
+    Product storage product = products[_index];
+
+    require(
+        ITransferFromToken(cUsdTokenAddress).transferFrom(
+            msg.sender,
+            product.owner,
+            product.price
+        ),
+        "Transfer failed."
+    );
+
+    product.sold++;
+}
 
 	function getProductsLength() public view returns (uint) {
 		return (productsLength);
@@ -374,7 +311,9 @@ Now you need to create a function to buy products from your contract.
 ```
 
 
-You create a `buyProduct` function, you need a parameter for the index of the type `uint`. The function is public and payable so that you can make transactions with it.
+You create a `buyProduct` function, you need a parameter for the index of the type `uint`.
+
+Firstly, you need to get the product from the array. You can do this by using the index and the `products` array. You need to use the `storage` keyword to get the product from the array. ([Learn more about storage](https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack))
 
 Now you can use a require function to ensure valid conditions. In this case, you want to ensure that the cUSD transaction was successful ([Learn more about error handling](https://docs.soliditylang.org/en/latest/control-structures.html#error-handling-assert-require-revert-and-exceptions)).
 
