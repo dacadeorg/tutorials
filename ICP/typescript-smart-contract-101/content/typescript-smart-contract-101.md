@@ -1,11 +1,11 @@
 <!-- SPDX-License-Identifier: MIT -->
 <!-- Copyright (c) 2023 Dacade.org -->
 
-Welcome to this Internet Computer TypeScript Smart Contract 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with a TypeScript smart contract (Azle canisters). By the end of this guide, you will have a solid understanding of developing on the ICP platform and be able to create the foundation for decentralized applications.
+Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with decentralized Azle canisters. By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
 
 ### What you'll learn
 - Setting up your development environment: Understand the necessary tools for ICP development, such as Node.js, Node Version Manager (nvm), and DFX, and learn how to install and use them​.
-- Understanding the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
+- Grasping the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
 - Building and interacting with a messaging canister: Learn how to construct a simple messaging canister that performs CRUD (Create, Read, Update, Delete) operations. You will also learn how to interact with the canister, calling its methods and handling responses. This knowledge will allow you to build a simple message board application, enabling users to create, update, delete, and view messages​.
 
 ### What is a Canister?
@@ -14,7 +14,7 @@ A canister is a fundamental building block and execution environment for deployi
 ### What is Azle?
 Azle is a TypeScript Canister Development Kit (CDK) for the Internet Computer (IC). It provides a set of libraries and tools that make it easy to build and deploy canisters on the IC platform. Azle allows web developers to bring their TypeScript/JavaScript skills to the IC and use various npm packages and VS Code intellisense. In this tutorial, you will use Azle to create and deploy your canisters.
 
-It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't have many live, successful, and continuously operating applications deployed to the IC yet. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
+It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't yet have many live, successful, continuously operating applications deployed to the IC. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
 
 If you want to learn more about Azle, check out the [Azle documentation](https://demergent-labs.github.io/azle/the_azle_book.html).
 
@@ -23,7 +23,7 @@ While having prior coding experience is necessary, you do not need to have any p
 
 - **Knowledge of TypeScript and Node.js**: Familiarity with TypeScript and Node.js is vital, as the tutorial involves building an application using these technologies. If you're new to TypeScript or Node.js, consider going through basic tutorials for both.
 - **Text Editor**: You will need a text editor to write and edit code. Visual Studio Code is recommended due to its excellent support for TypeScript and Node.js development, but feel free to use a text editor of your choice.
-- **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 18 or higher) will be necessary for running the DFINITY SDK and the project itself.
+- **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 18 or higher) will be necessary for running the DFINITY SDK and the project itself."
 
 ### Tech Stack
 Here are the key technologies and tools we'll be using:
@@ -34,7 +34,7 @@ Here are the key technologies and tools we'll be using:
 4.  Node Version Manager (nvm): Nvm is a tool that enables management and switching between different Node.js versions. We'll be using it to manage our Node.js environment.
 5.  DFX: DFX is the command-line interface for the Internet Computer. We'll be using it to create and manage our Azle project.
 6.  TypeScript: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. We'll be using it for writing our application's code, and our project will include a configuration file (`tsconfig.json`) for setting up the TypeScript compiler options.
-7.  Candid: Candid is an interface description language (IDL) used by the Internet Computer for defining and describing the public interfaces of services, i.e., their methods and their input/output types. We'll be using Candid in our project to describe the interface of our canisters.
+7.  Candid: Candid is an interface description language (IDL) used by Internet Computer for defining and describing the public interfaces of services, i.e., their methods and their input/output types. We'll be using Candid in our project to describe the interface of our canisters.
 
 ### Overview
 
@@ -47,7 +47,7 @@ Here are the key technologies and tools we'll be using:
 ## 1. Setup
 In this section, we will help you set up the boilerplate code for our project. By the end of this section, you'll have a development environment pre-configured with all the necessary tools and dependencies, and you'll be ready to start building your canisters.
 
-### 1.1 Preparing Your Development Environment
+### 1.1 Preparing your Development Environment
 
 You can set up your development environment either locally on your machine or in the cloud using GitHub Codespaces.
 
@@ -93,7 +93,7 @@ In this section, we will prepare our terminal environment by installing key tool
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
 
-2. **Switch to Node.js version 18**: Node.js is a JavaScript runtime that enables the execution of JavaScript outside of a browser environment, and it's necessary for running our Azle project. To switch to Node.js version 18 using nvm, use the following command: 
+2. **Switch to Node.js version 18**: Node.js is a JavaScript runtime that enables the execution of JavaScript outside of a browser environment, and it's necessary for running our Azle project. To switch to Node.js version 18 using nvm, use the following command:
 ```bash
 nvm use 18
 ```
@@ -103,12 +103,12 @@ nvm use 18
 DFX_VERSION=0.14.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
-4. **Add DFX to your path**: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
+4. **Add DFX to your path**: Add DFX to your PATH: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
 ```bash
 echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
 ```
 
-5. **Reload your terminal (if using GitHub Codespaces)**: If you're using GitHub Codespaces for this tutorial, you'll need to reload your terminal to ensure all changes are properly applied. You can do this by clicking on the "Reload" button located in the top-right corner of your terminal.
+5. **Reload your terminal (if using GitHub Codespaces)**: Reload your terminal (if using GitHub Codespaces): If you're using GitHub Codespaces for this tutorial, you'll need to reload your terminal to ensure all changes are properly applied. You can do this by clicking on the "Reload" button located in the top-right corner of your terminal.
 
 ### 1.3 Understanding the Boilerplate Code
 The boilerplate code we've prepared serves as a basic Azle project. It is designed to help you get started quickly by providing the necessary configuration files and dependencies. This code also includes a simple canister that serves as a reference for constructing your own canisters. Let's explore its key components:
@@ -191,9 +191,7 @@ If you're familiar with TypeScript, you'll find the Azle syntax quite similar. B
 
 ### 2.1 Setting Up the Directory and Entry Point
 
-First, we need to set up the directory where we'll be writing our code. To do this, create a folder named `src`.
-
-Once the `src` directory is created, we need to establish an entry point for our canister. This will be done by creating a file named `index.ts` inside the `src` folder.
+After cloning the boilerplate code, we would see a folder called `src` with a file called `index.ts`. This would be the entrypoint of our canister and will contain our logic.
 
 ### 2.2 Importing Dependencies
 
@@ -204,8 +202,8 @@ import { v4 as uuidv4 } from 'uuid';
 ```
 Here's a brief rundown of what each of these imported items does:
 
--   `$query`: An annotation enabling us to retrieve information from our canister.
--   `$update`: An annotation facilitating updates to our canister.
+-   `$query`: is an annotation enabling us to retrieve information from our canister.
+-   `$update`:is an annotation facilitating updates to our canister.
 -   `Record`: Type used for creating a record data structure.
 -   `StableBTreeMap`: Type used for creating a map data structure.
 -   `Vec`: Type used for creating a vector data structure.
@@ -269,7 +267,7 @@ Let's break down the `new StableBTreeMap` constructor:
 -   The second argument `44` sets the maximum size of the key (in bytes) in this map, it's 44 bytes because uuid_v4 generates identifiers which are exactly 44 bytes each.
 -   The third argument `1024` defines the maximum size of each value within the map, ensuring our messages don't exceed a certain size.
 
-**Note: It is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
+**Note: it is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
 
 ### 2.6 Creating the Get Messages Function
 
@@ -334,7 +332,7 @@ Here's a detailed exploration of the key components:
 
 -   The function concludes by returning the newly created message, wrapped in a `Result.Ok`. If any errors occurred during the process, the function would return a string error message.
 
-This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp.
+This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp."
 
 ### 2.9 Developing the Update Message Function
 Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file below the `addMessage` function:
@@ -385,6 +383,7 @@ A notable point is that the uuidV4 package may not function correctly within our
 ```JavaScript
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
+     // @ts-ignore
     getRandomValues: () => {
         let array = new Uint8Array(32)
 
@@ -405,7 +404,7 @@ In this block of code, we're extending the `globalThis` object by adding a `cryp
 
 -   Finally, we return this array of random values. This array is used by the `uuidV4` function to create unique IDs for our messages.
 
-By adding this block of code, we ensure that the `uuidV4` package works smoothly with the Azle framework within our canister.
+By adding this block of code, we ensure that the `uuidV4` package works smoothly with the Azle framework within our canister."
 
 ### 2.12 The Final Code
 At the end of this step, your `index.ts` file should look like this:
@@ -473,6 +472,7 @@ export function deleteMessage(id: string): Result<Message, string> {
 
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
+     // @ts-ignore
     getRandomValues: () => {
         let array = new Uint8Array(32);
 
@@ -508,7 +508,8 @@ Dashboard: http://localhost:49846/_/dashboard
 In this output, the URL for the dashboard (<http://localhost:49846/_/dashboard>) will be particularly helpful for debugging and observing the activity of your local replica.
 
 
-**IMPORTANT NOTE**: The StableBTreeMap, which is the data structure we use for `messageStorage`, has certain constraints that you need to be aware of. Specifically, once a StableBTreeMap is initialized, its configuration becomes immutable. This means that you cannot make changes to aspects such as the data types or sizes of the keys or values.
+**IMPORTANT NOTE**
+StableBTreeMap, which is the data structure we use for `messageStorage`, has certain constraints that you need to be aware of. Specifically, once a StableBTreeMap is initialized, its configuration becomes immutable. This means that you cannot make changes to aspects such as the data types or sizes of the keys or values.
 
 If you need to make any changes to these elements of the StableBTreeMap, you will need to restart your local replica with the `--clean` flag. The `--clean` flag ensures that the replica is started afresh, allowing for the changes in configuration to take effect.
 
@@ -546,7 +547,7 @@ Your seed phrase:
 ...
 ```
 
-Note: If this is your first time running the `dfx deploy` command, it may take awhile to register, build, and deploy your application.
+Note: If this is your first time running the `dfx deploy` command, it may take a moment to register, build, and deploy your application. Take this time to relax as the system does its work.
 
 Once the command completes, you should see a message indicating the successful deployment of your canisters. The output will include URLs for interacting with your backend canister through the Candid interface. For example:
 ```Bash
@@ -564,10 +565,11 @@ You can view a GIF illustrating this process:
 ### 3.3. Interacting with our canister
 There are two primary ways to interact with our canister: through the command line interface (CLI) or the web interface. We'll begin with the CLI.
 
-#### 3.3.1 Interacting with our canister through the CLI
-To interact with our canister through the CLI, we'll be using the `dfx canister call` command. This command allows us to invoke functions on our canister from the terminal. 
+#### 3.3.1. Interacting with our canister through the CLI
+To interact with our canister through the CLI, we'll be using the `dfx canister call` command. This command allows us to invoke functions on our canister from the terminal.
 
-**1. Adding a message**: First, let's invoke the addMessage function from our canister file, which we created earlier. This function will add a message to our canister. Execute the following command in your terminal:
+**1. Adding a message**
+First, let's invoke the addMessage function from our canister file, which we created earlier. This function will add a message to our canister. Execute the following command in your terminal:
 ```Bash
 dfx canister call message_board addMessage '(record {"title"= "Welcome"; "body"= "Hello World"; "attachmentURL"= "url/path/to/some/photo/attachment"})'
 ```
@@ -590,30 +592,35 @@ If the function call is successful, you should receive a response similar to thi
 ```
 This output indicates that the `addMessage` function has successfully added a message to your canister. The message includes a unique identifier, attachment URL, title, body, and creation timestamp. The `updated_at` field remains `null` because the message has not been updated since it was created.
 
-**2. Retrieving a single message**: To retrieve a single message, invoke the `getMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to retrieve. Here's the command:
+**2. Retrieving a single message**
+To retrieve a single message, invoke the `getMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to retrieve. Here's the command:
 
 ```dfx canister call message_board getMessage '("79daba82-18ce-4f69-afa1-7b3389368d1f")'```
 
-**3. Updating a message**: To update a message, use the `updateMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to update. Here's the command:
+**3. Updating a message**
+To update a message, use the `updateMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to update. Here's the command:
 
 ```dfx canister call message_board updateMessage '("79daba82-18ce-4f69-afa1-7b3389368d1f", record {"title"= "new title"; "body"= "new message"; "attachmentURL"= "url/path/to/some/photo/attachment"})'```
 
-**4. Retrieving messages**: To retrieve all messages, invoke the `getMessages` function. In this case, we're not passing any argument to the function. Here's the command:
+**4. Retrieving messages**
+To retrieve all messages, invoke the `getMessages` function. In this case, we're not passing any argument to the function. Here's the command:
 
 ```dfx canister call message_board getMessages '()'```
 
-**5. Deleting a message**: To delete a message, use the `deleteMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to delete. Here's the command:
+**5. Deleting a message**
+To delete a message, use the `deleteMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to delete. Here's the command:
 
 ```dfx canister call message_board deleteMessage '("79daba82-18ce-4f69-afa1-7b3389368d1f")'```
 
-Try adding, retrieving, updating and deleting messages for yourself using the CLI.
+
+Try for yourself, to add, retrieve, update, and delete messages using the CLI.
 
 Now that we've covered the CLI, let's move on to the web interface.
 
-#### 3.3.2 Getting a message with the web interface
-Now we are using the web interface to get the message we just created. Let's invoke the `getMessage` function from our canister file. 
+2. **Getting a message with the web interface**
+   Now we are using the web interface to get the message we just created. Let's invoke the `getMessage` function from our canister file.
 
-To view the message we just added, we can make use of the candid interface that was generated for us when we ran the  "dfx deploy" command.
+To view the message we just added, we can make use of the candid interface that was generated to us when we ran the  "dfx deploy" command.
 
 It should look something like this:
 ```
@@ -653,10 +660,10 @@ To conclude your work session, you can stop your local Azle replica by executing
 dfx stop
 ```
 
-This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources.
+This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources."
 
 ## 4. Conclusion
-In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters, then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
+In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters and then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
 
 You learned how to deploy your canister using `dfx deploy` and how to interact with it both through the terminal and the Candid web interface. We explored how to execute various functions like `addMessage`, `getMessages`, `updateMessage`, and `deleteMessage`, and discussed the structure and usage of the commands required.
 
@@ -666,9 +673,9 @@ As you continue to explore and experiment, remember that the Internet Computer a
 
 Please note that this course is open source and is licensed under the MIT license. You can also contribute to improving the course content by making pull requests if you have suggestions for improvement. You can do this by visiting the course repository [here](https://github.com/dacadeorg/tutorials/blob/main/ICP/icp-azle-development-101/content/icp-azle-development-101.md). We welcome any contributions and improvements from the community.
 
-For additional learning and connecting with like-minded individuals, you may consider visiting the following resources:
+For additional learning and connecting with like-minded individuals, consider visiting the following resources:
 
-- **Discord**: Join the ICP community on Discord where we discuss various topics, troubleshoot, and collaborate. Follow the [link](https://discord.com/invite/cA7y6ezyE2) to join the conversation. Particularly, you can find Typescript-focused discussions in the specific channel here: [Typescript Channel](https://discord.com/channels/748416164832608337/956466775380336680).
+- **Discord**: Join the ICP community on Discord where we discuss various topics, troubleshoot, and collaborate. Follow the [link](https://discord.com/invite/cA7y6ezyE2) to join the conversation. Particularly, you can find more focused discussion on Typescript in the specific channel here: [Typescript Channel](https://discord.com/channels/748416164832608337/956466775380336680).
 - **Forum**: The [forum](https://forum.dfinity.org/) is a great place to ask questions, share your projects, and learn about what others are working on.
 - **The Azle Book**: To deepen your understanding of the Azle framework, check out [The Azle Book](https://demergent-labs.github.io/azle/). It's a comprehensive guide that will take you beyond what we've covered in this tutorial.
 
