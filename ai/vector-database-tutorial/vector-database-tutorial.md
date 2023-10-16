@@ -23,7 +23,7 @@ So, if you want to find all the words related to 'happy,' you just look in the '
 
 ## What are Embeddings?
 
-Embeddings are like special codes, called vectors, that computers use to understand words and phrases better. These vectors are like arrows pointing in different directions in a big space. Computers use these arrows to figure out which words are similar in meaning and how words can change their meanings in different situations. We use these vector codes to make computers read and understand text, and they're really important for making computers do things like understand language and translate between languages, for example, `[-0.018704185,-0.010303496,0.016113129,-0.005418276,-0.007138899]`. Find more [examples here](./scripts/content/document.csv).
+Embeddings are like special codes, called vectors, that computers use to understand words and phrases better. These vectors are like arrows pointing in different directions in a big space. Computers use these arrows to figure out which words are similar in meaning and how words can change their meanings in different situations. We use these vector codes to make computers read and understand text, and they're really important for making computers do things like understand language and translate between languages, for example, `[-0.018704185,-0.010303496,0.016113129,-0.005418276,-0.007138899]`. Find more [examples here](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/scripts/content/document.csv).
 
 # Prerequisites
 
@@ -40,17 +40,17 @@ Ensure the following are installed on your machine:
 
    - Creating a New Project
 
-   ![Home Page](./public/images/Home-page.png)
+   ![Home Page](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Home-page.png)
 
    - Click on the button to create a new project.
 
-   ![Create a New Project](./public/images/Create-new-project.png)
+   ![Create a New Project](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Create-new-project.png)
 
-   ![Create New Project Form](./public/images/Create-project-form.png)
+   ![Create New Project Form](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Create-project-form.png)
 
    - Click on the "Create New Project" Button.
 
-   ![Click Button to Create the Project](./public/images/Button-to-create.png)
+   ![Click Button to Create the Project](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Button-to-create.png)
 
 3. Enable Supabase to Store Vector Datatypes
 
@@ -58,7 +58,7 @@ Ensure the following are installed on your machine:
 
    - Click the SQL editor button.
 
-   ![Button to the SQL](./public/images/Button-to-sql.png)
+   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Button-to-sql.png)
 
    - Copy the following SQL query into your SQL editor and execute it.
 
@@ -135,7 +135,7 @@ Ensure the following are installed on your machine:
    $$ LANGUAGE plpgsql;
    ```
 
-   ![Terminal in the SQL](./public/images/SQL-final-run.png)
+   ![Terminal in the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/SQL-final-run.png)
 
    After running the query, no rows will be returned, and you will receive a success message.
 
@@ -148,12 +148,9 @@ Now that you have created your own project and vector database, we can proceed t
 
 On Codespace, installation is automatically triggered.
 
-1. Open this [repository](https://github.com/sezeranoJchrisostome/vector-database-boilerplate) in your
-
- Codespace.
+1. Open this [repository](https://github.com/sezeranoJchrisostome/vector-database-boilerplate) in your Codespace.
 2. Rename .env.example to .env.
-3. To get the values for your environment variables: `OPENAI_API_KEY=`, `SUPABASE_REFERENCE_ID=`, `SUPABASE_PROJECT_API_KEY=`, follow the instructions. 
-- Create a `.env` file in the root directory of the project and include your OpenAI API key:
+3. To get the values for your environment variables: `OPENAI_API_KEY=`, `SUPABASE_REFERENCE_ID=`, `SUPABASE_PROJECT_API_KEY=`, follow the following instructions. 
 
    ```plaintext
    OPENAI_API_KEY=your_openai_api_key
@@ -167,13 +164,13 @@ On Codespace, installation is automatically triggered.
 
    1. Click on the settings icon on the sidebar menu, copy the Reference ID, and in your `.env` file, assign it to `SUPABASE_REFERENCE_ID`.
 
-   ![Settings](./public/images/project-setting.png)
+   ![Settings](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/project-setting.png)
 
    2. To get `SUPABASE_PROJECT_API_KEY`, click on [API](https://supabase.com/dashboard/project/ktrkrjsmtaomgqtvyppm/settings/api), click copy, and assign it to your `SUPABASE_PROJECT_API_KEY` in your `.env` file.
 
    > Copy only the key with `anon` and `public` labels.
 
-   ![Project API Key](./public/images/API-key.png)
+   ![Project API Key](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/API-key.png)
 
 5. Kickstart the development server:
 
@@ -216,13 +213,13 @@ On Codespace, installation is automatically triggered.
 
    1. Click on the settings icon on the sidebar menu, copy the Reference ID, and in your `.env` file, assign it to `SUPABASE_REFERENCE_ID`.
 
-   ![Settings](./public/images/project-setting.png)
+   ![Settings](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/project-setting.png)
 
    2. To get `SUPABASE_PROJECT_API_KEY`, click on [API](https://supabase.com/dashboard/project/ktrkrjsmtaomgqtvyppm/settings/api), click copy, and assign it to your `SUPABASE_PROJECT_API_KEY` in your `.env` file.
 
    > Copy only the key with `anon` and `public` labels.
 
-   ![Project API Key](./public/images/API-key.png)
+   ![Project API Key](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/API-key.png)
 
 5. Kickstart the development server:
 
@@ -264,7 +261,7 @@ Don't worry about this warning: "No storage option exists to persist the session
 
 ## Query Our Vector Database
 
-Head over to where our app is running [http://localhost:3000](http://localhost:3000/), and ask any query related to bun, or if you changed the content inside the [document.txt](./scripts/content/document.txt), try to query anything about them.
+Head over to where our app is running [http://localhost:3000](http://localhost:3000/), and ask any query related to bun, or if you changed the content inside the [document.txt](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/scripts/content/document.txt), try to query anything about them.
 
 #### Background Process
 
