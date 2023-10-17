@@ -9,7 +9,7 @@ Welcome to the Vector Database Course! In this course, you'll learn how to creat
 
 2. **Search Engines:** Embeddings can be employed to enhance the performance of search engines. By converting user queries and indexed documents into embeddings, search engines can deliver more accurate and relevant search results.
 
-> In this vector boilplate  we will use the vector database to extend the knowledge of openAI models which by now they only internet information up to 2020.
+> In this vector boilplate  we will use the vector database to extend the knowledge of openAI models which by now they only have internet knowledge up to 2020.
 
 ### What You Will Learn:
 Throughout this course, you will acquire the following essential skills:
