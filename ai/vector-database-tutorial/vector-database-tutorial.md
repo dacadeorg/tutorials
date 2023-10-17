@@ -69,86 +69,24 @@ Here are the technologies we will be using in this tutorial:
 
 3. Enable Supabase to Store Vector Datatypes
 
-   Initially, when you create a PostgreSQL database, you are not able to implicitly insert or deal with vector datatypes. To enable PostgreSQL to handle vector databases, follow these steps:
+   Initially, when you create a PostgreSQL database, you are not able to implicitly insert or deal with vector datatypes. To enable PostgreSQL to handle vector datatypes, follow these steps:
 
    - Click the SQL editor button.
 
    ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Button-to-sql.png)
 
-   - Copy the following SQL query into your SQL editor and execute it.
+   - Click on Quickstarts.
 
-   These queries are from [Langchain](https://js.langchain.com/docs/modules/data_connection/vectorstores/integrations/supabase).
+   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/quickstart1.png)
 
-   ```SQL
-   -- This line checks if a database extension called 'vector' exists. 
-   -- If not, it creates it. Extensions add extra functionality to the database.
+   - We will use langchain, It's recommended that we select quickstart from langchain.
 
-   CREATE EXTENSION IF NOT EXISTS vector WITH SCHEMA public;
+   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/quickstart2.png)
 
-   -- We're creating a table to store pieces of text, called 'chunks.' Each chunk has:
-   -- - An ID that automatically increments and is unique for each chunk.
-   -- - The actual text content, which could be, for example, a section of a document.
-   -- - Metadata, which is extra information about the chunk stored in JSON format.
-   -- - An 'embedding' field for storing vector data, often used for machine learning applications.
+   - Click on run.
 
-   CREATE TABLE chunks (
-     id bigserial primary key,
-     content text,
-     metadata jsonb,
-     embedding vector(1536) -- This field can store vectors with 1536 values (dimensions).
-   );
-
-   -- Here, we're creating a function for finding similar text chunks.
-   -- This function takes a 'query_embedding,' which is a vector representing the text you want to find similar chunks for.
-   -- You can also specify how many matching chunks to retrieve with 'match_count.'
-   -- You can filter the search using 'filter' based on metadata.
-
-   CREATE FUNCTION match_chunks (
-     query_embedding vector(1536),
-     match_count int DEFAULT null,
-     filter jsonb DEFAULT '{}'
-   ) RETURNS TABLE (
-     id bigint, -- The ID of matching chunks.
-     content text, -- The text content of matching chunks.
-     metadata jsonb, -- The metadata of matching chunks.
-     similarity float -- A number representing how similar the chunks are to the query.
-   )
-   LANGUAGE plpgsql
-   AS $$
-   #variable_conflict use_column
-   BEGIN
-     -- This is where the magic happens. It calculates the similarity of chunks based on their embeddings.
-     -- The chunks that are most similar to the query come first.
-     RETURN QUERY
-     SELECT
-       id,
-       content,
-       metadata,
-       1 - (chunks.embedding <=> query_embedding) AS similarity
-     FROM chunks
-     WHERE metadata @> filter
-     ORDER BY chunks.embedding <=> query_embedding
-     LIMIT match_count; -- This limits the number of matching chunks returned.
-   END;
-   $$;
-
-   -- Finally, we're creating another function for keyword-based search.
-   -- It takes a 'query_text' and a 'match_count.'
-
-   CREATE FUNCTION kw_match_chunks(query_text text, match_count int)
-   RETURNS TABLE (id bigint, content text, metadata jsonb, similarity real)
-   AS $$
-   BEGIN
-   RETURN QUERY EXECUTE
-   FORMAT('SELECT id, content, metadata, ts_rank(to_tsvector(content), plainto_tsquery($1)) AS similarity
-   FROM chunks
-   WHERE to_tsvector(content) @@ plainto_tsquery($1)
-   ORDER BY similarity DESC
-   LIMIT $2')
-   USING query_text, match_count;
-   END;
-   $$ LANGUAGE plpgsql;
-   ```
+   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/quickstart3.png)
+ 
 
    ![Terminal in the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/SQL-final-run.png)
 
@@ -165,7 +103,7 @@ GitHub Codespaces provides a complete, ready-to-use  cloud-based dev environment
 1. Create a GitHub account if you don't have one.
 
 2. To create a new Codespace with the boilerplate, go to the 
-[Vectordatabase-boilerplate repository](](https://github.com/sezeranoJchrisostome/vector-database-boilerplate)).
+[Vectordatabase-boilerplate repository](](https://github.com/dacadeorg/vector-database-boilerplate)).
 3. Click on the "Use this template" button and then, click on "Open with Codespaces." 
    
 When opening the Codespace, it will automatically install the dependencies.
@@ -174,7 +112,7 @@ When opening the Codespace, it will automatically install the dependencies.
 
 1. Clone this repository:
   ```
-  git clone https://github.com/sezeranoJchrisostome/vector-database-boilerplate
+  git clone https://github.com/dacadeorg/vector-database-boilerplate.git
   ```
 2. Move to the project directory:
   ```
