@@ -1,22 +1,20 @@
 # Vector Database Course
 Welcome to the Vector Database Course! In this course, you'll learn how to create, integrate, and query vector databases. We will create a simple application that will have a that is connected to OpenAI's GPT but augement it's knowledge with your own data via a vector database.
 
-<!-- TODO: Add usecases -->
-
 # Usecases
 
 1. **Natural Language Understanding (NLU):** Embeddings can be used to convert text into numerical representations that capture the meaning and context of the text. These embeddings can be used in NLU tasks, such as sentiment analysis, named entity recognition, and text classification.
 
 2. **Search Engines:** Embeddings can be employed to enhance the performance of search engines. By converting user queries and indexed documents into embeddings, search engines can deliver more accurate and relevant search results.
 
-> In this vector boilplate  we will use the vector database to extend the knowledge of openAI models which by now they only have internet knowledge up to 2020.
+> In this vector boilplate  we will use the vector database to extend the knowledge of openAI models which by now they only internet information up to 2020.
 
 ### What You Will Learn:
 Throughout this course, you will acquire the following essential skills:
 
 1. **Vector Database Creation and Utilization**: You will learn to create and set up a vector database and use it to store and retrieve vectors.
 2. **Embedding Generation and Integration**: Learn how to generate embeddings to transform text input into vectors and integrate them into your vector database.
-3. **Vector Database Querying**: You will learn how to query your vector database to retrieve vectors and implement them into chatresponses with OpenAI's GPT-3.
+3. **Vector Database Querying**: You will learn how to query your vector database to retrieve vectors and extend OpenAI's GPT-3 models knowledge with your vectors.
 
 ### What are Vectors and Embeddings?
 Embeddings are a form of feature engineering used predominantly in machine learning to convert text or other data into numerical vectors. These vectors capture semantic meaning and contextual relationships among words or items, making it easier for machine learning algorithms to understand text. Various algorithms like Word2Vec, GloVe, and BERT offer different methods for generating embeddings.
@@ -63,40 +61,40 @@ Here are the technologies we will be using in this tutorial:
 
    - Creating a New Project
 
-   ![Home Page](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Home-page.png)
+   ![Imgur](https://i.imgur.com/LwRjVYU.png)
 
-   - Click on the button to create a new project.
+   - Select an organization.
 
-   ![Create a New Project](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Create-new-project.png)
+   ![Imgur](https://i.imgur.com/12pOep0.png)
 
-   ![Create New Project Form](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Create-project-form.png)
+   ![Imgur](https://i.imgur.com/zaRDMnH.png)
 
    - Click on the "Create New Project" Button.
 
-   ![Click Button to Create the Project](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Button-to-create.png)
+   ![Imgur](https://i.imgur.com/cjQcuc4.png)
 
 3. Enable Supabase to Store Vector Datatypes
 
-   Initially, when you create a PostgreSQL database, you are not able to implicitly insert or deal with vector datatypes. To enable PostgreSQL to handle vector datatypes, follow these steps:
+  When initially setting up a PostgreSQL database, it's important to note that vector datatypes cannot be handled implicitly. To enable PostgreSQL to work with vector datatypes, you can follow these steps:
 
    - Click the SQL editor button.
 
-   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/Button-to-sql.png)
+   ![Imgur](https://i.imgur.com/RBdDx0Y.png)
 
    - Click on Quickstarts.
 
-   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/quickstart1.png)
+   ![Imgur](https://i.imgur.com/1olGXAC.png)
 
    - We will use langchain, It's recommended that we select quickstart from langchain.
 
-   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/quickstart2.png)
+   ![Imgur](https://i.imgur.com/u4MSw0l.png)
 
    - Click on run.
 
-   ![Button to the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/quickstart3.png)
+   ![Imgur](https://i.imgur.com/PDJ0sdC.png)
  
 
-   ![Terminal in the SQL](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/SQL-final-run.png)
+   ![Imgur](https://i.imgur.com/Ul2d7jP.png)
 
    After running the query, no rows will be returned, and you will receive a success message.
 
@@ -143,14 +141,14 @@ Your `OPENAI_API_KEY` key can be located in your [OpenAI Dashboard](https://plat
 
 To get your `SUPABASE_REFERENCE_ID`, click on the settings icon on the sidebar menu of your Supabase project, copy the Reference ID, and assign it to `SUPABASE_REFERENCE_ID`. 
 
-![Settings](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/project-setting.png)
+![Imgur](https://i.imgur.com/oSUNLCV.png)
 `SUPABASE_REFERENCE_ID=` - 
 
 **3. Supabase Project API Key**
 
 To get `SUPABASE_PROJECT_API_KEY`, click on [API](https://supabase.com/dashboard/project/ktrkrjsmtaomgqtvyppm/settings/api), click copy, and assign it to your `SUPABASE_PROJECT_API_KEY` in your `.env.example` file. Copy only the key with `anon` and `public` labels.
 
-![Project API Key](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/images/API-key.png)
+![Imgur](https://i.imgur.com/A5kifxw.png)
 
 **4. Rename .env.example to .env**
 
@@ -163,16 +161,26 @@ npm run dev
 Access the application by navigating to [http://localhost:3000](http://localhost:3000/). The boilerplate application should now be live.
 
 ## 3. Test the Boilerplate
+
 The boilerplate application is a simple chatbot that uses OpenAI's GPT-3 model to generate responses. It is not connected to the vector database yet. To test it, type a message in the input field and press enter. The chatbot will respond with a message generated by the GPT-3 model.
 
 ### 3.1 Test the Boilerplate in the Browser
-  ![Vectorize by interface](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/gif/interface.gif)
+
+Before vectorizing the `text-davinci-003` model uses it's current knowledge to generate you answers and by now the `text-davinci-003` doesn't know anything about `bun`.
+
+  ![Imgur](https://i.imgur.com/UfspVk7.png)
+
+After after vectorizing bun contents.
+
+  ![Imgur](https://i.imgur.com/Kkfirgn.png)
 
 ### 3.2 Test the Boilerplate in the Terminal
-  ![Vectorize by terminal](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/gif/terminal.gif)
+
+  You run `node scripts/uploadEmbending.js` via your terminal to vectorize content from a text file located and upload them on your vector database.
+
+  > Don't worry about this warning: "No storage option exists to persist the session, which may result in unexpected behavior when using auth. If you want to set `persistSession` to true, please provide a storage option, or you may set `persistSession` to false to disable this warning." Just wait until you see "Uploaded" logged in the terminal.
 
 ## 4. Exploring the Boilerplate Code
-<!-- TODO Explain very high-level the general structure of the code without going into too much detail. Then Explain the most important files in more detail. I provided some example but maybe other files are more relevant. -->
 
 ### 4.1 `pages/api/openai.js`
 
@@ -181,7 +189,7 @@ The boilerplate application is a simple chatbot that uses OpenAI's GPT-3 model t
 `new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY })`: this portion of code will initialize openai with `text-embedding-ada-002`.
 
 This is how `text-embedding-ada-002` is working.
-![text-embedding-ada-002 embeddings output](https://github.com/dacadeorg/vector-database-boilerplate/blob/main/public/vectors-3.svg)
+![Imgur](https://i.imgur.com/TADgWR5.png)
 
 
 ```javascript
@@ -237,57 +245,6 @@ await SupabaseVectorStore.fromDocuments(
 
 ```bash
 node ./scripts/uploadEmbedding.js
-```
-
-Don't worry about this warning: "No storage option exists to persist the session, which may result in unexpected behavior when using auth. If you want to set `persistSession` to true, please provide a storage option, or you may set `persistSession` to false to disable this warning." Just wait until you see "Uploaded" logged in the terminal.
-
-## Query Our Vector Database
-
-Head over to where our app is running [http://localhost:3000](http://localhost:3000/), and ask any query related to bun, or if you changed the content inside the [document.txt](./scripts/content/document.txt), try to query anything about them.
-
-#### Background Process
-
-```js
-/*
-
-This line creates an instance of the SupabaseVectorStore class by calling the fromExistingIndex method. It takes two arguments:
-The first argument is an instance of the OpenAIEmbeddings class, which is initialized with an object containing the OpenAI API key.
-
-The second argument is an object with properties client, tableName, and queryName. These properties specify the Supabase client, the name of the table, and the name of the query to be used for retrieving vectors from the Supabase database.
-
-*/
-
-const vectorStore = await SupabaseVectorStore.fromExistingIndex(
-    new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
-    { client: supabase, tableName: "chunks", queryName: "match_chunks" }
-);
-
-/*
-
-This line creates an instance of the ConversationalRetrievalQAChain class by calling the fromLLM method. It takes two arguments:
-The first argument is the model object, which represents the language model to be used for conversational retrieval.
-The second argument is the result of calling the asRetriever method on the vectorStore object. This method returns a retriever object that can be used for retrieving vectors from the Supabase database.
-
-*/
-
-const chain = ConversationalRetrievalQAChain.fromLLM(
-    model,
-    vectorStore.asRetriever()
-);
-
-/*
-
-This line calls the call method on the chain object to perform a conversational retrieval. It takes an object as an argument with properties question and chat_history. The question property contains the question to be asked. 
-The chat_history property is an array that can be used to provide previous conversation history if needed.
-
-*/
-const answer = await chain.call({ question: question, chat_history: [] });
-
-/*
-Finally, we deliver the response to the client.
-*/
-
-return res.status(200).json({ data: answer });
 ```
 
 ## 5. Conclusion
