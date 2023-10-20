@@ -176,11 +176,28 @@ After after vectorizing bun contents.
 
   ![Imgur](https://i.imgur.com/Kkfirgn.png)
 
-### 3.2 Test the Boilerplate in the Terminal
 
-  You run `node scripts/uploadEmbending.js` via your terminal to vectorize content from a text file located and upload them on your vector database.
+### 3.2 Testing the Boilerplate in the Terminal
 
-  > Don't worry about this warning: "No storage option exists to persist the session, which may result in unexpected behavior when using auth. If you want to set `persistSession` to true, please provide a storage option, or you may set `persistSession` to false to disable this warning." Just wait until you see "Uploaded" logged in the terminal.
+To vectorize content from a text file and upload it to your vector database, follow these steps:
+
+1. Open your terminal.
+
+2. Run the following command:
+
+   ```
+   node scripts/uploadEmbending.js
+   ```
+
+   This command will process the content from a text file and upload it to your vector database.
+
+3. As the script runs, you might encounter the following warning:
+
+   > Don't worry about this warning: "No storage option exists to persist the session, which may result in unexpected behavior when using auth. If you want to set `persistSession` to true, please provide a storage option, or you may set `persistSession` to false to disable this warning."
+
+4. Continue to wait until you see "Uploaded" logged in the terminal.
+
+These steps ensure that your content is successfully vectorized and added to your vector database. disable this warning." Just wait until you see "Uploaded" logged in the terminal.
 
 ## 4. Exploring the Boilerplate Code
 
