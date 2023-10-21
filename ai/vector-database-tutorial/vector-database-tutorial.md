@@ -1,15 +1,14 @@
-# Vector Database Course
-Welcome to the Vector Database Course! In this course, you'll learn how to create, integrate, and query vector databases. We will create a simple application that will have a connection to OpenAI's GPT but augment its knowledge with your own data via a vector database.
+<!-- SPDX-License-Identifier: MIT -->
+<!-- Copyright (c) 2023 Dacade.org -->
 
-# Usecases
+Welcome to the Vector Database Course! In this course, you'll learn how to create, integrate, and query vector databases. We will create a simple application that will have a that is connected to OpenAI's GPT but augement it's knowledge with your own data via a vector database.
 
-1. **Natural Language Understanding (NLU):** Embeddings can be used to convert text into numerical representations that capture the meaning and context of the text. These embeddings can be used in NLU tasks, such as sentiment analysis, named entity recognition, and text classification.
+Potential  use cases for vector databases include:
+- **Chatbots**: You can use vector databases to augment chatbots with your own data. For instance, you could use a vector database to store and retrieve vectors of product descriptions and use them to generate chatbot responses.
+- **Recommendation Systems**: You can use vector databases to store and retrieve vectors of user preferences and use them to generate recommendations.
+- **Similarity Searches**: You can use vector databases to store and retrieve vectors of text and use them to find similar text.
 
-2. **Search Engines:** Embeddings can be employed to enhance the performance of search engines. By converting user queries and indexed documents into embeddings, search engines can deliver more accurate and relevant search results.
-
-> In this vector boilplate  we will use the vector database to extend the knowledge of openAI models which by now they only internet information up to 2020.
-
-### What You Will Learn:
+### What You Will Learn
 Throughout this course, you will acquire the following essential skills:
 
 1. **Vector Database Creation and Utilization**: You will learn to create and set up a vector database and use it to store and retrieve vectors.
@@ -48,63 +47,51 @@ Here are the technologies we will be using in this tutorial:
 
 ### Overview
 
-1. Set Up Your Supabase Project
-2. Set Up the Next.js Boilerplate
-3. Create 
+1. **Set Up Your Supabase Project**: We will create a Supabase project and enable it to store vector datatypes.
+2. **Set Up the Next.js Boilerplate**: We will set up the boilerplate application and run it.
+3. **Test the Boilerplate**: We will test the boilerplate application in the browser and the terminal.
+4. **Exploring the Boilerplate Code**: We will explore the code of the boilerplate application.
+5. **Conclusion**: We will conclude the course.
 
 ## 1. Set Up Your Supabase Project
+In the first step, we will create a Supabase project and enable it to store vector datatypes.
 
-1. Create an account on [supabase.com](https://supabase.com/dashboard/sign-in?) if you don't have one.
+### 1.1 Create an Account on Supabase
+If you already have a Supabase account, you can skip this step. Otherwise, go to [supabase.com](https://supabase.com/dashboard/sign-in?) and create an account.
 
-2. Create a new project on Supabase.
+### 1.2 Create a New Project on Supabase
+Once you have created an account, you can create a new project.
 
-   - Creating a New Project
+  ![Imgur](https://i.imgur.com/LwRjVYU.png)
+  Click on the "New project" button.
+  
+  ![Imgur](https://i.imgur.com/zaRDMnH.png)
+  Select an organization and fill out the project details.
 
-   ![Imgur](https://i.imgur.com/LwRjVYU.png)
+  ![Imgur](https://i.imgur.com/cjQcuc4.png)
+  Finally click on the "Create New Project" button.
 
-   - Select an organization.
+Now that you have created a project, you can proceed to enable it to store vector datatypes.
+### 1.3 Enable Supabase to Store Vector Datatypes
+When you create a new Supabase project, with a PostgreSQL database you will not be able to store vector datatypes. To enable PostgreSQL to work with vector datatypes, you can follow these steps: 
 
-   ![Imgur](https://i.imgur.com/12pOep0.png)
+![Imgur](https://i.imgur.com/A7XRCW5.png)
+1. In the sidebar of your Supabase project, click on the SQL editor button.
+2. Click on Quickstarts.
+3. Select "LangChain" from the Quickstarts tiles.
 
-   ![Imgur](https://i.imgur.com/zaRDMnH.png)
+![Imgur](https://i.imgur.com/Ul2d7jP.png)
+Click on the "Run" button.
 
-   - Click on the "Create New Project" Button.
-
-   ![Imgur](https://i.imgur.com/cjQcuc4.png)
-
-3. Enable Supabase to Store Vector Datatypes
-
-  When initially setting up a PostgreSQL database, it's important to note that vector datatypes cannot be handled implicitly. To enable PostgreSQL to work with vector datatypes, you can follow these steps:
-
-   - Click the SQL editor button.
-
-   ![Imgur](https://i.imgur.com/RBdDx0Y.png)
-
-   - Click on Quickstarts.
-
-   ![Imgur](https://i.imgur.com/1olGXAC.png)
-
-   - We will use langchain, It's recommended that we select quickstart from langchain.
-
-   ![Imgur](https://i.imgur.com/u4MSw0l.png)
-
-   - Click on run.
-
-   ![Imgur](https://i.imgur.com/PDJ0sdC.png)
- 
-
-   ![Imgur](https://i.imgur.com/Ul2d7jP.png)
-
-   After running the query, no rows will be returned, and you will receive a success message.
-
-Now that you have created your own project and vector database, we can proceed to integrate it, create embeddings, upload them, and query the vector database.
+After running the query successfully, you will receive the following message: "Success. No rows returned."
+   
+Now that you have enabled PostgreSQL to work with vector datatypes, you can proceed to set up the boilerplate application.
 
 ## 2. Set Up the Next.js Boilerplate
-
-You can either use Codespaces or your local machine to set up the boilerplate. If you are using Codespaces, skip to the next section. Otherwise, follow the steps below.
+In this step, we will set up the boilerplate application and run it. You can either use Codespaces or your local machine to set up the boilerplate. If want to use Codespaces follow the steps below otherwise skip to the next section (2.1.2).
 
 ### 2.1.1 Option 1: Codespaces Boilerplate Setup
-GitHub Codespaces provides a complete, ready-to-use  cloud-based dev environment in your browser. It saves you from the need for local setup, allowing you to concentrate on learning and building.
+GitHub Codespaces provides a complete, ready-to-use cloud-based dev environment in your browser. It saves you from the need for local setup, allowing you to concentrate on learning and building.
 
 1. Create a GitHub account if you don't have one.
 
@@ -164,155 +151,194 @@ Access the application by navigating to [http://localhost:3000](http://localhost
 
 ## 3. Test the Boilerplate
 
-The boilerplate application is a simple chatbot that uses OpenAI's GPT-3 model to generate responses. It is not connected to the vector database yet. To test it, type a message in the input field and press enter. The chatbot will respond with a message generated by the GPT-3 model.
+The boilerplate application is a simple chatbot that uses OpenAI's GPT-3 model to generate responses. It doesn't use any data from the vector database yet. To test it, type a message in the input field and press enter. The chatbot will respond with a message generated by the unaugmented GPT-3 model. We will now augment the chatbot with our own data.
 
-### 3.1 Test the Boilerplate in the Browser
+If you ask it what the Javascript toolkit "bun" is for example it will not know the answer. Since it's knowledge cut off date is 2022-01-01.
 
-Before vectorizing the `text-davinci-003` model uses it's current knowledge to generate you answers and by now the `text-davinci-003` doesn't know anything about `bun`.
+![Imgur](https://i.imgur.com/UfspVk7.png)
 
-  ![Imgur](https://i.imgur.com/UfspVk7.png)
+Now you can enter content that you want to vectorize and store in your vector database. For example, content of the bun documentation.
 
-After after vectorizing bun contents.
+After you have entered the content, you can click on the "Vectorize" button. This will vectorize the content and store it in your vector database. Then you can ask the chatbot about the bun toolkit again. This time, it will know the answer because it has been augmented with your data.
 
-  ![Imgur](https://i.imgur.com/Kkfirgn.png)
+![Imgur](https://i.imgur.com/Kkfirgn.png)
 
+### 3.1 Test the Boilerplate in the Terminal
+In this step, we will add content to our vector database via the terminal. For most of your projects you will probably not have a UI to add content to your vector database, here we will use a script.
 
-### 3.2 Testing the Boilerplate in the Terminal
+We will use the `uploadEmbedding.js` file from the scripts folder. This file will read the content from the `document.txt` file from the `scripts/content` folder and upload it to the vector database.
 
-To vectorize content from a text file and upload it to your vector database, follow these steps:
-
-1. Open your terminal.
-
-2. Run the following command:
-
-   ```
-   node scripts/uploadEmbending.js
-   ```
-
-   This command will process the content from a text file and upload it to your vector database.
-
-3. As the script runs, you might encounter the following warning:
-
-   > Don't worry about this warning: "No storage option exists to persist the session, which may result in unexpected behavior when using auth. If you want to set `persistSession` to true, please provide a storage option, or you may set `persistSession` to false to disable this warning."
-
-4. Continue to wait until you see "Uploaded" logged in the terminal.
-
-These steps ensure that your content is successfully vectorized and added to your vector database. disable this warning." Just wait until you see "Uploaded" logged in the terminal.
-
-## 4. Exploring the Boilerplate Code
-
-### 4.1 `pages/api/openai.js`
-
-#### 4.1.1 Handler function
-
-
-This file contains an endpoint that allows querying the OpenAI model.
-
-This file holds handler functions that are responsible for accepting requests from clients and responding with an actual answer from the OpenAI model.
-
-```js
-export default async function (req, res) {
-  // Your code goes here
-}
-```
-
-Inside our handler function, we check if the OpenAI configuration is properly set up. If not, we throw an error.
-
-```js
-if (!configuration.apiKey) {
-  // Handle the error appropriately
-}
-```
-
-Next, we extract the payload from the request body as the question:
-
-```js
-const question = req.body.payload || "";
-```
-
-We initialize the OpenAI object with an object parameter that includes three items: `temperature`, `openAIApiKey`, and `stream`.
-
-```js
-const model = new OpenAI({
-  temperature: 0, // Values range from 0 up to 1, determining the model's creativity in the response.
-  openAIApiKey: process.env.OPENAI_API_KEY,
-  streaming: false, // Set to true if you want to stream responses, but note that this boilerplate does not support streamed responses.
-});
-```
-
-We also initialize a vector store with a Supabase client and specify the table where vectors are stored. This allows access to the vector database.
-
-```js
-const vectorStore = await SupabaseVectorStore.fromExistingIndex(
-  new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
-  {
-    client: supabase,
-    tableName: "documents",
-    queryName: "match_documents",
-  }
-);
-```
-
-We create a chain responsible for extracting context from our vector store, and with the `text-davinci-003` model, we obtain completion text, which will be the answer or query for the payload.
-
-```js
-const chain = ConversationalRetrievalQAChain.fromLLM(
-  model, // By default, 'text-davinci-003' is used here if not specified in the model object above.
-  vectorStore.asRetriever(), // This context contains the knowledge we need.
-);
-```
-
-Finally, we make a call to our chain to get the response.
-
-> Note: `chat_history: []` is not required to have elements; however, if you pass the chat history, the model will be aware of the conversation history. The format should be like this: ` [ { role: "assistant", content: "" }, { role: "user", content: "" } ];`
-
-```js
-const answer = await chain.call({ question: question, chat_history: [] });
-```
-
-### 4.2 `pages/api/embed.js`
-
-`pages/api/embed.js` This is endpoint is responsible for two major role transforming our conent into vectors and uploading them to our vector database.
-
-In this file we have two function first function that handle the content that came from the request payload and second function that is invoked inside the handler function to generate vectors and store vector them.
-
-#### 4.2.1 Handler function
-
-`RecursiveCharacterTextSplitter()`: will help us split the content into chunks, and those chunks will be transformed into vectors, that are going to be stored in our vector database, and each chunk is called a document.
-More information can be found [Here.](https://js.langchain.com/docs/modules/data_connection/document_transformers/text_splitters/recursive_text_splitter)
-
-
-`SupabaseVectorStore.fromDocuments`: This is an instance that merges your Supabase client with the logic of Langchain and the OpenAI model that converts documents into vectors and uploads them to vector database.
-
-#### 4.2.2 Generate and store vectors
-
-`OpenAIEmbeddings`: This will initialize openai instance with `text-embedding-ada-002` model and that will transform our content into text as vectors and the out gets to be uploaded to the vector database.
-
-This is how `text-embedding-ada-002` is working.
-
-![Imgur](https://i.imgur.com/TADgWR5.png)
-
-Lastly we pass an object that contains supabase client with the table that will store our vectors.
-
-```javascript
-await SupabaseVectorStore.fromDocuments(
-    splittedDocs,
-    new OpenAIEmbeddings({
-      openAIApiKey: process.env.OPENAI_API_KEY,
-    }),
-    {
-        client: supabase,
-        tableName: "documents",
-    }
-);
-```
-
-## Generate Vectors from a Text File
+To run the script, you can use the following command:
 
 ```bash
 node ./scripts/uploadEmbedding.js
 ```
 
-## 5. Conclusion
+Don't worry about this warning: "No storage option exists to persist the session, which may result in unexpected behavior when using auth. If you want to set `persistSession` to true, please provide a storage option, or you may set `persistSession` to false to disable this warning." Just wait until you see "Uploaded" logged in the terminal.
 
-In summary, this course has equipped you with the essential skills to work with vector databases. You've learned how to create, integrate, and query these databases, which will help you manage data more efficiently. With these practical skills, you're ready to utilize vector databases for various applications.
+After this is done you are ready to test the chatbot again. This time you can ask it about the bun toolkit and it will know the answer because it has been augmented with your data.
+
+## 4. Exploring the Boilerplate Code
+In this chapter we will explore the code of the boilerplate application. We will especially focus on the `pages/api/openai.js` and `pages/api/embed.js` files.
+
+### 4.1 `pages/api/openai.js`
+Lets first have a look in the `openai.js` file. This file is responsible for handling the request that comes from the client and respond back with the result. Here we will add our own data to the OpenAI model.
+
+On line 34 we initialize the OpenAI model with an object parameter with three items: `temperature`, `openAIApiKey`, `stream`.
+
+```js
+  const model = new OpenAI({
+    temperature: 1,
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    streaming: false,
+  });
+```
+
+On line 40, we initialize the vector store with the Supabase client and the table where we stored our vectors. This is responsible for giving us access to the vector database.
+
+```js
+  const vectorStore = await SupabaseVectorStore.fromExistingIndex(
+    new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
+    {
+      client: supabase,
+      tableName: "documents",
+      queryName: "match_documents",
+    }
+  );
+```
+
+`ConversationalRetrievalQAChain` is a type of chain in LangChain that is specifically designed for conversational question answering. It works by combining a retrieval component with a large language model (LLM).
+
+Chains in LangChain are reusable components that can be linked together to perform complex tasks. Chains can be formed using various types of components, such as prompt templates, LLMs, arbitrary functions, and other chains.
+
+In a `ConversationalRetrievalQAChain`, the retrieval component searches for relevant documents from a knowledge base based on the user's question. The LLM then uses these documents to generate a comprehensive and informative answer.
+
+On line 49 we use the `fromLLM` method to create a `ConversationalRetrievalQAChain` from an LLM and a retriever. The LLM is the OpenAI model we initialized earlier. The retriever is the vector store we initialized earlier.
+
+```js
+  const chain = ConversationalRetrievalQAChain.fromLLM(
+    model,
+    vectorStore.asRetriever()
+  );
+```
+
+Finally on line 54, we make the final call to get the response.
+We need to pass an object that contains the question and the chat history. The chat history is not required to have elements, however if you pass the chat history, the model will be aware of the history. The format should be like this: ` [ { role: "assistant', content: "" }, { role: "user', content: "" } ] `;
+
+```js
+  const answer = await chain.call({ question: question, chat_history: [] });
+  return res.status(200).json({ data: answer });
+```
+
+Now we passed the question to the chain which will use the vector store and the OpenAI model to generate an answer. The answer will be returned to the client.
+
+
+### 4.2 `pages/api/embed.js`
+
+```javascript
+// Import necessary libraries and modules
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import {
+  MarkdownTextSplitter,
+  RecursiveCharacterTextSplitter,
+} from "langchain/text_splitter";
+import { v4 as uuidv4 } from "uuid";
+import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
+import { supabase } from "@/utils/supabase";
+
+// Define an asynchronous function to handle incoming requests
+export default async function handler(req, res) {
+  try {
+    // Extract the 'payload' field from the request body
+    const content = req.body.payload;
+
+    // Create a content text splitter instance
+    const splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 150,
+      chunkOverlap: 2,
+    });
+    
+    const document = await splitter.createDocuments([content]);
+
+    // Generate and store embeddings for the text documents
+    const response = await generateAndStoreEmbedding(document, {
+      chat_id: uuidv4(),
+    });
+
+    // Send a JSON response with the result
+    res.status(200).json({ result: response });
+  } catch (error) {
+    // Handle any errors and send a 500 Internal Server Error response
+    res.status(500).json({ error: JSON.stringify(error) });
+  }
+}
+
+// Define an asynchronous function to generate and store embeddings
+const generateAndStoreEmbedding = async (docs, fields) => {
+
+  // Modify the metadata of each chunked document by adding specified fields
+  const splitedDocs = docs.map((e) => ({
+    ...e,
+    metadata: { ...e.metadata, ...fields },
+  }));
+
+  // Generate and store embeddings using SupabaseVectorStore and OpenAIEmbeddings
+  return await SupabaseVectorStore.fromDocuments(
+    splitedDocs,
+    new OpenAIEmbeddings({
+      openAIApiKey: process.env.OPENAI_API_KEY,
+    }),
+    {
+      client: supabase,
+      tableName: "documents",
+    }
+  );
+};
+```
+
+This file is responsible for handling the request that comes from the client and 
+transform the content into vectors and store them in our vector database.
+
+This file contains two functions, the `handler` function and the `generateAndStoreEmbedding` function. 
+
+#### 4.1.1 Handler function
+The `handler` function is the main function that is responsible for handling the request that comes from the client and respond back with the result. 
+
+On line 18, we use `RecursiveCharacterTextSplitter` to create a text splitter instance. 
+
+```Javascript
+    const splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 150,
+      chunkOverlap: 2,
+    });
+```
+
+`RecursiveCharacterTextSplitter` is responsible for splitting the content into chunks. It takes two parameters: `chunkSize` and `chunkOverlap`. The `chunkSize` parameter specifies the maximum number of characters in each chunk. The `chunkOverlap` parameter specifies the number of characters that each chunk should overlap with the previous chunk. Overlap in text splitting allows adjacent chunks to share common information, which can improve performance and accuracy of text processing tasks.
+
+You can read more about text splitting [here](https://js.langchain.com/docs/modules/data_connection/document_transformers/text_splitters/recursive_text_splitter). 
+
+On line 48, we use `SupabaseVectorStore.fromDocuments` to generate the embeddings via the OpenAI embedding model and store it in our Supabase vector database. 
+
+```Javascript
+ return await SupabaseVectorStore.fromDocuments(
+    splitedDocs,
+    new OpenAIEmbeddings({
+      openAIApiKey: process.env.OPENAI_API_KEY,
+    }),
+    {
+      client: supabase,
+      tableName: "documents",
+    }
+  );
+```
+
+`The SupabaseVectorStore.fromDocuments()` function takes three arguments:
+
+- **splitedDocs** - An array of text passages to generate embeddings for. We will add the chunks we have generated with the `RecursiveCharacterTextSplitter` to the `splitedDocs` array.
+- **embeddingModel** - An embedding model to use to generate the embeddings. We will use `OpenAIEmbeddings` from the Langchain library, which uses the OpenAI API to generate embeddings. Learn more about the Open AI embeddings [here](https://platform.openai.com/docs/guides/embeddings).
+- **options** - A configuration object for the vector store. We will pass the Supabase client and the table name where we want to store our vectors.
+  
+## 5. Conclusion
+In this course, you learned how to create, integrate, and query vector databases. You learned how to create a vector database using Supabase, how to integrate it with OpenAI's GPT-3 model, and how to query it to retrieve vectors. You also learned how to use vector databases to augment chatbots with your own data.
+
+Please note that this course is open source and is licensed under the MIT license. You can also contribute to improving the course content by making pull requests if you have suggestions for improvement. You can do this by visiting the course repository [here](https://github.com/dacadeorg/tutorials/blob/main/ai/vector-database-tutorial/vector-database-tutorial.md). We welcome any contributions and improvements from the community.
