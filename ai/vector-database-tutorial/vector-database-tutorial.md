@@ -96,9 +96,7 @@ GitHub Codespaces provides a complete, ready-to-use cloud-based dev environment 
 
 1. Create a GitHub account if you don't have one.
 
-2. To create a new Codespace with the boilerplate, go to the 
-
-[Vectordatabase-boilerplate repository](](https://github.com/dacadeorg/vector-database-boilerplate)).
+2. To create a new Codespace with the boilerplate, go to the [Vectordatabase-boilerplate repository](https://github.com/dacadeorg/vector-database-boilerplate).
 
 3. Click on the "Use this template" button and then click on "Open with Codespaces." 
    
