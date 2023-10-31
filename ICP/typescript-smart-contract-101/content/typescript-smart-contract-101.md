@@ -100,7 +100,7 @@ nvm use 18
 
 3. **Install DFX**: DFX is the command-line interface for the Internet Computer, and we'll use it to create our Azle project. To install DFX, execute this command:
 ```bash
-DFX_VERSION=0.14.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+DFX_VERSION=0.15.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
 4. **Add DFX to your path**: Add DFX to your PATH: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
@@ -117,16 +117,13 @@ The boilerplate code we've prepared serves as a basic Azle project. It is design
 
 ```JSON
 {
-    "compilerOptions": {
-        "strict": true,
-        "target": "ES2020",
-        "experimentalDecorators": true,
-        "strictPropertyInitialization": false,
-        "moduleResolution": "node",
-        "allowJs": true,
-        "outDir": "HACK_BECAUSE_OF_ALLOW_JS",
-        "allowSyntheticDefaultImports": true
-    }
+   "compilerOptions": {
+      "strict": true,
+      "target": "ES2020",
+      "moduleResolution": "node",
+      "allowJs": true,
+      "outDir": "HACK_BECAUSE_OF_ALLOW_JS"
+   }
 }
 ```
 
@@ -135,44 +132,50 @@ You can learn more about these options in the [TypeScript documentation](https:/
 **2. DFX Configuration File** (`dfx.json`): Also in the root directory, this file configures DFX and includes the following:
 ```JSON
 {
-  "canisters": {
-     "message_board": {
-      "type": "custom",
-      "build": "npx azle message_board",
-      "root": "src",
-      "ts": "src/index.ts",
-      "candid": "src/index.did",
-      "wasm": ".azle/message_board/message_board.wasm.gz"
-    }
-  }
+   "canisters": {
+      "message_board": {
+         "type": "custom",
+         "build": "npx azle message_board",
+         "root": "src",
+         "ts": "src/index.ts",
+         "wasm": ".azle/message_board/message_board.wasm",
+         "gzip": true
+      }
+   }
 }
 ```
 
 This configuration file communicates vital aspects of your canister to the DFINITY SDK (dfx). Here, we're creating a `message_board` canister using the Azle framework. Let's break down the properties:
 
 -   "canisters": The parent property for defining our canister, `message_board` in this case.
--   "message_board": The name of our canister, used for interacting with it.
--   "type": Describes the framework/language that is used in this canister. It can be Rust, Motoko, or custom (for Azle).
--   "build": Instructs DFX to use the Azle CLI to build the `message_board` canister.
--   "root" and "ts": Direct DFX to the `src` folder and `src/index.ts` file respectively for our code.
--   "candid": Points DFX to our Candid file (`src/index.did`), an interface description language (IDL) used by Internet Computer.
--   "wasm": Directs DFX to our compiled WebAssembly (WASM) file (`.azle/message_board/message_board.wasm.gz`), a fast, efficient, and secure binary instruction format.
+- message_board is the name of our canister, used for interacting with it.
+- The `main` property is the entry point of our canister. This is where we will be writing our code.
+- The `type` property describes the framework/language that is used in this canister. It can be Rust, Motoko, or custom (for Azle).
+- The `build` property instructs DFX to use the Azle CLI to build the `message_board` canister.
+- The `root` directs DFX to the `src` folder and `src/index.ts` file respectively for our code.
+- The `ts` property tells DFX where to look for our TypeScript code.
+- The `wasm` property directs DFX to our compiled WebAssembly (WASM) file (`.azle/message_board/message_board.wasm.gz`), a fast, efficient, and secure binary instruction format.
+- The `gzip` property tells DFX to gzip our compiled wasm file which will reduce the size of our canister.
 
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
 ```JSON
-  "name": "dfinity_project",
-  "main": "index.js",
-  "dependencies": {
-    "azle": "0.16.2",
-    "uuid": "^9.0.0"
-  },
-  "engines": {
-    "node": "^12 || ^14 || ^16 || ^18"
-  },
-  "devDependencies": {
-    "@types/uuid": "^9.0.1"
-  }
+{
+   "name": "dfinity_project",
+   "main": "index.js",
+   "dependencies": {
+      "@dfinity/agent": "^0.19.2",
+      "@dfinity/candid": "^0.19.2",
+      "azle": "^0.18.6",
+      "uuid": "^9.0.0"
+   },
+   "engines": {
+      "node": "^12 || ^14 || ^16 || ^18"
+   },
+   "devDependencies": {
+      "@types/uuid": "^9.0.1"
+   }
+}
 ```
 
 This file is crucial for managing the project's dependencies and scripts. It contains information about the project such as its name, version, and main file. It also lists the dependencies and devDependencies needed for the project, specifying their versions:
@@ -197,22 +200,23 @@ After cloning the boilerplate code, we would see a folder called `src` with a fi
 
 To start, we need to incorporate several dependencies which our smart contract will make use of. Add the following lines of code at the top of your `index.ts` file:
 ```
-import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle';
+import { query, update, Canister, text, Record, StableBTreeMap, Ok, None, Some, Err, Vec, Result, nat64, ic, Opt, Variant } from 'azle';
 import { v4 as uuidv4 } from 'uuid';
 ```
 Here's a brief rundown of what each of these imported items does:
 
--   `$query`: is an annotation enabling us to retrieve information from our canister.
--   `$update`:is an annotation facilitating updates to our canister.
--   `Record`: Type used for creating a record data structure.
--   `StableBTreeMap`: Type used for creating a map data structure.
--   `Vec`: Type used for creating a vector data structure.
--   `match`: Function enabling us to perform pattern matching on a result.
--   `Result`: Type used for creating a result data structure.
--   `nat64`: Type used for creating a 64-bit unsigned integer.
--   `ic`: is an object that provides access to various APIs of the Internet Computer.
--   `Opt`: Type used for creating an optional data structure.
--   `uuidv4`: Function generating a unique identifier for each new message.
+- `$query` is an annotation that allows us to query information from our canister.
+- `$update` is an annotation that allows us to update information in our canister.
+- `Record` is a type that allows us to create a record type.
+- `StableBTreeMap` is used for creating a map data structure.
+- `Vec` is a type that allows us to create a vector type.
+- `match` is a function that allows us to match on a result.
+- `Result` is a type that allows us to create a result type.
+- `nat64` is a type that allows us to create a 64-bit unsigned integer type.
+- `ic` is a type that allows us to create an Internet Computer type.
+- `Opt` is a type that allows us to create an optional type.
+- `Variant` is a type that allows us to create a variant type.
+- `uuidv4` is a function that allows us to generate a unique ID.
 
 ### 2.3 Defining Message Type
 
@@ -223,14 +227,14 @@ Before we start writing the logic of our canister, it's important to define the 
  * This type represents a message that can be listed on a board.
  */
 
-type Message = Record<{
-    id: string;
-    title: string;
-    body: string;
-    attachmentURL: string;
-    createdAt: nat64;
-    updatedAt: Opt<nat64>;
-}>
+const Message = Record({
+           id: text,
+           title: text,
+           body: text,
+           attachmentURL: text,
+           createdAt: nat64,
+           updatedAt: Opt(nat64)
+        });
 ```
 
 This code block defines the 'Message' type, where each message is characterized by a unique identifier, a title, a body, an attachment URL, and timestamps indicating when the message was created and last updated.
@@ -242,87 +246,103 @@ After defining the structure of a Message, we need to specify what kind of data 
 Add the following code in the `index.ts` file below the definition of the message type:
 
 ```JavaScript
-type MessagePayload = Record<{
-    title: string;
-    body: string;
-    attachmentURL: string;
-}>
+const MessagePayload = Record({
+   title: text,
+   body: text,
+   attachmentURL: text
+});
 ```
 
 This 'MessagePayload' type outlines the structure of the data that will be sent to our smart contract when a new message is created. Each payload consists of a title, a body, and an attachment URL.
 
-### 2.5 Defining the Message Storage
+
+### 2.5 Defining the Error Type
+
+Next, we need to define the type of error that will be returned if something goes wrong. Add the following code in the `index.ts` file below the definition of the message payload type:
+
+```JavaScript
+const Error = Variant({
+   NotFound: text,
+   InvalidPayload: text,
+});
+```
+
+This 'Error' type outlines the structure of the error that will be returned if something goes wrong. It consists of two possible errors: 'NotFound' and 'InvalidPayload'. The 'NotFound' error is returned when a message with the given ID is not found, while the 'InvalidPayload' error is returned when the payload is invalid.
+
+
+### 2.6 Defining the Message Storage
 
 Now that we've defined our message types, we need a place to store these messages. For this, we'll be creating a storage variable in our `index.ts` file below the definition of the message payload type:
 
 ```
-const messageStorage = new StableBTreeMap<string, Message>(0, 44, 1024);
+const messagesStorage = StableBTreeMap(text, Message, 0);
 ```
 
 This line of code establishes a storage variable named `messageStorage`, which is a map associating strings (our keys) with messages (our values). This storage will allow us to store and retrieve messages within our canister.
 
 Let's break down the `new StableBTreeMap` constructor:
 
--   The first argument `0` signifies the memory id, where to instantiate the map.
--   The second argument `44` sets the maximum size of the key (in bytes) in this map, it's 44 bytes because uuid_v4 generates identifiers which are exactly 44 bytes each.
--   The third argument `1024` defines the maximum size of each value within the map, ensuring our messages don't exceed a certain size.
+-   The first argument `text` sets the type of the key in this map, which is a string.
+-   The second argument `Message` sets the type of the value in this map, which is a message.
+-   The third argument `0` sets the maximum number of entries in this map. This is optional, and we've set it to 0, which means there is no limit to the number of entries in this map.
 
 **Note: it is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
 
-### 2.6 Creating the Get Messages Function
 
-The next step is to create a function that retrieves all messages stored within our canister. To accomplish this, add the following code to your `index.ts` file below the definition of the message storage:
+### 2.7 Creating the Canister's default export
+
+The next step is to create the canister's default export. This is the entry point of our canister, and it's where we'll be writing our code. Add the following code to your `index.ts` file below the definition of the message storage:
+
 ```JavaScript
-$query;
-export function getMessages(): Result<Vec<Message>, string> {
-    return Result.Ok(messageStorage.values());
-}
+export default Canister({
+// rest of the code here
+
+})
 ```
-This `getMessages` function gives us access to all messages on our message board. The `$query` decorator preceding the function tells Azle that `getMessages` is a query function, meaning it reads from but doesn't alter the state of our canister.
 
-The function returns a `Result` type, which can hold either a value or an error. In this case, we're returning a vector of messages (`Vec<Message>`) on successful execution, or a string error message if something goes wrong."
+We would add all the the functions we are going to create in the next steps inside the default Canister export.
 
-**Note: We do not need to use the Result wrapper to return the response. We use it here just to maintain consistency accross the implementation.**
+### 2.8 Creating the Get Messages Function
 
-### 2.7 Creating the Get Message Function
+The next step is to create a function inside of our Canister that retrieves all messages stored within our canister. To accomplish this, add the following code to your `index.ts` file below the definition of the message storage:
+```JavaScript
+getMessages: query([], Result(Vec(Message), Error), () => {
+   return Ok(messagesStorage.values());
+}),
+```
+This `getMessages` function gives us access to all messages on our message board. We return an Ok result with the values of our messageStorage variable..
+
+The function returns a `Result<Vec<Message>, Error>`. This means the function either returns a `Vec<Message>` if successful or an `Error` if unsuccessful.
+
+### 2.9 Creating the Get Message Function
 
 The next step involves creating a function to retrieve a specific message using its unique identifier (ID). Add the following code to your `index.ts` file below the `getMessages` function:
 
 ```JavaScript
-$query;
-export function getMessage(id: string): Result<Message, string> {
-    return match(messageStorage.get(id), {
-        Some: (message) => Result.Ok<Message, string>(message),
-        None: () => Result.Err<Message, string>(`a message with id=${id} not found`)
-    });
-}
+getMessage: query([text], Result(Message, Error), (id) => {
+   const messageOpt = messagesStorage.get(id);
+   if ("None" in messageOpt) {
+      return Err({ NotFound: `the message with id=${id} not found` });
+   }
+   return Ok(messageOpt.Some);
+}),
 ```
 
-Here's an in-depth look at what the code does:
-
--   We start by using the `$query` annotation to indicate that this function is a query function. A query function is one that does not alter the state of our canister.
--   The `getMessage` function is defined, which takes a string parameter `id`. This `id` is the unique identifier for the message we wish to retrieve. The function's return type is `Result<Message, string>`. This means the function either returns a `Message` object if successful or a string error message if unsuccessful.
--   Inside the function, we use the `match` function from Azle. This function is used to handle possible options from a function that may or may not return a result, in our case, `messageStorage.get(id)`.
--   `messageStorage.get(id)` attempts to retrieve a message with the given `id` from our `messageStorage`.
--   If a message with the given `id` is found, the `Some` function is triggered, passing the found message as a parameter. We then return the found message wrapped in `Result.Ok`.
--   If no message with the given `id` is found, the `None` function is triggered. We return an error message wrapped in `Result.Err` stating that no message with the given `id` was found.
+This is quite similar with the previous function, the difference is we search for a message by its unique ID, if no message is found, we return an error, otherwise, we return the message.
 
 This function, therefore, allows us to specifically query a message by its unique ID. If no message is found for the provided ID, we clearly communicate this by returning an informative error message."
 
-### 2.8 Creating the Add Message Function
+### 2.10 Creating the Add Message Function
 
 Following on, we will create a function to add new messages. Input the following code into your `index.ts` file below the `getMessage` function:
 ```JavaScript
-$update;
-export function addMessage(payload: MessagePayload): Result<Message, string> {
-    const message: Message = { id: uuidv4(), createdAt: ic.time(), updatedAt: Opt.None, ...payload };
-    messageStorage.insert(message.id, message);
-    return Result.Ok(message);
-}
+addMessage: update([MessagePayload], Result(Message, Error), (payload) => {
+   const message = { id: uuidv4(), createdAt: ic.time(), updatedAt: None, ...payload };
+   messagesStorage.insert(message.id, message);
+   return Ok(message);
+}),
 ```
 Here's a detailed exploration of the key components:
-
--   The `$update` annotation is utilized to signify to Azle that this function is an update function. It is labelled as such because it modifies the state of our canister.
 
 -   The function `addMessage` is defined, which accepts a parameter `payload` of type `MessagePayload`. This payload will contain the data for the new message to be created.
 
@@ -330,54 +350,52 @@ Here's a detailed exploration of the key components:
 
 -   The newly created message is then inserted into the `messageStorage` using the `insert` method. The `id` of the message is used as the key.
 
--   The function concludes by returning the newly created message, wrapped in a `Result.Ok`. If any errors occurred during the process, the function would return a string error message.
+-   The function concludes by returning the newly created message, wrapped in an `Ok` result.
 
-This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp."
+This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp.
 
-### 2.9 Developing the Update Message Function
+### 2.11 Developing the Update Message Function
 Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file below the `addMessage` function:
 ```JavaScript
-$update;
-export function updateMessage(id: string, payload: MessagePayload): Result<Message, string> {
-    return match(messageStorage.get(id), {
-        Some: (message) => {
-            const updatedMessage: Message = {...message, ...payload, updatedAt: Opt.Some(ic.time())};
-            messageStorage.insert(message.id, updatedMessage);
-            return Result.Ok<Message, string>(updatedMessage);
-        },
-        None: () => Result.Err<Message, string>(`couldn't update a message with id=${id}. message not found`)
-    });
-}
+updateMessage: update([text, MessagePayload], Result(Message, Error), (id, payload) => {
+   const messageOpt = messagesStorage.get(id);
+   if ("None" in messageOpt) {
+      return Err({ NotFound: `couldn't update a message with id=${id}. message not found` });
+   }
+   const message = messageOpt.Some;
+   const updatedMessage = { ...message, ...payload, updatedAt: Some(ic.time()) };
+   messagesStorage.insert(message.id, updatedMessage);
+   return Ok(updatedMessage);
+}),
 ```
 
-This function, denoted by the `$update` decorator, will change the state of our canister. Here's a breakdown of the new elements:
+This function, will change the state of our canister. Here's a breakdown of the new elements:
 
--   The `updateMessage` function takes two parameters: `id`, which represents the unique identifier of the message to be updated, and `payload`, which contains the new data for the message.
--   Inside the function, we use the `match` function to handle the outcome of retrieving a message from `messageStorage` by its `id`. The `match` function takes two cases: `Some` and `None`.
--   In the `Some` case, it implies that a message with the provided `id` exists. We create an updated message by spreading the existing message and the payload into a new object, and set the `updatedAt` field with the current time using `ic.time()`. This updated message is then inserted back into `messageStorage` using the same `id`.
--   In the `None` case, it indicates that no message with the provided `id` could be found. In this situation, the function returns an error message stating that the update operation couldn't be performed as the message was not found.
+-   The `updateMessage` function takes two parameters: `text`, which represents the unique identifier of the message to be updated, and `MessagePayload`, which contains the new data for the message.
+-  Inside the function, we use the `get` method to retrieve the message with the given ID from our `messageStorage`. If no message is found, we return an error message wrapped in an `Err` result.
+-  If a message is found, we use the spread operator (`...`) to spread the message's fields into a new object. We then spread the `payload` into this new object, overwriting the existing fields with the new data. Finally, we set the `updatedAt` field to the current time using `ic.time()`.
+- The updated message is then inserted into the `messageStorage` using the `insert` method. The `id` of the message is used as the key.
+- The function concludes by returning the updated message, wrapped in an `Ok` result.
 
 This `updateMessage` function thus enables us to update the contents of an existing message within our canister.
 
-### 2.10 Creating a Function to Delete a Message
+### 2.12 Creating a Function to Delete a Message
 
 The final step in our canister development is to create a function that allows for message deletion. Insert the following code into your `index.ts` file below the `updateMessage` function:
 ```JavaScript
-$update;
-export function deleteMessage(id: string): Result<Message, string> {
-    return match(messageStorage.remove(id), {
-        Some: (deletedMessage) => Result.Ok<Message, string>(deletedMessage),
-        None: () => Result.Err<Message, string>(`couldn't delete a message with id=${id}. message not found.`)
-    });
-}
+   deleteMessage: update([text], Result(Message, Error), (id) => {
+   const deletedMessage = messagesStorage.remove(id);
+   if ("None" in deletedMessage) {
+      return Err({ NotFound: `couldn't delete a message with id=${id}. message not found` });
+   }
+   return Ok(deletedMessage.Some);
+})
+});
 ```
 
-Here, we're using the `messageStorage.remove(id)` method to attempt to remove a message by its ID from our storage. If the operation is successful, it returns the deleted message, which we wrap in a `Result.Ok` and return from the function. If no message with the given ID exists, the removal operation returns `None`, and we return an error message wrapped in a `Result.Err`, notifying that no message could be found with the provided ID to delete.
+We use the match function to match on the result of removing a message by its ID. If a message is found, we call the remove function on our messageStorage and return the deleted message. If no message is found, we display an error to the user.
 
-This function, marked by the `$update` decorator, further extends our canister's capabilities, now including message deletion alongside creation, retrieval, and update.
-
-
-### 2.11 Configuring the UUID Package
+### 2.13 Configuring the UUID Package
 
 A notable point is that the uuidV4 package may not function correctly within our canister. To address this, we need to apply a workaround that ensures compatibility with Azle. Insert the following code at the end of your `index.ts` file:
 ```JavaScript
@@ -406,82 +424,101 @@ In this block of code, we're extending the `globalThis` object by adding a `cryp
 
 By adding this block of code, we ensure that the `uuidV4` package works smoothly with the Azle framework within our canister."
 
-### 2.12 The Final Code
+### 2.14 The Final Code
 At the end of this step, your `index.ts` file should look like this:
 
 ```JavaScript
-import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle';
+import { query, update, Canister, text, Record, StableBTreeMap, Ok, None, Some, Err, Vec, Result, nat64, ic, Opt, Variant } from 'azle';
 import { v4 as uuidv4 } from 'uuid';
 
-type Message = Record<{
-    id: string;
-    title: string;
-    body: string;
-    attachmentURL: string;
-    createdAt: nat64;
-    updatedAt: Opt<nat64>;
-}>
+/**
+ * This type represents a message that can be listed on a board.
+ */
+const Message = Record({
+   id: text,
+   title: text,
+   body: text,
+   attachmentURL: text,
+   createdAt: nat64,
+   updatedAt: Opt(nat64)
+});
 
-type MessagePayload = Record<{
-    title: string;
-    body: string;
-    attachmentURL: string;
-}>
+const MessagePayload = Record({
+   title: text,
+   body: text,
+   attachmentURL: text
+});
 
-const messageStorage = new StableBTreeMap<string, Message>(0, 44, 1024);
+const Error = Variant({
+   NotFound: text,
+   InvalidPayload: text,
+});
 
-$query;
-export function getMessages(): Result<Vec<Message>, string> {
-    return Result.Ok(messageStorage.values());
-}
+/**
+ * `messagesStorage` - it's a key-value datastructure that is used to store messages.
+ * {@link StableBTreeMap} is a self-balancing tree that acts as a durable data storage that keeps data across canister upgrades.
+ * For the sake of this contract we've chosen {@link StableBTreeMap} as a storage for the next reasons:
+ * - `insert`, `get` and `remove` operations have a constant time complexity - O(1)
+ * - data stored in the map survives canister upgrades unlike using HashMap where data is stored in the heap and it's lost after the canister is upgraded
+ *
+ * Brakedown of the `StableBTreeMap(text, Message)` datastructure:
+ * - the key of map is a `messageId`
+ * - the value in this map is a message itself `Message` that is related to a given key (`messageId`)
+ *
+ * Constructor values:
+ * 1) text - the type of the key in the map
+ * 2) Message - the type of the value in the map.
+ * 3) 0 - memory id where to initialize a map.
+ */
+const messagesStorage = StableBTreeMap(text, Message, 0);
 
-$query;
-export function getMessage(id: string): Result<Message, string> {
-    return match(messageStorage.get(id), {
-        Some: (message) => Result.Ok<Message, string>(message),
-        None: () => Result.Err<Message, string>(`a message with id=${id} not found`)
-    });
-}
-
-$update;
-export function addMessage(payload: MessagePayload): Result<Message, string> {
-    const message: Message = { id: uuidv4(), createdAt: ic.time(), updatedAt: Opt.None, ...payload };
-    messageStorage.insert(message.id, message);
-    return Result.Ok(message);
-}
-
-$update;
-export function updateMessage(id: string, payload: MessagePayload): Result<Message, string> {
-    return match(messageStorage.get(id), {
-        Some: (message) => {
-            const updatedMessage: Message = {...message, ...payload, updatedAt: Opt.Some(ic.time())};
-            messageStorage.insert(message.id, updatedMessage);
-            return Result.Ok<Message, string>(updatedMessage);
-        },
-        None: () => Result.Err<Message, string>(`couldn't update a message with id=${id}. message not found`)
-    });
-}
-
-$update;
-export function deleteMessage(id: string): Result<Message, string> {
-    return match(messageStorage.remove(id), {
-        Some: (deletedMessage) => Result.Ok<Message, string>(deletedMessage),
-        None: () => Result.Err<Message, string>(`couldn't delete a message with id=${id}. message not found.`)
-    });
-}
+export default Canister({
+   getMessages: query([], Result(Vec(Message), Error), () => {
+      return Ok(messagesStorage.values());
+   }),
+   getMessage: query([text], Result(Message, Error), (id) => {
+      const messageOpt = messagesStorage.get(id);
+      if ("None" in messageOpt) {
+         return Err({ NotFound: `the message with id=${id} not found` });
+      }
+      return Ok(messageOpt.Some);
+   }),
+   addMessage: update([MessagePayload], Result(Message, Error), (payload) => {
+      const message = { id: uuidv4(), createdAt: ic.time(), updatedAt: None, ...payload };
+      messagesStorage.insert(message.id, message);
+      return Ok(message);
+   }),
+   updateMessage: update([text, MessagePayload], Result(Message, Error), (id, payload) => {
+      const messageOpt = messagesStorage.get(id);
+      if ("None" in messageOpt) {
+         return Err({ NotFound: `couldn't update a message with id=${id}. message not found` });
+      }
+      const message = messageOpt.Some;
+      const updatedMessage = { ...message, ...payload, updatedAt: Some(ic.time()) };
+      messagesStorage.insert(message.id, updatedMessage);
+      return Ok(updatedMessage);
+   }),
+   deleteMessage: update([text], Result(Message, Error), (id) => {
+      const deletedMessage = messagesStorage.remove(id);
+      if ("None" in deletedMessage) {
+         return Err({ NotFound: `couldn't delete a message with id=${id}. message not found` });
+      }
+      return Ok(deletedMessage.Some);
+   })
+});
 
 // a workaround to make uuid package work with Azle
 globalThis.crypto = {
-     // @ts-ignore
-    getRandomValues: () => {
-        let array = new Uint8Array(32);
+   // @ts-ignore
+   getRandomValues: () => {
+      let array = new Uint8Array(32);
 
-        for (let i = 0; i < array.length; i++) {
-            array[i] = Math.floor(Math.random() * 256);
-        }
+      for (let i = 0; i < array.length; i++) {
+         array[i] = Math.floor(Math.random() * 256);
+      }
 
-        return array;
-    }
+      return array;
+   }
 };
 ```
 
