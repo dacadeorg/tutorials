@@ -43,7 +43,7 @@ While having prior coding experience is necessary, you do not need to have any p
 ### Overview
 1. [Setup](#1-setup) (15 min) - This section will guide you through the necessary steps to set up your project.
 2. [Building the canister](#2-building-the-canister) (45 min) - In this section, we will build out our message board ICP Canister.
-3. [Deploy and Interact With our Canister](#3-build-and-deploy-our-canister) (15 min) - In this section, we will interact with the Todo canister via our command line and the Candid web interface.
+3. [Deploy and Interact With our Canister](#3-build-and-deploy-our-canister) (15 min) - In this section, we will interact with the message-board canister via our command line and the Candid web interface.
 4. [Conclusion](#4-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 If you want to skip to the complete code, you can find the GitHub repository [here](https://github.com/dacadeorg/icp-message-board-rust).
@@ -59,7 +59,7 @@ GitHub Codespaces provides a complete, ready-to-use dev environment in your brow
 
 To create a new Codespace with the boilerplate, follow these steps:
 
-1. **Access the ICP Rust Boilerplate Repository**
+1. **Access the ICP Rust Boilerplate Repository**:
 Go to the [ICP Rust boilerplate repository](https://github.com/dacadeorg/icp-101-rust-boilerplate).
 
 2. **Create a Codespace:**
@@ -149,7 +149,7 @@ rustup target add wasm32-unknown-unknown
 ```
 
 #### 1.2.3 Installing Candid Extractor
-Next, we need to install Candid Extractor, a tool that allows you to extract Candid interface definitions from WebAssembly modules. Which enables us to generate Candid interface definitions for our canister, to interact with it.
+Next, we need to install Candid Extractor, a tool which allows you to extract Candid interface definitions from WebAssembly modules. This enables us to generate Candid interface definitions for our canister to interact with it.
 
 Run the following command to install Candid Extractor:
 ```bash
@@ -165,7 +165,7 @@ Install DFX by running:
 DFX_VERSION=0.15.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
-Now that we have DFX installed, we need to add it to your path. Run the following command:
+Now that we have DFX installed, you need to add it to your path. Run the following command:
 
 ```bash
 echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
@@ -174,7 +174,7 @@ echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
 #### 1.2.6 Ensuring Everything is Installed Correctly
 
 1. **Close and Reopen Your Terminal:**
-    Close and reopen your terminal to ensure the new environment variables are loaded
+    Close and reopen your terminal to ensure the new environment variables are loaded.
 2. **Check the Installed Rust Version:**
     Run the following command to check the installed Rust version:
     ```bash  
@@ -269,11 +269,11 @@ done
 
 In the provided script, you'll notice that we've replaced the original CANISTERS line to match the name of your own canister, which in this case is icp_rust_boilerplate_backend.
 
-For example, if your canister is named test_rust_boilerplate, you should change the line
+For example, if your canister is named test_rust_boilerplate, you should change the line:
 ```
 CANISTERS=icp_rust_boilerplate_backend
 ```
-to the name of your own canister which in the case of this tutorial will be
+to the name of your own canister which in the case of this tutorial will be:
 ```
 CANISTERS=test_rust_boilerplate_backend
 ```
@@ -283,15 +283,15 @@ Additionally, we have a package.json file in our root directory that contains sc
 
 The package.json file defines two scripts:
 
-- generate: This script runs did.sh and then dfx generate to generate Candid interface definitions and other necessary files.
-- gen-deploy: This script does the same as generate but also deploys the canister with dfx deploy -y.
+- `generate`: This script runs did.sh and then dfx generate to generate Candid interface definitions and other necessary files.
+- `gen-deploy`: This script does the same as generate but also deploys the canister with dfx deploy -y.
 
 You should run the generate script each time you modify, add, or remove exported functions of the canister. Otherwise, you may need to modify the Candid file manually.
 
 With this initial setup, you're ready to dive into the development process. 
 
 In the next sections, we'll delve into the specific details of each file, beginning with src/icp_rust_boilerplate_backend/src/lib.rs.
-Let's start building our ICP Canister step by step!
+Let's start building our ICP Canister step-by-step!
 
 ## 2. Building the Canister
 In this section, we'll build out our message board ICP Canister. We'll implement CRUD (Create, Read, Update, Delete) functionality to manage messages within a Canister.
@@ -504,10 +504,10 @@ Let's start by implementing the `get_message` function, which retrieves a messag
     }
  ```
 
-The get_message function takes an id as input and returns a Result containing a Message or an Error. It is marked with the #[ic_cdk::query] attribute, indicating that it is a query function that does not modify the canister's state. It uses the `_get_message` helper function to retrieve the message from the canister's storage.
+The `get_message` function takes an id as input and returns a Result containing a Message or an Error. It is marked with the #[ic_cdk::query] attribute, indicating that it is a query function that does not modify the canister's state. It uses the `_get_message` helper function to retrieve the message from the canister's storage.
 
 #### 2.7.2 `_get_message Function`:
-The _get_message is a helper function used inside the get_message function. 
+The `_get_message` is a helper function used inside the `get_message` function. 
 
 ```Rust
     fn _get_message(id: &u64) -> Option<Message> {
@@ -515,10 +515,10 @@ The _get_message is a helper function used inside the get_message function.
     }
 ```
 
-It accepts an id as a reference and returns an Option<Message>. It retrieves the message from the canister's storage using the STORAGE thread-local variable.
+It accepts an id as a reference and returns an `Option<Message>`. It retrieves the message from the canister's storage using the STORAGE thread-local variable.
 
 #### 2.7.3 `add_message Function`:
-Now, let's create the add_message function, responsible for adding a new message to our canister's storage.
+Now, let's create the `add_message` function, responsible for adding a new message to our canister's storage.
 
 ```Rust
     #[ic_cdk::update]
@@ -542,10 +542,10 @@ Now, let's create the add_message function, responsible for adding a new message
     }
 ```
 
-The add_message function takes a message of type MessagePayload as input and returns an Option<Message>. It generates a unique id for the message, creates a new Message struct, and adds it to the canister's storage. It uses the do_insert helper function to perform the storage operation.
+The `add_message` function takes a message of type MessagePayload as input and returns an `Option<Message>`. It generates a unique id for the message, creates a new Message struct, and adds it to the canister's storage. It uses the do_insert helper function to perform the storage operation.
 
 #### 2.7.4 `do_insert Function`:
-As we saw in the previous section, the do_insert function is a helper function used inside the add_message function.
+As we saw in the previous section, the `do_insert` function is a helper function used inside the `add_message` function.
 
 ```Rust
     // helper method to perform insert.
@@ -584,7 +584,7 @@ Now, let's create the `update_message` function, which is responsible for updati
 Just like the `add_message` function, the `update_message` function takes an id and a payload of type MessagePayload as input and returns a Result containing a Message or an Error. It updates an existing message in the canister's storage based on the provided id. If the message is successfully updated, it returns the updated message. Otherwise, it returns an error.
 
 #### 2.7.6 `delete_message Function`:
-Next, let's create the delete_message function, responsible for deleting a message from our canister's storage.
+Next, let's create the `delete_message` function, responsible for deleting a message from our canister's storage.
 
 ```Rust
     #[ic_cdk::update]
@@ -601,7 +601,7 @@ Next, let's create the delete_message function, responsible for deleting a messa
     }
 ```
 
-The delete_message function takes an id as input and returns a Result containing a Message or an Error. It deletes an existing message from the canister's storage based on the provided id. If the message is successfully deleted, it returns the deleted message. Otherwise, it returns an error.
+The `delete_message` function takes an id as input and returns a Result containing a Message or an Error. It deletes an existing message from the canister's storage based on the provided id. If the message is successfully deleted, it returns the deleted message. Otherwise, it returns an error.
 
 #### 2.7.7 `enum Error`:
 Finally, we create the Error enum, which is used to represent errors that may occur when interacting with our canister.
@@ -804,7 +804,7 @@ This command will initiate the deployment process for your canister. Once the de
     ```
 
 ### 3.2 Interacting With Our Canister
-Now that we have our canister deployed, There are two ways to interact with our canister:
+Now that we have our canister deployed, there are two ways to interact with our canister:
 
 #### 3.2.1 Option 1: Using the terminal
 To interact with our canister using the terminal, we can make use of the dfx canister call command. This command allows us to call functions on our canister from the terminal.
@@ -951,10 +951,9 @@ Throughout this tutorial, you've accomplished the following:
 
 As you continue to explore the vast landscape of the Internet Computer and its ecosystem, remember that you have a multitude of possibilities at your fingertips. Whether you're drawn to decentralized finance (DeFi), social media applications, decentralized autonomous organizations (DAOs), or any other innovative use case, the knowledge and skills you've acquired here provide a solid foundation for your journey.
 
-It's important to note that this course is open source and falls under the MIT license. We encourage you to contribute to enhancing the course content by making pull requests if you have suggestions for improvement. You can do so by visiting the course repository [here](https://github.com/update) and sharing your insights with the community.
-<!-- TODO: Update repo -->
+It's important to note that this course is open source and falls under the MIT license. We encourage you to contribute to enhancing the course content by making pull requests if you have suggestions for improvement. You can do so by visiting the course repository [here](https://github.com/dacadeorg/tutorials/blob/main/ICP/rust-smart-contract-101/content/rust-smart-contract-101.md) and sharing your improvement proposals.
 
-For further learning and engaging with like-minded individuals, consider exploring the following resources within the ICP community:
+For further learning and engagement with like-minded individuals, consider exploring the following resources within the ICP community:
 
 - **Discord:** Join the vibrant ICP community on Discord, where you can partake in discussions, seek solutions to challenges, and collaborate with fellow developers. [Join the Conversation](https://discord.com/invite/cA7y6ezyE2).
 - **Forum:** The [ICP Forum](https://forum.dfinity.org/) is a valuable platform for asking questions, sharing your projects, and gaining insights into the work of other community members.
