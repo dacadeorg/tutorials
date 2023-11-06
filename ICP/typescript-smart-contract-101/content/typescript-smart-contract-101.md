@@ -41,11 +41,12 @@ Here are the key technologies and tools we'll be using:
 
 ### 1.6 Overview
 
-1. [Setup](#1-setup) (15 min) - This section will guide you through the necessary steps to set up your project.
-2. [Constructing the Messaging Canister](#2-constructing-the-messaging-canister) (45 min) - In this section, we will build a messaging canister with basic CRUD(Create, Read, Update Delete) functionality.
-3. [Deploying and Interacting with our Canister](#3-deploying-and-interacting-with-our-canister) (15 min) - In this section, we will interact with the messaging canister via our command line and the Candid web interface.
-4. [Conclusion](#4-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
+1. [Introduction](#1-introduction) (5 min) - In this section, we'll provide an overview of the tutorial, including what you'll learn, the prerequisites, and the tech stack. We'll also introduce you to Azle, the TypeScript framework we'll be using to build our canisters.
 
+2. [Setup](#2-setup) (15 min) - This section will guide you through the necessary steps to set up your project.
+3. [Constructing the Messaging Canister](#3-constructing-the-messaging-canister) (45 min) - In this section, we will build a messaging canister with basic CRUD(Create, Read, Update Delete) functionality.
+4. [Deploying and Interacting with our Canister](#4-deploying-and-interacting-with-our-canister) (15 min) - In this section, we will interact with the messaging canister via our command line and the Candid web interface.
+5. [Conclusion](#5-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 ## 2. Setup
 In this section, we will help you set up the boilerplate code for our project. By the end of this section, you'll have a development environment pre-configured with all the necessary tools and dependencies, and you'll be ready to start building your canisters.
@@ -199,10 +200,12 @@ After cloning the boilerplate code, we would see a folder called `src` with a fi
 ### 3.2 Importing Dependencies
 
 To start, we need to incorporate several dependencies which our smart contract will make use of. Add the following lines of code at the top of your `index.ts` file:
-```
+
+```typescript
 import { $query, $update, Record, StableBTreeMap, Vec, match, Result, nat64, ic, Opt } from 'azle';
 import { v4 as uuidv4 } from 'uuid';
 ```
+
 Here's a brief rundown of what each of these imported items does:
 
 -   `$query`: is an annotation enabling us to retrieve information from our canister.
