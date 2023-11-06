@@ -205,8 +205,8 @@ import { v4 as uuidv4 } from 'uuid';
 ```
 Here's a brief rundown of what each of these imported items does:
 
-- `$query` is an annotation that allows us to query information from our canister.
-- `$update` is an annotation that allows us to update information in our canister.
+- `query` is an annotation that allows us to query information from our canister.
+- `update` is an annotation that allows us to update information in our canister.
 - `Record` is a type that allows us to create a record type.
 - `StableBTreeMap` is used for creating a map data structure.
 - `Vec` is a type that allows us to create a vector type.
