@@ -3,29 +3,32 @@
 
 Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with decentralized Azle canisters. By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
 
-### What you'll learn
+## 1. Introduction
+In this section, we'll provide an overview of the tutorial, including what you'll learn, the prerequisites, and the tech stack. We'll also introduce you to Azle, the TypeScript framework we'll be using to build our canisters.
+
+### 1.1 What you'll learn
 - Setting up your development environment: Understand the necessary tools for ICP development, such as Node.js, Node Version Manager (nvm), and DFX, and learn how to install and use them​.
 - Grasping the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
 - Building and interacting with a messaging canister: Learn how to construct a simple messaging canister that performs CRUD (Create, Read, Update, Delete) operations. You will also learn how to interact with the canister, calling its methods and handling responses. This knowledge will allow you to build a simple message board application, enabling users to create, update, delete, and view messages​.
 
-### What is a Canister?
+### 1.2 What is a Canister?
 A canister is a fundamental building block and execution environment for deploying and running software applications on the Internet Computer Protocol (ICP) platform. Canisters bundle together code and state to create a secure and efficient execution environment. They are similar to smart contracts on other blockchain platforms. Canisters enable the development of scalable and decentralized applications, including DeFi platforms, social media applications, DAOs, and more.
 
-### What is Azle?
+### 1.3 What is Azle?
 Azle is a TypeScript Canister Development Kit (CDK) for the Internet Computer (IC). It provides a set of libraries and tools that make it easy to build and deploy canisters on the IC platform. Azle allows web developers to bring their TypeScript/JavaScript skills to the IC and use various npm packages and VS Code intellisense. In this tutorial, you will use Azle to create and deploy your canisters.
 
 It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't yet have many live, successful, continuously operating applications deployed to the IC. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
 
 If you want to learn more about Azle, check out the [Azle documentation](https://demergent-labs.github.io/azle/the_azle_book.html).
 
-### Prerequisites
+### 1.4 Prerequisites
 While having prior coding experience is necessary, you do not need to have any prior blockchain experience to follow this tutorial. However, we do recommend that you have the following:
 
 - **Knowledge of TypeScript and Node.js**: Familiarity with TypeScript and Node.js is vital, as the tutorial involves building an application using these technologies. If you're new to TypeScript or Node.js, consider going through basic tutorials for both.
 - **Text Editor**: You will need a text editor to write and edit code. Visual Studio Code is recommended due to its excellent support for TypeScript and Node.js development, but feel free to use a text editor of your choice.
 - **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 18 or higher) will be necessary for running the DFINITY SDK and the project itself."
 
-### Tech Stack
+### 1.5 Tech Stack
 Here are the key technologies and tools we'll be using:
 
 1.  Internet Computer Protocol (ICP): ICP is a decentralized computing platform that facilitates the creation of software, computation, and data that can run on the public internet. It's the platform we'll be building our application on.
@@ -36,7 +39,7 @@ Here are the key technologies and tools we'll be using:
 6.  TypeScript: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. We'll be using it for writing our application's code, and our project will include a configuration file (`tsconfig.json`) for setting up the TypeScript compiler options.
 7.  Candid: Candid is an interface description language (IDL) used by Internet Computer for defining and describing the public interfaces of services, i.e., their methods and their input/output types. We'll be using Candid in our project to describe the interface of our canisters.
 
-### Overview
+### 1.6 Overview
 
 1. [Setup](#1-setup) (15 min) - This section will guide you through the necessary steps to set up your project.
 2. [Constructing the Messaging Canister](#2-constructing-the-messaging-canister) (45 min) - In this section, we will build a messaging canister with basic CRUD(Create, Read, Update Delete) functionality.
@@ -44,14 +47,14 @@ Here are the key technologies and tools we'll be using:
 4. [Conclusion](#4-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 
-## 1. Setup
+## 2. Setup
 In this section, we will help you set up the boilerplate code for our project. By the end of this section, you'll have a development environment pre-configured with all the necessary tools and dependencies, and you'll be ready to start building your canisters.
 
-### 1.1 Preparing your Development Environment
+### 2.1 Preparing your Development Environment
 
 You can set up your development environment either locally on your machine or in the cloud using GitHub Codespaces.
 
-#### 1.1.1 Option 1: Using GitHub Codespaces
+#### 2.1.1 Option 1: Using GitHub Codespaces
 
 GitHub Codespaces provides a complete, ready-to-use dev environment in your browser. It saves you from the need for local setup, allowing you to concentrate on learning and building.
 
@@ -61,7 +64,7 @@ Next, click on the "Code" button, then select "Create codespace on main". This a
 
 Please note that the first time you open the Codespace, the dependencies for this project will be installed automatically. This process may take a few minutes, but you can monitor the installation progress in the terminal.
 
-#### 1.1.2 Option 2: Setting up Locally
+#### 2.1.2 Option 2: Setting up Locally
 
 If you prefer to set up your development environment locally, start by navigating to the [ICP-azle-boilerplate](https://github.com/dacadeorg/ICP-azle-boilerplate/) repository. Select the "Code" button, then the "Local" tab, and copy the repository's URL.
 
@@ -85,7 +88,7 @@ npm install
 
 This command will install all the necessary dependencies for the project. Once the installation is complete, you're ready to start building your canisters!
 
-### 1.2 Preparing Our Terminal
+### 2.2 Preparing Our Terminal
 In this section, we will prepare our terminal environment by installing key tools: Node Version Manager (nvm) and DFX. Please note that the following instructions are specifically for Unix-like systems such as Linux and macOS. If you're on a Windows system, you would need to set up the Windows Subsystem for Linux (WSL) to follow along, or alternatively, you could use GitHub Codespaces. Let's get started.
 
 1. **Install Node Version Manager (nvm)**: Nvm is a useful tool that allows for the management of multiple active Node.js versions. With nvm, switching between different Node.js versions is a breeze. For this tutorial, we'll utilize Node.js version 18. To install nvm, execute the following command in your terminal:
@@ -110,7 +113,7 @@ echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
 
 5. **Reload your terminal (if using GitHub Codespaces)**: Reload your terminal (if using GitHub Codespaces): If you're using GitHub Codespaces for this tutorial, you'll need to reload your terminal to ensure all changes are properly applied. You can do this by clicking on the "Reload" button located in the top-right corner of your terminal.
 
-### 1.3 Understanding the Boilerplate Code
+### 2.3 Understanding the Boilerplate Code
 The boilerplate code we've prepared serves as a basic Azle project. It is designed to help you get started quickly by providing the necessary configuration files and dependencies. This code also includes a simple canister that serves as a reference for constructing your own canisters. Let's explore its key components:
 
 **1. TypeScript Configuration File** (`tsconfig.json`): Located in the root directory of your project, this file sets up the TypeScript compiler options. Here is what it looks like:
@@ -184,16 +187,16 @@ This file is crucial for managing the project's dependencies and scripts. It con
 
 - The `scripts` section includes commands that can be run from the terminal, while the `engines` section specifies the versions of Node.js that the project is compatible with.
 
-## 2. Constructing the Messaging Canister
+## 3. Constructing the Messaging Canister
 In this section, we're going to write our messaging canister. This canister is designed to handle the fundamental CRUD (Create, Read, Update, and Delete) operations, which are key to the functioning of any data-driven application. This functionality enables efficient data management within the canister. More specifically, we're going to use Azle to build a simple message board application, which will allow users to create, update, delete, and view messages.
 
 If you're familiar with TypeScript, you'll find the Azle syntax quite similar. But even if you're new to TypeScript, there's no need to worry - we'll be guiding you through the syntax as we proceed with the development.
 
-### 2.1 Setting Up the Directory and Entry Point
+### 3.1 Setting Up the Directory and Entry Point
 
 After cloning the boilerplate code, we would see a folder called `src` with a file called `index.ts`. This would be the entrypoint of our canister and will contain our logic.
 
-### 2.2 Importing Dependencies
+### 3.2 Importing Dependencies
 
 To start, we need to incorporate several dependencies which our smart contract will make use of. Add the following lines of code at the top of your `index.ts` file:
 ```
@@ -214,7 +217,7 @@ Here's a brief rundown of what each of these imported items does:
 -   `Opt`: Type used for creating an optional data structure.
 -   `uuidv4`: Function generating a unique identifier for each new message.
 
-### 2.3 Defining Message Type
+### 3.3 Defining Message Type
 
 Before we start writing the logic of our canister, it's important to define the structure of the data we'll be working with. In our case, this is the 'Message' that will be posted on the board. This definition will help us ensure consistency and clarity when dealing with messages in our smart contract. Add the following code in the `index.ts` file below the import statements:
 
@@ -235,7 +238,7 @@ type Message = Record<{
 
 This code block defines the 'Message' type, where each message is characterized by a unique identifier, a title, a body, an attachment URL, and timestamps indicating when the message was created and last updated.
 
-### 2.4 Defining Message Payload Type
+### 3.4 Defining Message Payload Type
 
 After defining the structure of a Message, we need to specify what kind of data will be sent to our smart contract. This is called the payload. In our context, the payload will contain the basic information needed to create a new message.
 
@@ -251,7 +254,7 @@ type MessagePayload = Record<{
 
 This 'MessagePayload' type outlines the structure of the data that will be sent to our smart contract when a new message is created. Each payload consists of a title, a body, and an attachment URL.
 
-### 2.5 Defining the Message Storage
+### 3.5 Defining the Message Storage
 
 Now that we've defined our message types, we need a place to store these messages. For this, we'll be creating a storage variable in our `index.ts` file below the definition of the message payload type:
 
@@ -269,7 +272,7 @@ Let's break down the `new StableBTreeMap` constructor:
 
 **Note: it is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
 
-### 2.6 Creating the Get Messages Function
+### 3.6 Creating the Get Messages Function
 
 The next step is to create a function that retrieves all messages stored within our canister. To accomplish this, add the following code to your `index.ts` file below the definition of the message storage:
 ```JavaScript
@@ -284,7 +287,7 @@ The function returns a `Result` type, which can hold either a value or an error.
 
 **Note: We do not need to use the Result wrapper to return the response. We use it here just to maintain consistency accross the implementation.**
 
-### 2.7 Creating the Get Message Function
+### 3.7 Creating the Get Message Function
 
 The next step involves creating a function to retrieve a specific message using its unique identifier (ID). Add the following code to your `index.ts` file below the `getMessages` function:
 
@@ -309,7 +312,7 @@ Here's an in-depth look at what the code does:
 
 This function, therefore, allows us to specifically query a message by its unique ID. If no message is found for the provided ID, we clearly communicate this by returning an informative error message."
 
-### 2.8 Creating the Add Message Function
+### 3.8 Creating the Add Message Function
 
 Following on, we will create a function to add new messages. Input the following code into your `index.ts` file below the `getMessage` function:
 ```JavaScript
@@ -334,7 +337,7 @@ Here's a detailed exploration of the key components:
 
 This function thus facilitates the creation of new messages within our canister, providing each with a unique identifier and timestamp."
 
-### 2.9 Developing the Update Message Function
+### 3.9 Developing the Update Message Function
 Our next step is to create a function that allows us to update an existing message. Insert the following code into your `index.ts` file below the `addMessage` function:
 ```JavaScript
 $update;
@@ -359,7 +362,7 @@ This function, denoted by the `$update` decorator, will change the state of our 
 
 This `updateMessage` function thus enables us to update the contents of an existing message within our canister.
 
-### 2.10 Creating a Function to Delete a Message
+### 3.10 Creating a Function to Delete a Message
 
 The final step in our canister development is to create a function that allows for message deletion. Insert the following code into your `index.ts` file below the `updateMessage` function:
 ```JavaScript
@@ -377,7 +380,7 @@ Here, we're using the `messageStorage.remove(id)` method to attempt to remove a 
 This function, marked by the `$update` decorator, further extends our canister's capabilities, now including message deletion alongside creation, retrieval, and update.
 
 
-### 2.11 Configuring the UUID Package
+### 3.11 Configuring the UUID Package
 
 A notable point is that the uuidV4 package may not function correctly within our canister. To address this, we need to apply a workaround that ensures compatibility with Azle. Insert the following code at the end of your `index.ts` file:
 ```JavaScript
@@ -406,7 +409,7 @@ In this block of code, we're extending the `globalThis` object by adding a `cryp
 
 By adding this block of code, we ensure that the `uuidV4` package works smoothly with the Azle framework within our canister."
 
-### 2.12 The Final Code
+### 3.12 The Final Code
 At the end of this step, your `index.ts` file should look like this:
 
 ```JavaScript
@@ -485,11 +488,11 @@ globalThis.crypto = {
 };
 ```
 
-## 3. Deploying and Interacting with our Canister
+## 4. Deploying and Interacting with our Canister
 
 Having completed the coding of our canister, it's now time to deploy and interact with it.
 
-### 3.1. Starting the Local Internet Computer
+### 4.1. Starting the Local Internet Computer
 
 The first step is to initialize our local Internet Computer replica, which is essentially an instance of the Internet Computer blockchain where our canister will run. We'll start this replica in the background to allow for other operations. This can be done by executing the following command in your terminal:
 
@@ -521,7 +524,7 @@ dfx start --background --clean
 
 Remember, only use the `--clean` flag if you have made changes to the configuration of your StableBTreeMap. If no changes have been made, a regular start of the local replica (i.e., without the `--clean` flag) will suffice.
 
-### 3.2. Deploying the Canister
+### 4.2. Deploying the Canister
 Next, we will compile our canister code and install it on the local network using the `dfx deploy` command:
 
 ```Bash
@@ -562,10 +565,10 @@ The provided URL (in this case: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aa
 You can view a GIF illustrating this process:
 ![](https://hackmd.io/_uploads/rk7ViLpL2.gif)
 
-### 3.3. Interacting with our canister
+### 4.3. Interacting with our canister
 There are two primary ways to interact with our canister: through the command line interface (CLI) or the web interface. We'll begin with the CLI.
 
-#### 3.3.1. Interacting with our canister through the CLI
+#### 4.3.1. Interacting with our canister through the CLI
 To interact with our canister through the CLI, we'll be using the `dfx canister call` command. This command allows us to invoke functions on our canister from the terminal.
 
 **1. Adding a message**
@@ -662,7 +665,7 @@ dfx stop
 
 This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources."
 
-## 4. Conclusion
+## 5. Conclusion
 In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters and then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
 
 You learned how to deploy your canister using `dfx deploy` and how to interact with it both through the terminal and the Candid web interface. We explored how to execute various functions like `addMessage`, `getMessages`, `updateMessage`, and `deleteMessage`, and discussed the structure and usage of the commands required.
