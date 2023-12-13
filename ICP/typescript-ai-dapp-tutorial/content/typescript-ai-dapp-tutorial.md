@@ -1,6 +1,4 @@
-# TypeScript AI Dapp Tutorial
-
-Welcome to the TypeScript AI Chatbot Tutorial! In this tutorial, we will be building a decentralized AI chatbot using the Internet Computer Protocol (ICP). The chatbot will be able to respond to user messages and answer questions using the OpenAI API. We will also be using the DFINITY Canister SDK to deploy the chatbot on the Internet Computer.
+Welcome to the TypeScript AI Dapp Tutorial! In this tutorial, we will be building a decentralized AI chatbot using the Internet Computer Protocol (ICP). The chatbot will be able to respond to user messages and answer questions using the OpenAI API. We will also be using the DFINITY Canister SDK to deploy the chatbot on the Internet Computer.
 
 ## 1. Introduction
 
