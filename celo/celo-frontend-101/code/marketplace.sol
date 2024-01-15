@@ -42,9 +42,8 @@ contract Marketplace {
     // Keeps track of the number of products in the marketplace
     uint256 internal productsLength = 0;
     // Address of the cUSDToken
-    address internal cUsdTokenAddress =
+    address internal immutable cUsdTokenAddress =
         0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-
     // Structure for a product
     struct Product {
         // Address of the product owner
@@ -109,15 +108,17 @@ contract Marketplace {
             uint256
         )
     {
+        // Declaring and initializing the variable product with the current product
+        Product storage product = products[_index];
         // Returns the details of the product
         return (
-            products[_index].owner,
-            products[_index].name,
-            products[_index].image,
-            products[_index].description,
-            products[_index].location,
-            products[_index].price,
-            products[_index].sold
+            product.owner,
+            product.name,
+            product.image,
+            product.description,
+            product.location,
+            product.price,
+            product.sold
         );
     }
 
@@ -126,21 +127,23 @@ contract Marketplace {
         // Index of the product
         uint256 _index
     ) public payable {
+        // Declaring and initializing the variable product with the current product
+        Product storage product = products[_index];
         // Transfers the tokens from the buyer to the seller
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
                 // Sender's address is the buyer
                 msg.sender,
                 // Receiver's address is the seller
-                products[_index].owner,
+                product.owner,
                 // Amount of tokens to transfer is the price of the product
-                products[_index].price
+                product.price
             ),
             // If transfer fails, throw an error message
             "Transfer failed."
         );
         // Increases the number of times the product has been sold
-        products[_index].sold++;
+        product.sold++;
     }
 
     // Returns the number of products in the marketplace
