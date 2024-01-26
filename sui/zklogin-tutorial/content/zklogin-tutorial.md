@@ -245,8 +245,7 @@ export const SUI_CLIENT = new SuiClient({ url: FULLNODE_URL });
 
 ``` 
 
-The code above is pretty straight forward. We are importing the SuiClient from the `@mysten/sui.js/client` package. We are also importing the `FULLNODE_URL` and `PACKAGE_ID` from the `.env` file. We are then creating a new instance of the SuiClient and exporting it.
-
+he code above is pretty straight forward. We are importing the SuiClient from the `@mysten/sui.js/client` package. We also import the `FULLNODE_URL` and `PACKAGE_ID` from the `.env` file and then a new instance of the SuiClient and exporting it.
 
 ### 3.4 Setting up the Sui Service
 Create a file called `suiService.ts` in the `utils` directory. This file will contain utility functions we will use to interact with the SUI blockchain.
@@ -266,6 +265,8 @@ export class SuiService {
 ```
 
 We are importing the SUI_CLIENT from the `suiClient.ts` file. We are then creating a new class called `SuiService`. This class contains a function called `getFormattedBalance`. This function is used to get the balance of a wallet. It takes in the wallet address as a parameter and returns the balance of the wallet.
+
+The balance is returned in the smallest unit of the currency. Since Sui uses 9 decimal places, we divide the balance by 1000_000_000 to get the balance in Sui.
 
 ### 3.5 Setting up the Authentication Service
 Create a file called `authService.ts` in the `utils` directory. This file will contain the code for our authentication services, it will be a bit more complex than the previous services.
