@@ -1333,21 +1333,18 @@ yarn start
 ```
 
 This will start the application on port `8080`. You can access the application on your browser at `http://localhost:8080`. You should see the following page:
-![Screenshot 2024-01-09 at 19.22.46](https://hackmd.io/_uploads/HkUW1fs_T.png)
-<!-- TODO: Repuload screenshot to github -->
+![Screenshot 2024-01-09 at 19.22.46](https://github.com/dacadeorg/tutorials/assets/40989414/2e5bfcbc-715a-4353-a298-75cece22e15c)
 
 Click on the `Login with Google` button to login and go through the authentication process. Once you are authenticated, you should see the following page:
 
-![Screenshot 2024-01-09 at 19.33.12](https://hackmd.io/_uploads/HJcdZMs_6.png)
-<!-- TODO: Repuload screenshot to github -->
+![Screenshot 2024-01-09 at 19.33.12](https://github.com/dacadeorg/tutorials/assets/40989414/4704c427-e51e-4e95-89ee-b2c64bc92a34)
 
 #### **3. Fund the wallet:**
 If you check your wallet balance at the top right corner of the screen, you will see that your wallet is empty with 0 SUI tokens.
 In order to fund the wallet, we'll need to use the faucet. The faucet is a service that provides free SUI tokens for testing purposes. We'll use the Faucet URL from the previous section to interact with the faucet.
 
 Firstly, you will need your wallet address. To easily get this, navigate to your running frontend application on your browser at `http://localhost:8080/notes` and copy the address from the top right corner of the screen after you login:
-![Screenshot 2024-01-09 at 19.51.45](https://hackmd.io/_uploads/HJGABzsda.png)
-<!-- TODO: Repuload screenshot to github -->
+![Screenshot 2024-01-09 at 19.51.45](https://github.com/dacadeorg/tutorials/assets/40989414/38547414-f1d0-4569-a4b0-341e0fb76bad)
 
 Simply click on the address to copy it.
 
