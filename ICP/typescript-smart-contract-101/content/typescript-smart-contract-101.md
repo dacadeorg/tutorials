@@ -651,6 +651,16 @@ You can view a GIF illustrating this process:
 ![](https://hackmd.io/_uploads/rk7ViLpL2.gif)
 
 
+**Note: if you would like your canister to auto reload after changes, you can run the command**
+
+```
+AZLE_AUTORELOAD=true dfx deploy
+```
+
+Ensure to set this to false when deploying to the mainnet.
+
+```Bash
+
 
 ### 4.3. Interacting with our canister
 There are two primary ways to interact with our canister: through the command line interface (CLI) or the web interface. We'll begin with the CLI.
