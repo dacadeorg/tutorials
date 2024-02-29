@@ -3,7 +3,7 @@
 
 Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to provide an introduction to developing on the Internet Computer Protocol (ICP) platform. In this guide, you will learn the basics of building and interacting with decentralized Azle canisters. By the end of this guide, you will have a solid understanding of developing for the ICP platform and be able to create the foundation for decentralized applications.
 
-If you want to skip the tutorial and jump straight into the code, you can access the final code for this tutorial in the [ICP-azle-boilerplate](https://github.com/dacadeorg/icp-message-board-contract) repository.
+If you want to skip the tutorial and jump straight into the code, you can access the final code for this tutorial in the [Course Repo](https://github.com/dacadeorg/icp-message-board-contract) repository.
 
 ## 1. Introduction
 In this section, we'll provide an overview of the tutorial, including what you'll learn, the prerequisites, and the tech stack. We'll also introduce you to Azle, the TypeScript framework we'll be using to build our canisters.
@@ -218,6 +218,7 @@ This configuration file communicates vital aspects of your canister to the DFINI
 -   "candid": Points DFX to our Candid file (`src/index.did`), an interface description language (IDL) used by Internet Computer.
 -   "wasm": Directs DFX to our compiled WebAssembly (WASM) file (`.azle/message_board/message_board.wasm.gz`), a fast, efficient, and secure binary instruction format.
 -  "gzip": Indicates that the WASM file should be compressed using gzip.
+- "metadata": Contains additional information about the canister, such as its Candid service and the name of the CDK (Canister Development Kit) used. This information is used by DFX to interact with the canister.
 
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
@@ -234,7 +235,7 @@ This configuration file communicates vital aspects of your canister to the DFINI
       "uuid": "^9.0.1"
    },
    "engines": {
-      "node": "^12 || ^14 || ^16 || ^18 || ^20"
+      "node": "^20"
    },
    "devDependencies": {
       "@types/express": "^4.17.21"
