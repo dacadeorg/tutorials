@@ -660,9 +660,6 @@ AZLE_AUTORELOAD=true dfx deploy
 
 Ensure to set this to false when deploying to the mainnet.
 
-```Bash
-
-
 ### 4.3. Interacting with our canister
 There are two primary ways to interact with our canister: through the command line interface (CLI) or the web interface. We'll begin with the CLI.
 
@@ -747,7 +744,6 @@ Now that we've covered the CLI, let's move on to the web interface.
 
 #### 4.3.2. **Getting a message with the web interface**
 Now we are using the web interface to get the message we just created. Let's invoke the `getMessage` function from our canister file.
-
 To view the message we just added, we can make use of the candid interface that was generated to us when we ran the  "dfx deploy" command.
 
 It should look something like this:
