@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: MIT -->
 <!-- Copyright (c) 2023 Dacade.org -->
 
-Welcome to the advanced ICP Azle Development 201 tutorial! Building upon the fundamentals you've learned in the ICP Azle Development 101 course, this guide will take you through the development of a decentralized marketplace on the Internet Computer Protocol (ICP) platform. By the end of this guide, you will not only have a deeper understanding of ICP canisters but also a functional decentralized marketplace application.
+Welcome to the advanced ICP TypeScript Development 201 tutorial! Building upon the fundamentals you've learned in the ICP TypeScript Smart Contract 101 course, this guide will take you through the development of a decentralized marketplace on the Internet Computer Protocol (ICP) platform. By the end of this guide, you will not only have a deeper understanding of ICP canisters but also a functional decentralized marketplace application.
 
 ## 1. Introduction
 In this tutorial, we will build a Marketplace canister that allows users to add, view, update, delete, and buy products. We will also build a frontend that allows users to interact with the canister.
