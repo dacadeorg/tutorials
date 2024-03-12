@@ -206,7 +206,7 @@ sudo apt-get install podman
 }
 ```
 
-이 구성 파일(configuration file)은 DFINITY SDK (dfx)에게 캐니스터의 필수 정보를 전달합니다. Azle 프레임워크를 사용하여 `message_board` 캐니스터를 생성하고 있습니다. 속성을 분석해 봅시다:
+이 구성 파일(configuration file)은 DFINITY SDK (dfx)에게 캐니스터의 중요한 정보를 전달합니다. Azle 프레임워크를 사용하여 `message_board` 캐니스터를 생성하고 있습니다. 속성을 분석해 봅시다:
 
 -   "canisters": 캐니스터를 정의하는 부모 속성. 이 경우에는 `message_board`를 정의합니다.
 -   "message_board": 캐니스터의 이름, 그것과 상호 작용하는 데 사용됩니다.
