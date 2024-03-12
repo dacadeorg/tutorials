@@ -296,7 +296,7 @@ Now that we have defined the record types that we will be using in our marketpla
  * - `insert`, `get`, and `remove` operations have a constant time complexity of O(1).
  * - Data stored in this map persists across canister upgrades, unlike using a HashMap where data is stored in the heap and can be lost after a canister upgrade.
  */
-const productsStorage = StableBTreeMap(text, Product, 0);
+const productsStorage = StableBTreeMap(0, text, Product);
 ```
 The `productsStorage` is a key-value data structure used to store products listed by sellers in the marketplace. It is implemented as a `StableBTreeMap`, which is a self-balancing tree with the ability to retain data across canister upgrades. We chose this data structure for its efficient time complexities (O(1) for insert, get, and remove operations) and its resilience against canister upgrades, unlike other data storage options. Canister upgrades are a common occurrence in the ICP ecosystem, and it's essential to ensure data persistence across upgrades.
 
@@ -305,8 +305,8 @@ The `productsStorage` is a key-value data structure used to store products liste
  * `persistedOrders` and `pendingOrders` are also instances of {@link StableBTreeMap}.
  * These data structures are used to manage and store orders within the marketplace.
  */
-const persistedOrders = StableBTreeMap(Principal, Order, 1);
-const pendingOrders = StableBTreeMap(nat64, Order, 2);
+const persistedOrders = StableBTreeMap(1, Principal, Order);
+const pendingOrders = StableBTreeMap(2, nat64, Order);
 
 ```
 
