@@ -55,10 +55,9 @@ The chatbot uses the OpenAI API, which requires API credentials. You need to cre
 1.  Copy the **`credential.example.js`** file and rename the copy to **`credential.js`**.
 2.  Open **`credential.js`** and set your OpenAI API key and assistant ID:
     `jsx
-export const OPEN_AI_API_KEY = "YOUR_OPEN_AI_API_KEY";
 export const ASSISTANT_ID = "YOUR_ASSISTANT_ID";
 `
-    Replace **`YOUR_OPEN_AI_API_KEY`** and **`YOUR_ASSISTANT_ID`** with your actual OpenAI API key and assistant ID, respectively.
+    Replace **`YOUR_ASSISTANT_ID`** with your actual assistant ID.
 
 - You can find your OpenAI API key and assistant ID in the interface of your OpenAI account. If you don't have an account yet, you can create one [here](https://platform.openai.com/).
 - The API key can be found in the [API keys](https://platform.openai.com/api-keys) page of your account.
@@ -141,7 +140,7 @@ src/
 
 The most important files and directories are:
 
-- **`credential.js`**: Contains the OpenAI API key and assistant ID. We have created this file in the previous chapter.
+- **`credential.js`**: Contains the assistant ID. We have created this file in the previous chapter.
 - **`deploy-local-ledger.sh`**: A shell script for deploying the canisters to the local network.
 - **`dfx.json`**: The configuration file for DFX. It contains the configuration for the canisters and the local network.
 - **`dfinity_js_backend`**: The directory containing the source code of the backend canister.
