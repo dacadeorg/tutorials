@@ -53,7 +53,7 @@ If you want to skip to the complete code, you can find the GitHub repository [he
 In this initial section, we are going to set up our boilerplate code and run it on your local machine.
 
 ## 2.1 Preparing Your Local Development Environment
-Start by navigating to the [ICP-azle-boilerplate](https://github.com/dacadeorg/ICP-azle-boilerplate/) repository. Select the "Code" button, then the "Local" tab, and copy the repository's URL.
+Start by navigating to the [ICP-azle-boilerplate](https://github.com/dacadeorg/icp-azle-201-boilerplate.git) repository. Select the "Code" button, then the "Local" tab, and copy the repository's URL.
 
 In your terminal, navigate to the directory where you want to store your project, then clone the repository to your local machine by running:
 
@@ -1011,8 +1011,8 @@ If you are on a Windows machine, you may need to install the `bash` shell. You c
 
 Once you have installed the bash shell, you can run the following command:
 
-```bash
-bash deploy-local-ledger.sh
+```
+./deploy-local-ledger.sh
 ```
 
 After running the command, you should see a similar output:
@@ -1040,89 +1040,54 @@ URLs:
     ledger_canister: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai
 ```
 
-Next, go ahead and deploy the internet identity canister. This canister is responsible for managing the authentication of users on the marketplace.
+Next, go ahead and run 'deploy-local-icrc-ledger' script. This script will deploy the ICRC ledger canister to our local replica. This canister is responsible for managing the ICRC token balances of users on the marketplace.
 
 Run the following command:
 
 ```bash
-dfx deploy internet_identity
+./deploy-local-icrc-ledger.sh
 ```
-
-This command will deploy the internet identity canister to our local replica and create a wallet canister for our user. This wallet canister will be used to manage the ICP balance of our user.
-
 After running the command, you should see a similar output:
 
 ```bash
-Deploying: internet_identity
-Creating a wallet canister on the local network.
-The wallet canister on the "local" network for user "minter" is "be2us-64aaa-aaaaa-qaabq-cai"
+Deploying: icrc1_ledger_canister
 Creating canisters...
-Creating canister internet_identity...
-internet_identity canister created with canister id: br5f7-7uaaa-aaaaa-qaaca-cai
+Creating canister icrc1_ledger_canister...
+icrc1_ledger_canister canister created with canister id: mxzaz-hqaaa-aaaar-qaada-cai
 Building canisters...
 Installing canisters...
-Installing code for canister internet_identity, with canister ID br5f7-7uaaa-aaaaa-qaaca-cai
+Installing code for 
+```
+
+With that done, we can run the 'deploy-local-identity' script. This script will deploy the Internet Identity canister to our local replica. This canister is responsible for managing user authentication and identity on the marketplace.
+```bash
+./deploy-local-identity.sh
+```
+After running the command, you should see a similar output:
+
+```bash
+Using identity: "default".
+Deploying: internet_identity
+Creating canisters...
+Creating canister internet_identity...
+Creating a wallet canister on the local network.
+The wallet canister on the "local" network for user "default" is "bkyz2-fmaaa-aaaaa-qaaaq-cai"
+internet_identity canister created with canister id: bd3sg-teaaa-aaaaa-qaaba-cai
+Building canisters...
+Installing canisters...
+Installing code for canister internet_identity, with canister ID bd3sg-teaaa-aaaaa-qaaba-cai
 Deployed canisters.
 URLs:
   Backend canister via Candid interface:
-    dfinity_js_backend: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
-    internet_identity: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=br5f7-7uaaa-aaaaa-qaaca-cai
-    ledger_canister: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai
+    icrc1_ledger_canister: http://127.0.0.1:8000/?canisterId=bnz7o-iuaaa-aaaaa-qaaaa-cai&id=mxzaz-hqaaa-aaaar-qaada-cai
+    internet_identity: http://127.0.0.1:8000/?canisterId=bnz7o-iuaaa-aaaaa-qaaaa-cai&id=bd3sg-teaaa-aaaaa-qaaba-cai
+    ledger_canister: http://127.0.0.1:8000/?canisterId=bnz7o-iuaaa-aaaaa-qaaaa-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai
+Generating type declarations for canister internet_identity:
+  /Users/emmanuel/Desktop/work_folder/dacade_official/temporary/src/declarations/internet_identity/internet_identity.did.d.ts
+  /Users/emmanuel/Desktop/work_folder/dacade_official/temporary/src/declarations/internet_identity/internet_identity.did.js
+  src/declarations/internet_identity/internet_identity.did
 ```
-
-With that done, we can now deploy our marketplace canister. Run the following command:
-
-```bash
-dfx deploy dfinity_js_backend
-
-```
-
-This command will deploy the marketplace canister to our local replica and also create a Candid interface for our canister. This interface will be used to interact with our canister through the generated interface.
-
-If you are running this command for the first time, it may take a while to deploy. This is because the dfx command line tool needs to build your canister before deploying it. This may take a few minutes.
-
-After running the command, you should see a similar output:
-
-```bash
-Deploying: dfinity_js_backend
-All canisters have already been created.
-Building canisters...
-Executing 'npx azle dfinity_js_backend'
-
-Building canister dfinity_js_backend
-
-Done in 77.39s
-
-🎉 Built canister dfinity_js_backend at .azle/dfinity_js_backend/dfinity_js_backend.wasm
-
-Installing canisters...
-Upgrading code for canister dfinity_js_backend, with canister ID be2us-64aaa-aaaaa-qaabq-cai
- Deployed canisters.
-URLs:
-  Frontend canister via browser
-    dfinity_js_frontend: http://127.0.0.1:4943/?canisterId=br5f7-7uaaa-aaaaa-qaaca-cai
-  Backend canister via Candid interface:
-    dfinity_js_backend: http://127.0.0.1:4943/?canisterId=bnz7o-iuaaa-aaaaa-qaaaa-cai&id=be2us-64aaa-aaaaa-qaabq-cai
-    internet_identity: http://127.0.0.1:4943/?canisterId=bnz7o-iuaaa-aaaaa-qaaaa-cai&id=bd3sg-teaaa-aaaaa-qaaba-cai
-    ledger_canister: http://127.0.0.1:4943/?canisterId=bnz7o-iuaaa-aaaaa-qaaaa-cai&id=ryjl3-tyaaa-aaaaa-aaaba-cai
-```
-
-Next, let us go ahead and generate the declaration files for our canisters. Run the following command:
-
-```bash
-dfx generate dfinity_js_backend
-```
-
-After running the command, you should see a similar output:
-
-```bash
-Generating type declarations for canister dfinity_js_backend:
-  src/declarations/dfinity_js_backend/dfinity_js_backend.did.d.ts
-  src/declarations/dfinity_js_backend/dfinity_js_backend.did.js
-  src/declarations/dfinity_js_backend/dfinity_js_backend.did
- ```
-
-After running the command, your folder structure should look like this:
+After running the command, your folder structure should look like this as it also generates the type declarations for the canister:
 
 ```bash
 ├── src
@@ -1136,6 +1101,21 @@ After running the command, your folder structure should look like this:
 │   │   │   ├── components
 
 ```
+
+We are almost done. Go ahead and deploy the backend canister with the following command
+
+```bash
+./deploy-local-backend-canister.sh
+```
+If running for the first time, this may take a while.
+After running the command, you should see a similar output:
+
+```bash
+Generating type declarations for canister dfinity_js_backend:
+  src/declarations/dfinity_js_backend/dfinity_js_backend.did.d.ts
+  src/declarations/dfinity_js_backend/dfinity_js_backend.did.js
+  src/declarations/dfinity_js_backend/dfinity_js_backend.did
+ ```
 
 **Note: Do not forget to run dfx generate dfinity_js_backend anytime you add/remove functions in the canister or when you change the signatures. Otherwise, these changes won't be reflected in IDL's and won't work when called using the JS agent.**
 
@@ -1183,6 +1163,14 @@ You can open the frontend in your browser by clicking on the localhost link prov
   Frontend canister via browser
     dfinity_js_frontend: http://127.0.0.1:4943/?canisterId=br5f7-7uaaa-aaaaa-qaaca-cai
 ```
+
+
+**Note**: If you are on codespaces, you need to run the 'canister_urls.py' script with the following comamand
+
+```
+./canister_urls.py
+```
+Then click the links it generates for you to view your deployed application
 
 ## 5. Conclusion
 In this tutorial, we've explored the process of building a decentralized marketplace on the Internet Computer. We've covered the basics of creating a marketplace canister, including the creation of products, listing products, and purchasing products. We've also explored the process of creating a frontend application that interacts with the marketplace canister. We've covered the basics of user authentication, product listing, and purchasing products.
