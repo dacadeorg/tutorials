@@ -18,6 +18,7 @@ Here are the technologies we will be using in this tutorial:
 - **Internet Computer Protocol (ICP)**: The core platform for deploying the chatbot, providing a decentralized infrastructure.
 - **JavaScript/TypeScript**: Used for the development of the chatbot, leveraging modern web development practices.
 - **Node.js**: The runtime environment for executing the JavaScript code outside of a browser.
+- **Express**: Node.js web application framework that provides a robust set of features for web and mobile applications, APIs.
 - **DFINITY Canister SDK**: A toolkit for building and deploying applications on the Internet Computer.
 - **Internet Identity**: A decentralized identity management system for the Internet Computer.
 - **OpenAI API**: Utilized for AI functionalities within the chatbot.
@@ -45,28 +46,19 @@ In this chapter, we'll guide you through setting up the TypeScript AI Chatbot pr
 First, you need to clone the repository containing the project's code. Open your terminal and run the following command:
 
 ```bash
-git clone https://github.com/Jonath-z/assistant-deBot.git
+git clone https://github.com/Jonath-z/Decentralized-bot
 ```
 
 ### 2.2 Setting Up Credentials
 
-The chatbot uses the OpenAI API, which requires API credentials. You need to create a **`credential.js`** file in the root directory with your OpenAI API key and the assistant ID. Follow these steps:
+The chatbot uses the OpenAI API, which requires API credentials.
 
-1.  Copy the **`credential.example.js`** file and rename the copy to **`credential.js`**.
-2.  Open **`credential.js`** and set your OpenAI API key and assistant ID:
-    `jsx
-export const OPEN_AI_API_KEY = "YOUR_OPEN_AI_API_KEY";
-export const ASSISTANT_ID = "YOUR_ASSISTANT_ID";
-`
-    Replace **`YOUR_OPEN_AI_API_KEY`** and **`YOUR_ASSISTANT_ID`** with your actual OpenAI API key and assistant ID, respectively.
-
-- You can find your OpenAI API key and assistant ID in the interface of your OpenAI account. If you don't have an account yet, you can create one [here](https://platform.openai.com/).
+- You can find your OpenAI API key in the interface of your OpenAI account. If you don't have an account yet, you can create one [here](https://platform.openai.com/).
 - The API key can be found in the [API keys](https://platform.openai.com/api-keys) page of your account.
-- You can find the assistant ID in the assistant's page [here](https://platform.openai.com/assistants). Navigate to your assistant and copy the id from under the assistant's name, it will look like this: "asst_I5U3ic2gLfMuIK4D2LDwdxH0".
 
 ### 2.3 Installing DFX
 
-The DFINITY Canister SDK (DFX) is a toolkit for building and deploying applications on the Internet Computer. We will be using DFX to deploy the chatbot on the Internet Computer Protocol. Follow the instructions [here](https://internetcomputer.org/docs/current/developer-docs/setup/install#installing-the-ic-sdk-1) to install DFX on your machine. Make sure to install the latest version of DFX, currently **`0.15.*`**.
+The DFINITY Canister SDK (DFX) is a toolkit for building and deploying applications on the Internet Computer. We will be using DFX to deploy the chatbot on the Internet Computer Protocol. Follow the instructions [here](https://internetcomputer.org/docs/current/developer-docs/setup/install#installing-the-ic-sdk-1) to install DFX on your machine. Make sure to install the latest version of DFX, currently **`0.17.*`**.
 
 Once the installation is complete, run the following command to verify that DFX is installed correctly:
 
@@ -114,7 +106,7 @@ You can now access the chatbot at the URL of the frontend canister. In this case
 
 Now that the chatbot is running locally, you can test it. First, you need to log in to the chatbot using the Internet Identity. Click on the **`Login`** button and follow the instructions to log in. You may need to create a new Internet Identity, but since we are running it locally, this is goes very quickly.
 
-Once you are logged in, you can start chatting with the assistant. Depending on your assistant's configuration, you may need to ask a specific question to get a response. For example, if your assistant is configured to answer questions about cooking, you can ask it **`How do I make a pizza?`**. The assistant will then respond with an answer.
+Once you are logged in, you can start chatting with the bot.
 
 ## 3. Exploring the Code
 
@@ -127,7 +119,6 @@ The project is structured as follows:
 ```bash
 ├── .gitignore
 ├── README.md
-├── credential.js
 ├── deploy-local-ledger.sh
 ├── dfx.json
 ├── package-lock.json
@@ -141,7 +132,6 @@ src/
 
 The most important files and directories are:
 
-- **`credential.js`**: Contains the OpenAI API key and assistant ID. We have created this file in the previous chapter.
 - **`deploy-local-ledger.sh`**: A shell script for deploying the canisters to the local network.
 - **`dfx.json`**: The configuration file for DFX. It contains the configuration for the canisters and the local network.
 - **`dfinity_js_backend`**: The directory containing the source code of the backend canister.
@@ -149,120 +139,129 @@ The most important files and directories are:
 
 ### 3.2 Backend Canister
 
-The backend canister is responsible for communicating with the OpenAI API and providing the frontend canister with the response. It is written in TypeScript and uses the DFINITY Canister SDK to communicate with the Internet Computer Protocol. The backend canister is located in the **`dfinity_js_backend`** directory.
+The backend canister is responsible for storing the chat history. It is written in TypeScript and uses the DFINITY Canister SDK to communicate with the Internet Computer Protocol. The backend canister is located in the **`dfinity_js_backend`** directory.
 
 The structure of the backend canister is as follows:
 
 ```bash
 src/
-    dfinity_js_backend/
-        ├── assistant.ts
+    dfinity_js_backend/src
         ├── index.did
         ├── index.ts
-        ├── user.ts
-        models/
-            ├── assistant.ts
-            ├── error.ts
+        utils/
+            ├── ai.ts
 ```
 
-#### 3.2.1 `assistant.ts`
+#### 3.2.1 `index.ts`
 
-We are looking at the **`assistant.ts`** file located in the **`dfinity_js_backend`** directory. This file contains the code for the **`Assistant`** class, which is responsible for managing the assistant and its interactions with the user. The class contains methods for retrieving the assistant's ID, saving a thread, retrieving a thread, and deleting a thread. It also contains methods for checking if a thread exists for a given user identity.
+We are looking at the **`index.ts`** file located in the **`dfinity_js_backend/src`** directory. This file contains the code which is responsible for managing the routes calls and saving the messages.
+It contains routes for creating a conversation, add a message in a conversation deleting the conversation, as well as retreiving the conversation.
 
-```jsx
-import {
-  update,
-  text,
-  Ok,
-  Err,
-  Result,
-  StableBTreeMap,
-  query,
-  bool,
-} from "azle";
-import { ErrorResponse } from "./models/error";
-import { CreateThead, Thread } from "./models/assistant";
+```ts
+import { StableBTreeMap, Server } from "azle";
+import { v4 as uuidv4 } from "uuid";
+import { systemMessage } from "./utils/ai";
+import express, { Request, Response } from "express";
+import cors from "cors";
 ```
 
-The file starts by importing necessary functions and types from **`azle`**, a library for building decentralized applications on the Internet Computer Protocol
-in TypeScript. It also imports models such as **`ErrorResponse`** and thread-related structures (**`CreateThead`**, **`Thread`**) for data handling.
+The file starts by importing necessary functions from **`azle`**, a library for building decentralized applications on the Internet Computer Protocol
+in TypeScript. It also imports **`express`** a Node.js framework that provides a set of features for building web and mobile applications.
+Last, it imports **`cors`** a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 
-```jsx
-const threadStorage = StableBTreeMap(text, CreateThead, 4);
+```ts
+type Message = {
+  role: string;
+  content: string;
+  id: string;
+};
+
+type ConversationPayload = { userIdentity: string };
+
+type AddMessgeToConversationPayload = {
+  userIdentity: string;
+  conversationId: string;
+  message: Partial<Message>;
+};
+
+type Conversation = {
+  id: string;
+  conversation: Message[];
+};
+
+type ErrorMessage = { message: string };
 ```
 
-Next, the file initializes **`threadStorage`** as a **`StableBTreeMap`**, a data structure used for storing threads. The map is keyed by `text` and contains `CreateThead` values. The map is initialized with a capacity of 4.
+In this file, we aslo defines all the models for the data that will be used in our express canister,
+**`Message`** for the message, **`Conversation`** for the conversation, **`ErrorMessage`** for the error message that will be sent to the frontend in case of an error, **`ConversationPayload`** the payload model for creating a new conversation, **`AddMessgeToConversationPayload`** the payload model for adding a new message in a conversation.
 
-```jsx
-class Assistant {
-  getAssistant(assistantId: string) {
-    return query([], Result(text, ErrorResponse), () => {
-      return Ok(assistantId);
-    });
+```ts
+const userConversation = StableBTreeMap<string, Conversation>(0);
+```
+
+Next, the file initializes **`userConversation`** as a **`StableBTreeMap`**, a data structure used for storing conversations. The map is keyed by `string` and contains `Conversation` values. The map is initialized with an memory id of 0.
+
+```ts
+export default Server(() => {
+  const app = express();
+  app.use(express.json());
+  app.use(cors());
+
+  ...
+})
+```
+
+The code exports a default function **`Server`** a function imported from azle for building canisters that act as HTTP servers on ICP. These servers can serve static files or act as API backends, or both.
+Inside this function, the server is defined along with its routes.
+
+Here, **`express()`** creates an Express application. **`express.json()`** middleware is used to parse incoming JSON payloads. **`cors()`** middleware is used to enable Cross-Origin Resource Sharing (CORS), allowing the server/canister to handle requests from different origins.
+
+```ts
+app.put("/conversation", (req: Request, res: Response) => {
+  const conversationPayload = req.body as ConversationPayload;
+  if (!conversationPayload) {
+    return res.status(400).json({ message: "Invalid conversation payload" });
   }
+
+  // Generate unique IDs for message and conversation
+  const message = { ...systemMessage, id: uuidv4() };
+  const conversation = { id: uuidv4(), conversation: [message] };
+
+  // Insert the conversation into storage
+  userConversation.insert(conversationPayload.userIdentity, conversation);
+
+  // Respond with the created conversation
+  return res.status(200).json({
+    conversation,
+    id: conversation.id,
+    initiator: conversationPayload.userIdentity,
+  });
+});
 ```
 
-The **`Assistant`** class encapsulates various methods for managing threads and interactions with the assistant. The **`getAssistant`** method retrieves an assistant's ID. It uses a **`query`** function, indicating that it fetches data without modifying the state.
+This endpoint is used to create a new conversation. It expects a JSON payload containing information about the conversation (**`conversationPayload`**). It creates a system message with a unique ID, creates a conversation object with a unique ID containing this message, and then stores this conversation in **`userConversation`** storage. Finally, it responds with the created conversation object.
 
-```jsx
-  saveThread() {
-    return update(
-      [text, Thread],
-      Result(Thread, ErrorResponse),
-      async (userIdentity, thread) => {
-        if (!userIdentity || !thread || typeof thread !== "object") {
-          return Err({
-            error: { message: "userIdentity and thread can not be empty" },
-          });
-        }
-
-       // Support one thread for now, can add multiple threads support
-        const hasASavedThread = this.hasASavedThread_(userIdentity);
-        if (hasASavedThread) {
-          const thread = threadStorage.get(userIdentity.trim());
-          return Ok(thread.Some.thread);
-        }
-
-        const threadToSave: typeof CreateThead = {
-          thread,
-        };
-
-        threadStorage.insert(userIdentity, threadToSave);
-        return Ok(threadToSave.thread);
-      }
-    )
-  }
-```
-
-The **`saveThread`** method is responsible for saving a thread.
-It checks whether a saved thread exists for the given **`userIdentity`** by calling the **`this.hasASavedThread_`** method. If a saved thread is found, it retrieves and returns the thread.If no saved thread is found, the code prepares a **`threadToSave`** object of type CreateThead, wraps it in an object, and inserts it into **`threadStorage`** using **`threadStorage.insert(userIdentity, threadToSave)`**.
-
-There are additional methods for retrieving, and deleting threads, we will not be going over them in this tutorial.
+There are additional routes for retrieving, and deleting conversation, we will not be going over them in this tutorial.
 
 #### 3.2.2 `index.did`
 
 This file contains the interface for the backend canister. It defines the service provided by the canister and the methods it exposes. The file is written in Candid, an interface description language for the Internet Computer Protocol. This file automatically generated by DFX when you deploy the canister. If you want to learn more follow the Typescript Smart Contract 101 tutorial [here](https://dacade.org/communities/icp/courses/typescript-smart-contract-101).
 
-#### 3.2.3 `index.ts`
+#### 3.2.3 `utils/ai.ts`
 
-The **`index.ts`** file contains the code for the backend canister.
-This file is responsible for initializing the canister and exposing the service defined in the **`index.did`** file.
+The **`ai.ts`** file contains and export a message object that set the system message for the bot.
 
-#### 3.2.4 `user.ts`
-
-The **`user.ts`** file contains the code for the **`User`** class, which is responsible for managing user identities. The class contains methods for retrieving a username and updating a username. It also contains a method for checking if a username exists for a given user identity.
-
-#### 3.2.5 `models/assistant.ts`
-
-The **`assistant.ts`** file contains models for data handling. The file contains models for saving an assistant, a thread, and creating a thread. These models are used by the **`Assistant`** class.
-
-#### 3.2.6 `models/error.ts`
-
-The **`error.ts`** file contains the **`ErrorResponse`** model, which is used for returning error messages. The model is used by the **`Assistant`** class.
+```ts
+export const systemMessage = {
+  role: "system",
+  content:
+    "Hello! 👋 I'm a decentralized chatbot deployed on ICP (Internet Computer Protocol) blockchain",
+};
+```
 
 ### 3.3 Frontend Canister
 
-The frontend canister is responsible for providing the user interface for the chatbot. It is written in TypeScript and uses the DFINITY Canister SDK to communicate with the Internet Computer Protocol. The frontend canister is located in the **`dfinity_js_frontend`** directory.
+The frontend canister is responsible for providing the user interface for the chatbot. It is written in JavaScript and uses the JavaScript **`fetch`** API to communicate with the Backend canister. The frontend canister is located in the **`dfinity_js_frontend`** directory.
 
 The structure of the frontend canister is as follows:
 
@@ -275,16 +274,15 @@ The structure of the frontend canister is as follows:
                 ...
                 components/
                 ...
-                context/
-                    ├── assistantProvider.js
-                    ├── userProvider.js
+                hooks/
+                    ├── useApi.js
                 utils/
-                    ├── assistantCanister.js
                     ├── auth.js
                     ├── canisterFactory.js
                     ├── chat.js
                     ├── icp.js
                     ├── localStorageController.js
+                    ├── encryptData.js.js
 ```
 
 The most important files and directories are:
@@ -292,89 +290,206 @@ The most important files and directories are:
 - **`src/App.js`**: The main file of the frontend canister. It contains the code for the chatbot's user interface.
 - **`src/index.js`**: The entry point of the frontend canister. It contains the code for initializing the canister and rendering the chatbot's user interface.
 - **`src/components`**: The directory containing the React components of the chatbot. We will not be going over them here, they should be pretty straightforward.
-- **`src/context`**: The directory containing the React contexts of the chatbot. We will be going over them in the next section.
+- **`src/hooks`**: The directory containing the custom hook for managing API calls. We will be going over them in the next section.
 - **`src/utils`**: The directory containing utility functions for the chatbot. We will be going over them in a later section.
 
-#### 3.3.1 `context/assistantProvider.js`
+#### 3.3.1 `hooks/useApi.js`
 
-The **`assistantProvider.js`** file contains the code for the **`AssistantProvider`** component, which is responsible for managing the assistant and its interactions with the user. It uses the **`AssistantContext`** context to provide the assistant and thread to its children. It also uses the **`UserContext`** context to retrieve the user identity.
+```ts
+import { useState, useCallback } from "react";
+import toast from "react-hot-toast";
+import { addMessageToConversation } from "../utils/chat";
+import { decryptData } from "../utils/encryptData";
 
-#### 3.3.2 `context/userProvider.js`
+const useApi = () => {
+  const [data, setData] = useState("");
+  const [chatMessage, setChatMessage] = useState([]);
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const OPEN_AI_API_KEY = () =>
+    decryptData(localStorage.getItem("icp-dai-open-ai"));
 
-The **`userProvider.js`** file contains the code for the **`UserProvider`** component, which is responsible for managing the user identity and its interactions with the assistant. It uses the **`UserContext`** context to provide the user identity to its children.
+  const chatCompletion = useCallback(async (payload) => {
+    const url = "https://api.openai.com/v1/chat/completions";
+    setLoading(true);
+    try {
+      await addMessageToConversation(payload.at(-1));
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + OPEN_AI_API_KEY()?.split('"')[1],
+        },
+        body: JSON.stringify({
+          messages: payload.map((message) => ({
+            content: message.content,
+            role: message.role,
+          })),
+          model: "gpt-3.5-turbo",
+          temperature: 1,
+        }),
+      });
 
-#### 3.3.3 `utils/assistantCanister.js`
+      const result = await response.json();
 
-The **`assistantCanister.js`** file contains functions for communicating with the backend canister. It uses the **`window.canister`** object to access the backend canister. The file contains functions for retrieving the assistant, saving a thread, retrieving a thread, deleting a thread, and checking if a thread exists for a given user identity.
+      if (response.status !== 200) {
+        const message = result.error.message;
+        toast.error(message);
+        throw new Error(message);
+      }
 
-#### 3.3.4 `utils/auth.js`
+      const assistantContent = result.choices[0].message.content;
+      const messageToSaveFromAssistant = {
+        content: assistantContent,
+        role: "assistant",
+      };
+      setChatMessage((prev) => [...prev, messageToSaveFromAssistant]);
+      await addMessageToConversation(messageToSaveFromAssistant);
+      setData(assistantContent);
+      setError(null);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  }, []);
+
+  return {
+    data,
+    error,
+    loading,
+    chatCompletion,
+    uploading,
+    setData,
+    chatMessage,
+    setChatMessage,
+  };
+};
+
+export default useApi;
+```
+
+The **`useApi.js`** file contains a custom hook with functions and states for managing API calls. This file is responsible for managing the communication between the frontend application and an external API, specifically the OpenAI API and the backend canister in this case.
+
+This is the break down the functionality provided by this hook:
+
+1. **State Management**: The hook utilizes the `useState` hook from React to manage various states such as `data`, `chatMessage`, `error`, `loading`, and `uploading`. These states are used to track data received from the API, chat messages exchanged between the user and the AI model, error messages, and loading/uploading statuses.
+
+2. **API Interaction**: The `chatCompletion` function is a callback function created using the `useCallback` hook. It handles the completion of chat messages by sending a payload containing the user's messages to OpenAI API. Upon receiving a response from the API, it processes the data and updates the state accordingly.
+
+3. **Error Handling**: Error handling is implemented within the `try...catch` block. If there's an error during the API call, it sets the appropriate error state and notifies the user via a toast notification.
+
+4. **Local Storage Interaction**: The hook interacts with local storage to retrieve an API key required for authorization to OpenAI API. It utilizes encryption and decryption functions (`decryptData`) to secure the API key stored in local storage.
+
+5. **Updating Chat Messages**: Upon successful completion of the chat interaction with the OpenAI API, the hook updates the chat message state with the response from the AI model. It also saves the exchanged messages to the conversation in the backend canister using the `addMessageToConversation` utility function.
+
+#### 3.3.2 `utils/auth.js`
 
 The **`auth.js`** file contains functions for managing the user's authentication. It uses the **`@dfinity/auth-client`** library to handle authentication. The file contains functions for logging in and logging out.
 
-#### 3.3.5 `utils/canisterFactory.js`
+#### 3.3.3 `utils/canisterFactory.js`
 
 The **`canisterFactory.js`** file contains functions for creating canister actors. It uses the **`@dfinity/agent`** library to create canister actors. The file contains a function for creating a canister actor for the chatbot canister. A canister actor is an object that allows you to call methods on a canister.
 
 #### 3.3.6 `utils/chat.js`
 
-The **`chat.js`** file contains functions for communicating with the OpenAI API. It uses the **`openai`** library to communicate with the OpenAI API. The file contains functions for creating a thread, saving a thread, retrieving a thread, creating a message, retrieving all messages, and analyzing runs steps.
+The **`chat.js`** file contains functions for interacting with a backend server to manage conversations.
 
-```jsx
-const openai = new Openai({
-  apiKey: OPEN_AI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
+```ts
+import { localStorageController } from "./localStorageController";
 ```
 
-We are using the **`openai`** library to communicate with the OpenAI API. The library is initialized with the OpenAI API key and the **`dangerouslyAllowBrowser`** flag set to **`true`**. This flag allows the library to be used in the browser, which is not recommended in a production environment.
+We are using the **`localStorageController`**. This function is used to interact with the local storage of the browser.
 
 ```jsx
-export const runTheAssistantOnTheThread = async (threadId, assistantId) => {
+const baseUrl = "http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943";
+const endpoints = {
+  createConversation: "conversation",
+  addMessageToConversation: "add/conversation",
+  getConversation: (userIdentity) => `conversation/${userIdentity}`,
+  deleteConversation: (userIdentity) => `conversation/${userIdentity}`,
+};
+```
+
+Here we define some constants like **`baseUrl`** and **`endpoints`**. **`baseUrl`** specifies the base URL of the backend canister, and **`endpoints`** contains various endpoint URLs for different operations related to conversations.
+
+```ts
+export async function createConversation(userIdentity) {
   try {
-    const run = await openai.beta.threads.runs.create(threadId, {
-      assistant_id: assistantId,
+    const response = await fetch(`${baseUrl}/${endpoints.createConversation}`, {
+      method: "PUT",
+      headers: [["Content-Type", "application/json"]],
+      body: JSON.stringify({ userIdentity }),
     });
-    return run.id;
-  } catch (e) {
-    console.log(e);
+
+    if (!response.ok) {
+      throw await response.json();
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.log(error);
   }
-};
+}
 ```
 
-The **`runTheAssistantOnTheThread`** function runs the assistant on a given thread. It takes a thread ID and an assistant ID as inputs. It uses the **`openai.beta.threads.runs.create`** function to run the assistant on the thread. It then returns the run ID. Which is needed to retrieve the assistant's response.
-
-We then have functions for creating a thread, saving a thread, retrieving a thread, creating a message, retrieving all messages, and analyzing runs steps.
+This function is used to create a new conversation.It sends a PUT request to the server with the logged in **`userIdentity`** in the request body. If the response is successful (status code 200), it returns the JSON response. Otherwise, it logs the error to the console.
 
 ```jsx
-export const analyseRunsStepsDone = async (threadId, runId) => {
-  const runStep = await openai.beta.threads.runs.steps.list(threadId, runId);
-  const completedStep = runStep.data.find(
-    (step) => step.status === "completed"
-  );
+export async function addMessageToConversation(message) {
+  try {
+    const userIdentity = window.auth.principalText;
+    const conversationId = localStorageController("conversation")?.id;
 
-  if (completedStep) {
-    return true;
-  } else {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    return await analyseRunsStepsDone(threadId, runId);
+    const response = await fetch(
+      `${baseUrl}/${endpoints.addMessageToConversation}`,
+      {
+        method: "POST",
+        headers: [["Content-Type", "application/json"]],
+        body: JSON.stringify({
+          userIdentity,
+          conversationId,
+          message,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw await response.json();
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.log(error);
   }
-};
+}
 ```
 
-The **`analyseRunsStepsDone`** function analyzes the steps of a run. It takes a thread ID and a run ID as inputs. It uses the **`openai.beta.threads.runs.steps.list`** function to retrieve the steps of the run. It then checks if the run is completed. If it is, it returns **`true`**. If not, it waits for 3 seconds and calls itself again.
+It retrieves the **`userIdentity`** from the authentication mechanism (**`window.auth.principalText`**) and the **`conversationId`** from the local storage. Then, it sends a POST request to add the message to the conversation. If successful, it returns the JSON response. Otherwise, it logs the error.
 
-```jsx
-export const retreiveAssistantFromOpenai = async (assistantid) => {
-  const assistant = await openai.beta.assistants.retrieve(assistantid);
-  return assistant;
-};
-```
-
-The **`retreiveAssistantFromOpenai`** function retrieves an assistant from the OpenAI API. It takes an assistant ID as input. It uses the **`openai.beta.assistants.retrieve`** function to retrieve the assistant. It then returns the assistant.
+There are more functions in this file, for deleting and retreiving the conversation that we will not cover in this section.
 
 #### 3.3.7 `utils/icp.js`
 
-The **`icp.js`** file contains functions for initializing the canister and the authentication client. It uses the **`@dfinity/agent`** library to create canister actors. The file contains a function for creating a canister actor for the chatbot canister. A canister actor is an object that allows you to call methods on a canister.
+The **`icp.js`** file contains functions for initializing the canister and the authentication client.
+
+```ts
+import { getAuthClient } from "./auth";
+...
+
+export async function initializeContract() {
+  const authClient = await getAuthClient();
+  window.auth = {};
+  window.canister = {};
+  window.auth.client = authClient;
+  window.auth.isAuthenticated = await authClient.isAuthenticated();
+  window.auth.identity = authClient.getIdentity();
+  window.auth.principal = authClient.getIdentity()?.getPrincipal();
+  window.auth.principalText = authClient.getIdentity()?.getPrincipal().toText();
+  ...
+}
+```
 
 #### 3.3.8 `utils/localStorageController.js`
 
