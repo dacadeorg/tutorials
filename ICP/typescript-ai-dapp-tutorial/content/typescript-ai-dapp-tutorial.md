@@ -37,6 +37,8 @@ Here are the technologies we will be using in this tutorial:
 3. **Exploring the Code**: We will be exploring the code of the project and discussing the architecture of the chatbot and looking into the most important files.
 4. **Conclusion**: We will be concluding the tutorial and discussing next steps.
 
+If you want to skip the tutorial and jump straight into the code, you can access the final code for this tutorial in the Course Repo repository [here](https://github.com/Jonath-z/Decentralized-bot)
+
 ## 2. Setting Up the Project
 
 In this chapter, we'll guide you through setting up the TypeScript AI Chatbot project. This process includes cloning the project repository, installing necessary dependencies, and preparing your development environment. Follow these steps to ensure a smooth setup.
