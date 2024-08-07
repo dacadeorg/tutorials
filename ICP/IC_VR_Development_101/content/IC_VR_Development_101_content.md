@@ -49,7 +49,7 @@ This section will provide an overview of the tutorial, including what you will l
 4. [Deploying VR experience on the ICP canister](#4-deploying-vr-experience-on-the-icp-canister) (40min) - In this section you will learn how to set up the development environment for ICVR-canister template and how to deploy VR experience on the ICP canister.
 
 
-5. [Conclusions](#5-conclusions) (5min) - Finally we will conclude this tutorial and provide you with some ideas on how to continue.
+5. [Conclusion](#5-conclusion) (5min) - Finally we will conclude this tutorial and provide you with some ideas on how to continue.
 
 
 <br clear>
@@ -556,7 +556,7 @@ dfx deploy --network ic
 
 <br clear>
 
-## 5. Conclusions
+## 5. Conclusion
 In this tutorial you went through the process of building a unique VR experience on the Internet Computer. You've learned key concepts related to the Internet Computer and canisters and you have gone through the steps to set up your development environment and create your unique VR space in Unity game engine.
 
 By working through this tutorial, you have gained hands-on experience with the ICVR framework, one of the many tools available for building applications on the Internet Computer. This knowledge is a stepping stone for building more complex and robust VR experiences on this emerging platform.
