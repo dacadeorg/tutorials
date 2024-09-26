@@ -114,45 +114,36 @@ Code for this section:
 [Link to code](https://github.com/dacadeorg/celo-development-101/tree/main/code/celo101-code-chapter_2/2-3-read-and-write-functions/marketplace.sol)
 
 
-## 2.4 Save multiple Products with Mappings (5 min)
+## 2.4 Save multiple Products with Arrays (5 min)
 In your current contract, you can only store one product.
 In this section, you will learn how to store multiple products.
 
-First, remove the state variable product. You will use mapping instead.
+First, remove the state variable product. You will use an array of strings instead.
 
 ```solidity
 contract Marketplace {
 
-    mapping (uint => string) internal products;
+    string[] public products;
 ```
 
-Mappings can map keys to values. You will get a collection of key-value pairs, so you can handle multiple products. You can access the value of the product through their key ([Learn more about mappings](https://docs.soliditylang.org/en/latest/types.html#mappings)).
+This allows us to store string values in our products array. We will also give it a `public` visibility, this will automatically give us a getter function to fetch our products without having to create a `readProduct` function.
 
-To create a mapping you use the keyword `mapping` and assign a key type to a value type. You will use an unsigned integer (non-negative), an `uint` as the key type for the index and a `string` type for the value, your product. You need to define the visibility, in this case, `internal` and a name for the mapping. You can call it `products`.
+By default, the items in our array will start at index 0. So the first product will be at index 0, the second at index 1, and so on. This will come in handy when we want to fetch a specific product from the array.
 
 Now you need to adapt your `writeProduct` function.
 
 ```solidity
-function writeProduct(uint _index, string memory _product) public {
-	products[_index] = _product;
+function writeProduct(string memory _product) public {
+	products.push(_product);
 }
 ```
+The function basically receives the product as a parameter and pushes it to our product array.
 
-First, you need a new parameter for the index. The type is a `uint` and you name it `_index`.
-In the next line, create a new key-value pair for the products mapping, by mapping the key `_index` to the value `_product`.
-
-Now you need to change the `readProduct` function as well.
-
-```solidity
-function readProduct(uint _index) public view returns (string memory) {
-	return products[_index];
-}
-```
-
-Now, you need a parameter because you have multiple products, and you need to specify which one you want to return. The type of your new parameter is `uint` and, you call it `_index`. In the next line, return the value for your key `_index` from the products mapping.
+We do not need a `readProduct` function to get our products we saved in our products array. This is because we gave our product array a `public visibility`. This tells solidity to already create a getter function for us.
+To fetch the product, all you will to pass the index of the product you want to fetch.
 
 If you test it, it should look like this:
-![](https://cdn-celo-101-dacade.netlify.app/celo_2_4_save_multiple_products_with_mappings.gif)
+![](https://hackmd.io/_uploads/H1snkxMT2.gif)
 
 [Code for this section](https://github.com/dacadeorg/celo-development-101/tree/main/code/celo101-code-chapter_2/2-4-save-multiple-products-with-mappings/marketplace.sol)
 
