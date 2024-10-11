@@ -4,13 +4,6 @@
 
 Welcome to this tutorial on creating immersive VR spaces on the ICP platform using the ICVR open-source framework. This guide is crafted to introduce you to the process of setting up your development environment and mastering the fundamentals of building an interactive VR experience with the Unity game engine. By the end of this tutorial, you will possess a robust foundation in developing unique VR spaces tailored for the ICP platform.
 
-Jump straight into the code and start building 👉
-https://github.com/willguest/ICVR
-
-Follow ICVR twitter 👉
-https://twitter.com/ICVRhub
-
-
 ### Visit ICVR spaces made by others:
 
 #### 🏝️The Island Collective 👉 https://6ajqg-5qaaa-aaaak-qb6uq-cai.raw.ic0.app/
@@ -106,21 +99,21 @@ We will approach this task in 3 steps:
 5.	Click “Create project” and wait until it finishes loading.
 6.  Navigate to "File", then Build Settings.
 7.  Change the platform to WebGL and download and install the WebGL module.
-8.	Download ICVR_Core.unitypackage from the ICVR 1.1.0 release. 
-👉 https://github.com/willguest/ICVR/releases
-9.	Go back to Unity, click “Assets”, then "Import Package", and select "Custom Package".
-10.	Import ICVR_Core package.
-11.	Navigate to “Window”, then "WebXR", then "ICVR Setup".
-12.	Click "Set to WebGL".
-13.	Install packages Newtonsoft Json and WebXR Export.
-14.	Enable ICVR settings.
-15.	Tick each box one by one, then click “Apply All".
-16.	Navigate to Package Manager and find De-Panther WebXR Export.
-17.	Update WebXR Export to version 0.18.0.
-18.	Navigate to Project Settings, then XR Plug-in Management.
-19.	Enable WebXR Export (tick the box).
-20.	Open the "TestScene" (Main Assets folder / ICVR / Scenes).
-21.	You are now ready to build your first VR experience.
+8.	Visit 👉 https://github.com/ICVRhub/ICVR_Framework , navigate to "Releases" and download "Source_code.zip".
+9.  Extract the content of the zip file. Once completed, you should see three extracted files in the chosen location.
+10.	Go back to Unity, click “Assets”, then "Import Package", and select "Custom Package".
+11.	Import "ICVR_Core" package.
+12.	Navigate to “Window”, then "WebXR", then "ICVR Setup".
+13.	Click "Set to WebGL".
+14.	Install packages Newtonsoft Json and WebXR Export.
+15.	Enable ICVR settings.
+16.	Tick each box one by one, then click “Apply All".
+17.	Navigate to Package Manager and find De-Panther WebXR Export.
+18.	Update WebXR Export to version 0.18.0.
+19.	Navigate to Project Settings, then XR Plug-in Management.
+20.	Enable WebXR Export (tick the box).
+21.	Open the "TestScene" (Main Assets folder / ICVR / Scenes).
+22.	You are now ready to build your first VR experience.
 
 <br clear>
 
@@ -135,8 +128,9 @@ Unity stands out as a powerful platform for VR development, offering a wide rang
 
 ### 3.1	Build a VR space using ICVR pre-made scenes and prefabs
 In this video tutorial, you'll discover how to quickly construct a basic VR scene by leveraging ICVR's pre-designed scenes and prefabs. The process is straightforward:
-- Download ICVR_DLC.unitypackage from the ICVR 1.1.0 release. 
-👉 https://github.com/willguest/ICVR/releases
+- Visit 👉 https://github.com/ICVRhub/ICVR_Framework , navigate to "Releases", download "source_code.zip" and extract the content of the zip file (unless you've already performed these steps previously).
+- Go back to your Unity project, click “Assets”, then "Import Package", and select "Custom Package".
+- Import "ICVR_DLC" package.
 - Import a pre-made ICVR scene, which forms the backbone of your VR environment.
 - Use the ICVR prefabs by simply dragging and dropping them into your scene.
 
@@ -387,29 +381,25 @@ npm start
 
     <img src="https://i.imgur.com/522Rd3Y.png">
 
-9. Start a new, empty project directory (create an empty folder for your VR project) and open it in VS code.
-10.	Open a new terminal and import the ICVR-canister template with the following command:
-```bash
-npx degit willguest/icvr-react
-```
-11. Alternatively you can download the ICVR-canister v0.1.2 source code from here: 
-https://github.com/willguest/icvr-canister/releases
-12.	Verify you have installed all dependencies correctly with the following commands:
+9. Visit 👉 https://github.com/ICVRhub/ICVR_Framework , navigate to "Releases", download "source_code.zip" and extract the content of the zip file (unless you've already performed these steps previously).
+10.	Open Visual Studio Code, navigate to "File", then "Open Folder" and select "icvr-canister" folder.
+
+11. Add 5 unity_build items into the "Build" folder (src/assets/build).
+
+    <img src="https://i.imgur.com/oVDKTW8.png">
+
+12. Navigate to "Terminal", then "New Terminal".    
+13.	Verify you have installed all dependencies correctly with the following commands:
 ```bash
 dfx --version
 ```
 ```bash
 node –-version
 ```
-13.	Start DFX with the following command:
+14.	Start DFX with the following command:
 ```bash
 dfx start --clean --background
 ```
-
-14.	Add 5 unity_build items into the "Build" folder (src/assets/build).
-
-    <img src="https://i.imgur.com/oVDKTW8.png">
-
 15.	To deploy your VR project on the local network enter the following commands:
 ```bash
 npm run setup
@@ -562,9 +552,9 @@ In this tutorial you went through the process of building a unique VR experience
 By working through this tutorial, you have gained hands-on experience with the ICVR framework, one of the many tools available for building applications on the Internet Computer. This knowledge is a stepping stone for building more complex and robust VR experiences on this emerging platform.
 
 For additional resources, consider visiting the following:
-- ICVR GitHub 👉 https://github.com/willguest/ICVR
+- ICVR GitHub 👉 https://github.com/ICVRhub/ICVR_Framework
 - ICVR on Dacade Discord - connect with other VR builders 👉 https://discord.gg/6QRcKCszFq
-- ICVR Twitter 👉 https://twitter.com/ICVRhub
+- Follow Dacade on X: https://x.com/dacadeOrg
 - Dfinity's forum is a great place to ask questions, share your projects, and learn about what others are working on 👉 https://forum.dfinity.org/
 
 These platforms are filled with enthusiastic individuals and helpful resources that can further support your journey in building decentralized VR experiences on ICP. We look forward to seeing what you'll create!
