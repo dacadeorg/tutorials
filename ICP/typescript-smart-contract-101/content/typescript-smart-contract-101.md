@@ -47,7 +47,7 @@ Here are the key technologies and tools we'll be using:
 
 2. [Setup](#2-setup) (15 min) - This section will guide you through the necessary steps to set up your project.
 3. [Constructing the Messaging Canister](#3-constructing-the-messaging-canister) (45 min) - In this section, we will build a messaging canister with basic CRUD(Create, Read, Update Delete) functionality.
-4. [Deploying and Interacting with our Canister](#4-deploying-and-interacting-with-our-canister) (15 min) - In this section, we will interact with the messaging canister via our command line and the Candid web interface.
+4. [Deploying and Interacting with our Canister](#4-deploying-and-interacting-with-our-canister) (15 min) - In this section, we will interact with the messaging canister via our command line.
 5. [Conclusion](#5-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 ## 2. Setup
@@ -740,51 +740,6 @@ Where `d8326ec8-fe70-402e-8914-ca83f0f1055b` is the unique ID of the message you
 
 Try for yourself, to add, retrieve, update, and delete messages using the CLI.
 
-Now that we've covered the CLI, let's move on to the web interface.
-
-#### 4.3.2. **Getting a message with the web interface**
-Now we are using the web interface to get the message we just created. Let's invoke the `getMessage` function from our canister file.
-To view the message we just added, we can make use of the candid interface that was generated to us when we ran the  "dfx deploy" command.
-
-It should look something like this:
-```
-http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
-```
-
-Note: In Codespaces, the web interface might sometimes not be displayed correctly. In that case, you will need to use the CLI to interact with your canister.
-
-In the interface, click on the `getMessage` function. Then, enter the ID of the message you wish to retrieve. In this instance, we'll be retrieving the message we just created, hence we'll need to input the ID that we received from the `addMessage` function response. Please note, your message ID will differ from the example given here.
-
-After entering the ID, click on the `Call` button. If done correctly, you should receive a response similar to this:
-
-
-```Bash
-(
-  variant {
-    Ok = record {
-      id = "79daba82-18ce-4f69-afa1-7b3389368d1f";
-      attachmentURL = "url/path/to/some/photo/attachment";
-      title = "message list";
-      updatedAt = null;
-      body = "some important things";
-      createdAt = 1_685_568_853_915_736_000 : nat64;
-    }
-  },
-)
-```
-
-You can view a GIF illustrating this process of interacting with the web interface:
-![](https://hackmd.io/_uploads/HJNcuITI3.gif)
-
-Now you can use the web interface to interact with the same functions we used in the CLI.
-
-To conclude your work session, you can stop your local Azle replica by executing the following command in your terminal:
-
-```Bash
-dfx stop
-```
-
-This command will shut down your local replica. Remember to always stop your local replica when you're done working to free up system resources."
 
 ## 5. Conclusion
 In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters and then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
