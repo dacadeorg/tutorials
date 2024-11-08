@@ -6,17 +6,21 @@ Welcome to this ICP Azle Development 101 tutorial! This tutorial is designed to 
 If you want to skip the tutorial and jump straight into the code, you can access the final code for this tutorial in the [Course Repo](https://github.com/dacadeorg/icp-message-board-contract) repository.
 
 ## 1. Introduction
+
 In this section, we'll provide an overview of the tutorial, including what you'll learn, the prerequisites, and the tech stack. We'll also introduce you to Azle, the TypeScript framework we'll be using to build our canisters.
 
 ### 1.1 What you'll learn
+
 - Setting up your development environment: Understand the necessary tools for ICP development, such as Node.js, Node Version Manager (nvm), and DFX, and learn how to install and use them​.
 - Grasping the boilerplate code: Familiarize yourself with the essential files and configurations needed to start an Azle project on the ICP platform, including the `tsconfig.json`, `dfx.json`, and `package.json` files.
 - Building and interacting with a messaging canister: Learn how to construct a simple messaging canister that performs CRUD (Create, Read, Update, Delete) operations. You will also learn how to interact with the canister, calling its methods and handling responses. This knowledge will allow you to build a simple message board application, enabling users to create, update, delete, and view messages​.
 
 ### 1.2 What is a Canister?
+
 A canister is a fundamental building block and execution environment for deploying and running software applications on the Internet Computer Protocol (ICP) platform. Canisters bundle together code and state to create a secure and efficient execution environment. They are similar to smart contracts on other blockchain platforms. Canisters enable the development of scalable and decentralized applications, including DeFi platforms, social media applications, DAOs, and more.
 
 ### 1.3 What is Azle?
+
 Azle is a TypeScript Canister Development Kit (CDK) for the Internet Computer (IC). It provides a set of libraries and tools that make it easy to build and deploy canisters on the IC platform. Azle allows web developers to bring their TypeScript/JavaScript skills to the IC and use various npm packages and VS Code intellisense. In this tutorial, you will use Azle to create and deploy your canisters.
 
 It's important to note that Azle is currently in a beta development stage. This means while it offers a robust and valuable framework for development, it is continuously evolving and may undergo significant changes. As such, there may be occasional hiccups, and it doesn't yet have many live, successful, continuously operating applications deployed to the IC. We encourage all users to read the [disclaimer](https://demergent-labs.github.io/azle/azle.html#disclaimer).
@@ -24,18 +28,20 @@ It's important to note that Azle is currently in a beta development stage. This 
 If you want to learn more about Azle, check out the [Azle documentation](https://demergent-labs.github.io/azle/the_azle_book.html).
 
 ### 1.4 Prerequisites
+
 While having prior coding experience is necessary, you do not need to have any prior blockchain experience to follow this tutorial. However, we do recommend that you have the following:
 
 - **Knowledge of TypeScript and Node.js**: Familiarity with TypeScript and Node.js is vital, as the tutorial involves building an application using these technologies. If you're new to TypeScript or Node.js, consider going through basic tutorials for both.
 - **Text Editor**: You will need a text editor to write and edit code. Visual Studio Code is recommended due to its excellent support for TypeScript and Node.js development, but feel free to use a text editor of your choice.
-- **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 18 or higher) will be necessary for running the DFINITY SDK and the project itself."
+- **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 20 or higher) will be necessary for running the DFINITY SDK and the project itself."
 
 ### 1.5 Tech Stack
+
 Here are the key technologies and tools we'll be using:
 
 1.  Internet Computer Protocol (ICP): ICP is a decentralized computing platform that facilitates the creation of software, computation, and data that can run on the public internet. It's the platform we'll be building our application on.
 2.  Azle: Azle is a TypeScript framework for creating and managing smart contracts, or "canisters," on the Internet Computer Protocol (ICP).
-3.  Node.js: Node.js is a JavaScript runtime that allows for the execution of JavaScript outside of a web browser. We'll be using Node.js version 18 for this tutorial.
+3.  Node.js: Node.js is a JavaScript runtime that allows for the execution of JavaScript outside of a web browser. We'll be using Node.js version 20 for this tutorial.
 4.  Node Version Manager (nvm): Nvm is a tool that enables management and switching between different Node.js versions. We'll be using it to manage our Node.js environment.
 5.  DFX: DFX is the command-line interface for the Internet Computer. We'll be using it to create and manage our Azle project.
 6.  TypeScript: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. We'll be using it for writing our application's code, and our project will include a configuration file (`tsconfig.json`) for setting up the TypeScript compiler options.
@@ -51,6 +57,7 @@ Here are the key technologies and tools we'll be using:
 5. [Conclusion](#5-conclusion) (1 min) - Finally, we will conclude this tutorial and give you some ideas on how to continue.
 
 ## 2. Setup
+
 In this section, we will help you set up the boilerplate code for our project. By the end of this section, you'll have a development environment pre-configured with all the necessary tools and dependencies, and you'll be ready to start building your canisters.
 
 ### 2.1 Preparing your Development Environment
@@ -92,31 +99,36 @@ npm install
 This command will install all the necessary dependencies for the project. Once the installation is complete, you're ready to start building your canisters!
 
 ### 2.2 Preparing Our Terminal
+
 In this section, we will prepare our terminal environment by installing key tools: Node Version Manager (nvm) and DFX. Please note that the following instructions are specifically for Unix-like systems such as Linux and macOS. If you're on a Windows system, you would need to set up the Windows Subsystem for Linux (WSL) to follow along, or alternatively, you could use GitHub Codespaces. Let's get started.
 
-1. **Install Node Version Manager (nvm)**: Nvm is a useful tool that allows for the management of multiple active Node.js versions. With nvm, switching between different Node.js versions is a breeze. For this tutorial, we'll utilize Node.js version 18. To install nvm, execute the following command in your terminal:
+1. **Install Node Version Manager (nvm)**: Nvm is a useful tool that allows for the management of multiple active Node.js versions. With nvm, switching between different Node.js versions is a breeze. For this tutorial, we'll utilize Node.js version 20. To install nvm, execute the following command in your terminal:
+
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
 
 2. **Switch to Node.js version 20**: Node.js is a JavaScript runtime that enables the execution of JavaScript outside of a browser environment, and it's necessary for running our Azle project. To switch to Node.js version 18 using nvm, use the following command:
+
 ```bash
 nvm use 20
 ```
 
 ### 2.3.1 Installing DFX
+
 DFX is the command-line interface for the Internet Computer. It provides a set of tools for creating, deploying, and managing canisters.
 
 #### 2.3.1 Installing DFX on MacOS
 
 1. **Install Homebrew**: Homebrew is a package manager for macOS that simplifies the installation of software. To install Homebrew if you do not already have that setup, execute the following command in your terminal:
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-
 2. ** Update command line tools**:
-Go to the terminal and run the following command:
+   Go to the terminal and run the following command:
+
 ```
 xcode-select --install
 ```
@@ -132,7 +144,7 @@ brew install podman
 4. **Install DFX**:
 
 ```bash
-DFX_VERSION=0.16.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+DFX_VERSION=0.22.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
 5. **Add DFX to your PATH**:
@@ -150,18 +162,18 @@ dfx --version
 ```
 
 #### 2.3.1 Installing DFX on Ubuntu and WSL2
+
 1. **Run sudo installations**:
    Run the command below to install the necessary dependencies:
 
 ```bash
 sudo apt-get install podman
-
 ```
 
 Then continue from step 4 in the MacOS installation guide above.
 
-
 ### 2.3 Understanding the Boilerplate Code
+
 The boilerplate code we've prepared serves as a basic Azle project. It is designed to help you get started quickly by providing the necessary configuration files and dependencies. This code also includes a simple canister that serves as a reference for constructing your own canisters. Let's explore its key components:
 
 **1. TypeScript Configuration File** (`tsconfig.json`): Located in the root directory of your project, this file sets up the TypeScript compiler options. Here is what it looks like:
@@ -183,6 +195,7 @@ The boilerplate code we've prepared serves as a basic Azle project. It is design
 You can learn more about these options in the [TypeScript documentation](https://www.typescriptlang.org/tsconfig).
 
 **2. DFX Configuration File** (`dfx.json`): Also in the root directory, this file configures DFX and includes the following:
+
 ```JSON
 {
    "canisters": {
@@ -211,41 +224,40 @@ You can learn more about these options in the [TypeScript documentation](https:/
 
 This configuration file communicates vital aspects of your canister to the DFINITY SDK (dfx). Here, we're creating a `message_board` canister using the Azle framework. Let's break down the properties:
 
--   "canisters": The parent property for defining our canister, `message_board` in this case.
--   "message_board": The name of our canister, used for interacting with it.
--   "type": Describes the framework/language that is used in this canister. It can be Rust, Motoko, or custom (for Azle).
--   "build": Instructs DFX to use the Azle CLI to build the `message_board` canister.
--   "candid": Points DFX to our Candid file (`src/index.did`), an interface description language (IDL) used by Internet Computer.
--   "wasm": Directs DFX to our compiled WebAssembly (WASM) file (`.azle/message_board/message_board.wasm.gz`), a fast, efficient, and secure binary instruction format.
--  "gzip": Indicates that the WASM file should be compressed using gzip.
+- "canisters": The parent property for defining our canister, `message_board` in this case.
+- "message_board": The name of our canister, used for interacting with it.
+- "type": Describes the framework/language that is used in this canister. It can be Rust, Motoko, or custom (for Azle).
+- "build": Instructs DFX to use the Azle CLI to build the `message_board` canister.
+- "candid": Points DFX to our Candid file (`src/index.did`), an interface description language (IDL) used by Internet Computer.
+- "wasm": Directs DFX to our compiled WebAssembly (WASM) file (`.azle/message_board/message_board.wasm.gz`), a fast, efficient, and secure binary instruction format.
+- "gzip": Indicates that the WASM file should be compressed using gzip.
 - "metadata": Contains additional information about the canister, such as its Candid service and the name of the CDK (Canister Development Kit) used. This information is used by DFX to interact with the canister.
 
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
 ```JSON
-  {
-   "name": "message_board",
-   "version": "0.1.0",
-   "description": "Internet Computer message board application",
-   "dependencies": {
-      "@dfinity/agent": "^0.21.4",
-      "@dfinity/candid": "^0.21.4",
-      "azle": "^0.20.2",
-      "express": "^4.18.2",
-      "uuid": "^9.0.1"
-   },
-   "engines": {
-      "node": "^20"
-   },
-   "devDependencies": {
-      "@types/express": "^4.17.21"
-   }
+{
+  "name": "message_board",
+  "version": "0.1.0",
+  "description": "Internet Computer message board application",
+  "dependencies": {
+    "@dfinity/agent": "^0.21.4",
+    "@dfinity/candid": "^0.21.4",
+    "azle": "^0.24.1",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": "^20"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
 }
 
 ```
 
 This file is crucial for managing the project's dependencies and scripts. It contains information about the project such as its name, version, and main file. It also lists the dependencies and devDependencies needed for the project, specifying their versions:
-
 
 - `"azle"`: Azle is a framework for building decentralized applications on the Internet Computer. It provides tools and abstractions that make it easier to write, deploy, and interact with canisters.
 
@@ -254,6 +266,7 @@ This file is crucial for managing the project's dependencies and scripts. It con
 - The `scripts` section includes commands that can be run from the terminal, while the `engines` section specifies the versions of Node.js that the project is compatible with.
 
 ## 3. Constructing the Messaging Canister
+
 In this section, we're going to write our messaging canister. This canister is designed to handle the fundamental CRUD (Create, Read, Update, and Delete) operations, which are key to the functioning of any data-driven application. This functionality enables efficient data management within the canister. More specifically, we're going to use Azle to build a simple message board application, which will allow users to create, update, delete, and view messages.
 
 If you're familiar with TypeScript, you'll find the Azle syntax quite similar. But even if you're new to TypeScript, there's no need to worry - we'll be guiding you through the syntax as we proceed with the development.
@@ -267,16 +280,14 @@ After cloning the boilerplate code, we would see a folder called `src` with a fi
 To start, we need to incorporate several dependencies which our smart contract will make use of. Add the following lines of code at the top of your `index.ts` file:
 
 ```typescript
-import { v4 as uuidv4 } from 'uuid';
-import { Server, StableBTreeMap, ic } from 'azle';
-import express from 'express';
-
+import { v4 as uuidv4 } from "uuid";
+import { StableBTreeMap, ic } from "azle";
+import express from "express";
 ```
 
 Here's a brief rundown of what each of these imported items does:
 
--   `v4 as uuidv4`: This imports the `v4` function from the `uuid` package, which we'll use to generate unique identifiers for our messages.
--  `Server`: This is a class from Azle that represents the server for our canister. It allows us to define and run our canister's HTTP server.
+- `v4 as uuidv4`: This imports the `v4` function from the `uuid` package, which we'll use to generate unique identifiers for our messages.
 - `StableBTreeMap`: This is a data structure from Azle that we'll use to store our messages. It's a map that associates keys with values, allowing us to store and retrieve messages within our canister.
 - `ic`: This is an object from Azle that provides access to the Internet Computer's environment, including the ability to retrieve the current time.
 - `express`: This is a popular web framework for Node.js that we'll use to create our HTTP server.
@@ -304,44 +315,39 @@ class Message {
 
 This code block defines the 'Message' type, where each message is characterized by a unique identifier, a title, a body, an attachment URL, and timestamps indicating when the message was created and last updated.
 
-
 ### 3.4 Defining the Message Storage
 
 Now that we've defined our message types, we need a place to store these messages. For this, we'll be creating a storage variable in our `index.ts` file below the definition of the message payload type:
 
 ```
 const messagesStorage = StableBTreeMap<string, Message>(0);
-
 ```
 
 This line of code creates a new `StableBTreeMap` called `messagesStorage`. This map will store our messages, associating each message with a unique identifier. The `StableBTreeMap` is a data structure from Azle that provides a durable and efficient way to store and retrieve data within our canister. It's ideal for storing critical and long-term data, ensuring that our messages persist across canister redeployments.
 
-
 Let's break down the `new StableBTreeMap` constructor:
 
--   `StableBTreeMap`: This is the class from Azle that represents the stable B-tree map data structure. It's used to store and retrieve data within our canister.
--  `<string, Message>`: This specifies the types of the keys and values in our map. In this case, the keys are strings (the unique identifiers of our messages), and the values are of type `Message`.
--   `(0)`: This is the ID of the stable memory region where our map will be stored. It's used to ensure that our map persists across canister redeployments.
+- `StableBTreeMap`: This is the class from Azle that represents the stable B-tree map data structure. It's used to store and retrieve data within our canister.
+- `<string, Message>`: This specifies the types of the keys and values in our map. In this case, the keys are strings (the unique identifiers of our messages), and the values are of type `Message`.
+- `(0)`: This is the ID of the stable memory region where our map will be stored. It's used to ensure that our map persists across canister redeployments.
 
-
-**Note: it is not compulsory to use the StableBTreeMap. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
+**Note: it is not compulsory to use the `StableBTreeMap`. We can choose between using tools from the JavaScript standard library like Map or the StableBTreeMap. While both options have their uses, it's important to highlight the significance of the StableBTreeMap. It offers durability, ensuring data persists across canister redeployments, making it suitable for storing critical and long-term data. On the other hand, the Map from the JavaScript standard library is ideal for temporary data as it is erased during redeployments. You should carefully consider your data persistence needs when deciding which data structure to use.**
 
 ### 3.5 Creating the Server
 
 The next step is to create an HTTP server that will handle requests to our canister. This server will be responsible for processing incoming requests and returning appropriate responses. Add the following code to your `index.ts` file below the `messageStorage` definition:
 
 ```JavaScript
-export default Server(() => {
    const app = express();
    app.use(express.json());
 ```
 
-We initialize our server by calling the `Server` function from Azle. This function takes a callback that returns an instance of the `express` app. We then create an instance of the `express` app and use the `express.json()` middleware to parse incoming requests with JSON payloads.
-
+We initialize our server by calling the `express()` function from `express` package. We then use the `express.json()` middleware to parse incoming requests with JSON payloads.
 
 ### 3.6 Creating the Add Message Function
 
 Following on, we will create a function to add new messages. Input the following code into your `index.ts` file :
+
 ```JavaScript
    app.post("/messages", (req, res) => {
    const message: Message =  {id: uuidv4(), createdAt: getCurrentDate(), ...req.body};
@@ -353,8 +359,8 @@ Following on, we will create a function to add new messages. Input the following
 
 If you have knowledge of RESTful APIs, you'll recognize that this function is designed to handle POST requests to the `/messages` endpoint. Here's a breakdown of the code:
 
--   `app.post("/messages", (req, res) => {`: This line sets up a route for POST requests to the `/messages` endpoint. It takes a callback function that receives the request (`req`) and response (`res`) objects.
--  `const message: Message =  {id: uuidv4(), createdAt: getCurrentDate(), ...req.body};`: This line creates a new message object by combining the unique identifier generated by `uuidv4()`, the current date and time, and the data sent in the request body (`req.body`). The `...` syntax is the spread operator, which allows us to merge the properties of `req.body` into the new message object.
+- `app.post("/messages", (req, res) => {`: This line sets up a route for POST requests to the `/messages` endpoint. It takes a callback function that receives the request (`req`) and response (`res`) objects.
+- `const message: Message =  {id: uuidv4(), createdAt: getCurrentDate(), ...req.body};`: This line creates a new message object by combining the unique identifier generated by `uuidv4()`, the current date and time, and the data sent in the request body (`req.body`). The `...` syntax is the spread operator, which allows us to merge the properties of `req.body` into the new message object.
 - `messagesStorage.insert(message.id, message);`: This line inserts the new message into our `messagesStorage` map, associating it with the unique identifier generated by `uuidv4()`.
 - `res.json(message);`: This line sends a JSON response containing the newly created message back to the client.
 
@@ -375,7 +381,6 @@ The next step involves creating a function to retrieve all messages that have be
 This function is relatively straightforward. It sets up a route for GET requests to the `/messages` endpoint and sends a JSON response containing all the messages stored in our `messagesStorage` map. This function, therefore, allows us to retrieve all messages that have been added to our canister.
 We call the `values` method on our `messagesStorage` map to retrieve all the messages it contains. This method returns an array of all the values in the map, which we then send back to the client as a JSON response.
 
-
 ### 3.8 Creating the Get Message Function
 
 Our next step is to create a function that allows us to retrieve a specific message by its unique identifier. Insert the following code into your `index.ts` file:
@@ -385,7 +390,7 @@ Our next step is to create a function that allows us to retrieve a specific mess
 app.get("/messages/:id", (req, res) => {
    const messageId = req.params.id;
    const messageOpt = messagesStorage.get(messageId);
-   if ("None" in messageOpt) {
+   if (!messageOpt) {
       res.status(404).send(`the message with id=${messageId} not found`);
    } else {
       res.json(messageOpt.Some);
@@ -395,21 +400,23 @@ app.get("/messages/:id", (req, res) => {
 
 This function sets up a route for GET requests to the `/messages/:id` endpoint, where `:id` is a route parameter representing the unique identifier of the message to be retrieved. Here's a breakdown of the code:
 
--   `app.get("/messages/:id", (req, res) => {`: This line sets up a route for GET requests to the `/messages/:id` endpoint. It takes a callback function that receives the request (`req`) and response (`res`) objects.
--  `const messageId = req.params.id;`: This line retrieves the unique identifier of the message from the route parameters.
+- `app.get("/messages/:id", (req, res) => {`: This line sets up a route for GET requests to the `/messages/:id` endpoint. It takes a callback function that receives the request (`req`) and response (`res`) objects.
+- `const messageId = req.params.id;`: This line retrieves the unique identifier of the message from the route parameters.
 - `const messageOpt = messagesStorage.get(messageId);`: This line retrieves the message from our `messagesStorage` map by its unique identifier. The `get` method returns an `Opt` type, which represents the possibility of a value being present (`Some`) or absent (`None`).
-- `if ("None" in messageOpt) {`: This line checks if the message was found in the `messagesStorage` map. If it wasn't found, we send a 404 status code and a message indicating that the message with the provided ID was not found.
+- `if (!messageOpt) {`: This line checks if the message was found in the `messagesStorage` map. If it wasn't found, we send a 404 status code and a message indicating that the message with the provided ID was not found.
 - `res.json(messageOpt.Some);`: This line sends a JSON response containing the retrieved message back to the client.
 
 This function, therefore, allows us to retrieve a specific message by its unique identifier.
 
 ### 3.9 Developing the Update Message Function
+
 Our next step is to create a function that allows us to update an existing message. Add the following code into your `index.ts`:
+
 ```JavaScript
   app.put("/messages/:id", (req, res) => {
    const messageId = req.params.id;
    const messageOpt = messagesStorage.get(messageId);
-   if ("None" in messageOpt) {
+   if (!messageOpt) {
       res.status(400).send(`couldn't update a message with id=${messageId}. message not found`);
    } else {
       const message = messageOpt.Some;
@@ -418,15 +425,14 @@ Our next step is to create a function that allows us to update an existing messa
       res.json(updatedMessage);
    }
 });
-
 ```
 
 This function sets up a route for PUT requests to the `/messages/:id` in order to update a specific message by its unique identifier. Here's a breakdown of the code:
 
--   `app.put("/messages/:id", (req, res) => {`: This line sets up a route for PUT requests to the `/messages/:id` endpoint. It takes a callback function that receives the request (`req`) and response (`res`) objects.
+- `app.put("/messages/:id", (req, res) => {`: This line sets up a route for PUT requests to the `/messages/:id` endpoint. It takes a callback function that receives the request (`req`) and response (`res`) objects.
 - `const messageId = req.params.id;`: This line retrieves the unique identifier of the message from the route parameters.
 - `const messageOpt = messagesStorage.get(messageId);`: This line retrieves the message from our `messagesStorage` map by its unique identifier. The `get` method returns an `Opt` type, which represents the possibility of a value being present (`Some`) or absent (`None`).
-- `if ("None" in messageOpt) {`: Just lime in the previous section, line checks if the message was found in the `messagesStorage` map. If it wasn't found, we send a 400 status code and a message indicating that the message with the provided ID was not found.
+- `if (!messageOpt) {`: Just lime in the previous section, line checks if the message was found in the `messagesStorage` map. If it wasn't found, we send a 400 status code and a message indicating that the message with the provided ID was not found.
 - `const message = messageOpt.Some;`: This line retrieves the message from the `messageOpt` object.
 - `const updatedMessage = { ...message, ...req.body, updatedAt: getCurrentDate()};`: This line creates an updated message by merging the existing message with the data sent in the request body (`req.body`) and adding the current date and time as the `updatedAt` property. The `...` syntax is the spread operator, which allows us to merge the properties of `req.body` into the existing message.
 - `messagesStorage.insert(message.id, updatedMessage);`: This line inserts the updated message into our `messagesStorage` map, associating it with the unique identifier of the original message.
@@ -435,24 +441,26 @@ This function sets up a route for PUT requests to the `/messages/:id` in order t
 ### 3.10 Creating a Function to Delete a Message
 
 The final step in our canister development is to create a function that allows for message deletion. Go ahead and add the following code into your `index.ts` file below the `updateMessage` function:
+
 ```JavaScript
 app.delete("/messages/:id", (req, res) => {
    const messageId = req.params.id;
    const deletedMessage = messagesStorage.remove(messageId);
-   if ("None" in deletedMessage) {
+   if (!deletedMessage) {
       res.status(400).send(`couldn't delete a message with id=${messageId}. message not found`);
    } else {
       res.json(deletedMessage.Some);
    }
 });
 ```
+
 Just like in the previous sections, this function sets up a route for DELETE requests to the `/messages/:id` endpoint in order to delete a specific message by its unique identifier.
-We use the `remove` method on our `messagesStorage` map to delete the message with the provided ID. This method returns an `Opt` type, which represents the possibility of a value being present (`Some`) or absent (`None`). If the message was found and deleted, we send a JSON response containing the deleted message back to the client. If the message was not found, we send a 400 status code and a message indicating that the message with the provided ID was not found.
+We use the `remove` method on our `messagesStorage` map to delete the message with the provided ID. If the message was found and deleted, we send a JSON response containing the deleted message back to the client. If the message was not found, we send a 400 status code and a message indicating that the message with the provided ID was not found.
 
 Finally, in order to allow our server to listen for incoming requests, we need to add the following line of code at the end of our `index.ts` file:
+
 ```JavaScript
-return app.listen();
-}); // to close the Server function.
+app.listen();
 ```
 
 ### 3.11 Get Current Date Function
@@ -469,14 +477,15 @@ function getCurrentDate() {
 
 This function retrieves the current time from the Internet Computer environment using the `ic.time()` method. It then converts the timestamp to a JavaScript `Date` object and returns it. This function will be used to set the `createdAt` and `updatedAt` properties of our messages.
 
-
 ### 3.12 The Final Code
+
 At the end of this step, your `index.ts` file should look like this:
 
 ```JavaScript
-import { v4 as uuidv4 } from 'uuid';
-import { Server, StableBTreeMap, ic } from 'azle';
-import express from 'express';
+import { v4 as uuidv4 } from "uuid";
+import { StableBTreeMap } from "azle";
+import express from "express";
+import { time } from "azle";
 
 /**
  * `messagesStorage` - it's a key-value datastructure that is used to store messages.
@@ -494,73 +503,89 @@ import express from 'express';
  */
 
 /**
- This type represents a message that can be listed on a board.
- */
+    This type represents a message that can be listed on a board.
+*/
 class Message {
-   id: string;
-   title: string;
-   body: string;
-   attachmentURL: string;
-   createdAt: Date;
-   updatedAt: Date | null
+  id: string;
+  title: string;
+  body: string;
+  attachmentURL: string;
+  createdAt: Date;
+  updatedAt: Date | null;
 }
 
 const messagesStorage = StableBTreeMap<string, Message>(0);
 
-export default Server(() => {
-   const app = express();
-   app.use(express.json());
+const app = express();
+app.use(express.json());
 
-   app.post("/messages", (req, res) => {
-      const message: Message =  {id: uuidv4(), createdAt: getCurrentDate(), ...req.body};
-      messagesStorage.insert(message.id, message);
-      res.json(message);
-   });
-
-   app.get("/messages", (req, res) => {
-      res.json(messagesStorage.values());
-   });
-
-   app.get("/messages/:id", (req, res) => {
-      const messageId = req.params.id;
-      const messageOpt = messagesStorage.get(messageId);
-      if ("None" in messageOpt) {
-         res.status(404).send(`the message with id=${messageId} not found`);
-      } else {
-         res.json(messageOpt.Some);
-      }
-   });
-
-   app.put("/messages/:id", (req, res) => {
-      const messageId = req.params.id;
-      const messageOpt = messagesStorage.get(messageId);
-      if ("None" in messageOpt) {
-         res.status(400).send(`couldn't update a message with id=${messageId}. message not found`);
-      } else {
-         const message = messageOpt.Some;
-         const updatedMessage = { ...message, ...req.body, updatedAt: getCurrentDate()};
-         messagesStorage.insert(message.id, updatedMessage);
-         res.json(updatedMessage);
-      }
-   });
-
-   app.delete("/messages/:id", (req, res) => {
-      const messageId = req.params.id;
-      const deletedMessage = messagesStorage.remove(messageId);
-      if ("None" in deletedMessage) {
-         res.status(400).send(`couldn't delete a message with id=${messageId}. message not found`);
-      } else {
-         res.json(deletedMessage.Some);
-      }
-   });
-
-   return app.listen();
+app.post("/messages", (req, res) => {
+  const message: Message = {
+    id: uuidv4(),
+    createdAt: getCurrentDate(),
+    ...req.body,
+  };
+  messagesStorage.insert(message.id, message);
+  res.json(message);
 });
 
+app.get("/messages", (req, res) => {
+  res.json(messagesStorage.values());
+});
+
+app.get("/messages/:id", (req, res) => {
+  const messageId = req.params.id;
+  const messageOpt = messagesStorage.get(messageId);
+  if (!messageOpt) {
+    res.status(404).send(`the message with id=${messageId} not found`);
+  } else {
+    res.json(messageOpt);
+  }
+});
+
+app.put("/messages/:id", (req, res) => {
+  const messageId = req.params.id;
+  const messageOpt = messagesStorage.get(messageId);
+  if (!messageOpt) {
+    res
+      .status(400)
+      .send(
+        `couldn't update a message with id=${messageId}. message not found`
+      );
+  } else {
+    const message = messageOpt;
+
+    const updatedMessage = {
+      ...message,
+      ...req.body,
+      updatedAt: getCurrentDate(),
+    };
+    messagesStorage.insert(message.id, updatedMessage);
+    res.json(updatedMessage);
+  }
+});
+
+app.delete("/messages/:id", (req, res) => {
+  const messageId = req.params.id;
+  const deletedMessage = messagesStorage.remove(messageId);
+  if (!deletedMessage) {
+    res
+      .status(400)
+      .send(
+        `couldn't delete a message with id=${messageId}. message not found`
+      );
+  } else {
+    res.json(deletedMessage);
+  }
+});
+
+app.listen();
+
 function getCurrentDate() {
-   const timestamp = new Number(ic.time());
-   return new Date(timestamp.valueOf() / 1000_000);
+  const timestamp = new Number(time());
+  return new Date(timestamp.valueOf() / 1000_000);
 }
+
 ```
 
 ## 4. Deploying and Interacting with our Canister
@@ -585,7 +610,6 @@ Dashboard: http://localhost:49846/_/dashboard
 
 In this output, the URL for the dashboard (<http://localhost:49846/_/dashboard>) will be particularly helpful for debugging and observing the activity of your local replica.
 
-
 **IMPORTANT NOTE**
 StableBTreeMap, which is the data structure we use for `messageStorage`, has certain constraints that you need to be aware of. Specifically, once a StableBTreeMap is initialized, its configuration becomes immutable. This means that you cannot make changes to aspects such as the data types or sizes of the keys or values.
 
@@ -602,15 +626,24 @@ Remember, only use the `--clean` flag if you have made changes to the configurat
 ### 4.2. Deploying the Canister
 
 #### 4.2.1. Deploying the Canister on Codespaces
+
 If you are on codespaces, simply run the already prepared 'canister_urls.py' script. This script will deploy the canister and print the canister's URL.
 Run the following command:
+
 ```Bash
 ./canister_urls.py
+```
+
+or
+
+```bash
+node deploy.js
 ```
 
 Finally, click the generated link to the canister's URL to interact with it.
 
 #### 4.2.2. Deploying the Canister on Localhost
+
 Next, we will compile our canister code and install it on the local network using the `dfx deploy` command:
 
 ```Bash
@@ -624,33 +657,40 @@ The `dfx deploy` command is a convenient way to register, build, and deploy a ca
 3.  Installing the canister (`dfx canister install --all`)
 
 Executing the `dfx deploy` command should result in an output similar to:
-```Bash
-Creating the "default" identity.
-WARNING: The "default" identity is not stored securely. Do not use it to control a lot of cycles/ICP.
-To create a more secure identity, create and use an identity that is protected by a password using the following commands:
-    dfx identity new <my-secure-identity-name> # creates a password protected identity
-    dfx identity use <my-secure-identity-name> # uses this identity by default
 
-  - generating new key at /Users/alice/.config/dfx/identity/default/identity.pem
-Your seed phrase: 
+```Bash
+➜  icp-message-board-contract git:(main) dfx deploy
+Deploying all canisters.
+Creating canisters...
+Creating canister message_board...
+Creating a wallet canister on the local network.
+The wallet canister on the "local" network for user "mainnet_user" is "bnz7o-iuaaa-aaaaa-qaaaa-cai"
+message_board canister created with canister id: bkyz2-fmaaa-aaaaa-qaaaq-cai
+Building canisters...
+Executing 'node_modules/.bin/azle compile message_board'
+
+Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
+
+Installing canisters...
+Creating UI canister on the local network.
+The UI canister on the "local" network is "bd3sg-teaaa-aaaaa-qaaba-cai"
+Installing code for canister message_board, with canister ID bkyz2-fmaaa-aaaaa-qaaaq-cai
+Deployed canisters.
+URLs:
+  Backend canister via Candid interface:
+    message_board: http://127.0.0.1:8000/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
 ...
 ```
 
 Note: If this is your first time running the `dfx deploy` command, it may take a moment to register, build, and deploy your application. Take this time to relax as the system does its work.
 
 Once the command completes, you should see a message indicating the successful deployment of your canisters. The output will include URLs for interacting with your backend canister through the Candid interface. For example:
+
 ```Bash
-Deployed canisters.
-URLs:
-  Backend canister via Candid interface:
-    message_board: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
+Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
 ```
 
-The provided URL (in this case: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai) is the endpoint for your message_board canister. This URL links to a Candid interface, which provides a web-based interface for interacting with your canister's methods.
-
-You can view a GIF illustrating this process:
-![](https://hackmd.io/_uploads/rk7ViLpL2.gif)
-
+The provided URL (in this case: Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000) is the endpoint for your message_board canister.
 
 **Note: if you would like your canister to auto reload after changes, you can run the command**
 
@@ -661,9 +701,11 @@ AZLE_AUTORELOAD=true dfx deploy
 Ensure to set this to false when deploying to the mainnet.
 
 ### 4.3. Interacting with our canister
+
 There are two primary ways to interact with our canister: through the command line interface (CLI) or the web interface. We'll begin with the CLI.
 
 #### 4.3.1. Interacting with our canister through the CLI
+
 To interact with our canister through the CLI, we'll be using the `curl` command. This command allows us to make HTTP requests to our canister's endpoints. We'll be using the `curl` command to add, retrieve, update, and delete messages.
 
 Before we begin, we need to first get our canister ID. This can be done by executing the following command in your terminal:
@@ -671,7 +713,9 @@ Before we begin, we need to first get our canister ID. This can be done by execu
 ```Bash
 dfx canister id <CANISTER_NAME>
 ```
+
 where `<CANISTER_NAME>` is the name of your canister. In our case, it's `message_board` so the command will be:
+
 ```Bash
 dfx canister id message_board
 ```
@@ -679,6 +723,7 @@ dfx canister id message_board
 This command will return the unique identifier of your canister. You will need this identifier to interact with your canister.
 
 After running the `dfx canister id` command, you should receive a response similar to this:
+
 ```Bash
 bkyz2-fmaaa-aaaaa-qaaaq-cai
 ```
@@ -686,10 +731,13 @@ bkyz2-fmaaa-aaaaa-qaaaq-cai
 This output indicates that the unique identifier of your canister is `bkyz2-fmaaa-aaaaa-qaaaq-cai`. You will use this identifier to interact with your canister.
 
 With tha generated, the url of your canister will be:
+
 ```Bash
 http://<CANISTER_ID>.localhost:8000
-``` 
+```
+
 where `<CANISTER_ID>` is the unique identifier of your canister. In our case, it's `bkyz2-fmaaa-aaaaa-qaaaq-cai` so the url will be:
+
 ```Bash
 http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
 ```
@@ -698,6 +746,7 @@ Now that we have our canister ID, we can begin interacting with our canister thr
 
 **1. Adding a message**
 First, let's invoke the addMessage function from our canister file, which we created earlier. This function will add a message to our canister. Execute the following command in your terminal:
+
 ```Bash
 curl -X POST http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages -H "Content-type: application/json" -d '{"title": "todo list", "body": "some important things", "attachmentURL": "url/path/to/some/photo/attachment"}'
 ```
@@ -713,35 +762,35 @@ If the function call is successful, you should receive a response similar to thi
     "attachmentURL": "url/path/to/some/photo/attachment"
 }
 ```
+
 This output indicates that the `addMessage` function has successfully added a message to your canister.
 
 **2. Retrieving a single message**
 To retrieve a single message, invoke the `getMessage` function.
 
-```curl http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages/d8326ec8-fe70-402e-8914-ca83f0f1055b```
+`curl http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages/d8326ec8-fe70-402e-8914-ca83f0f1055b`
 Where `d8326ec8-fe70-402e-8914-ca83f0f1055b` is the unique ID of the message you wish to retrieve.
 
 **3. Updating a message**
 To update a message, use the `updateMessage` function.
-```curl -X PUT  http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages/d8326ec8-fe70-402e-8914-ca83f0f1055b -H "Content-type: application/json" -d '{"title": "UPDATED TITLE", "body": "some important things", "attachmentURL": "url/path/to/some/photo/attachment"}'```
+`curl -X PUT  http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages/d8326ec8-fe70-402e-8914-ca83f0f1055b -H "Content-type: application/json" -d '{"title": "UPDATED TITLE", "body": "some important things", "attachmentURL": "url/path/to/some/photo/attachment"}'`
 Where `d8326ec8-fe70-402e-8914-ca83f0f1055b` is the unique ID of the message you wish to update.
 
 **4. Retrieving messages**
 To retrieve all messages, invoke the `getMessages` function. In this case, we're not passing any argument to the function. Here's the command:
 
-```curl http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages```
+`curl http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages`
 
 **5. Deleting a message**
 To delete a message, use the `deleteMessage` function. Replace `79daba82-18ce-4f69-afa1-7b3389368d1f` with the unique ID of the message you wish to delete. Here's the command:
 
-```curl -X DELETE http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages/d8326ec8-fe70-402e-8914-ca83f0f1055b```
+`curl -X DELETE http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000/messages/d8326ec8-fe70-402e-8914-ca83f0f1055b`
 Where `d8326ec8-fe70-402e-8914-ca83f0f1055b` is the unique ID of the message you wish to delete.
-
 
 Try for yourself, to add, retrieve, update, and delete messages using the CLI.
 
-
 ## 5. Conclusion
+
 In this tutorial, we've walked you through the process of building and interacting with a decentralized Azle canister. We introduced you to key concepts related to the Internet Computer and canisters and then guided you through the steps to set up your project and construct a message web3 canister with basic CRUD functionality.
 
 You learned how to deploy your canister using `dfx deploy` and how to interact with it both through the terminal and the Candid web interface. We explored how to execute various functions like `addMessage`, `getMessages`, `updateMessage`, and `deleteMessage`, and discussed the structure and usage of the commands required.
