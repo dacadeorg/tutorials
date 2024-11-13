@@ -1,60 +1,70 @@
+--- start of translation
 <!-- SPDX-License-Identifier: MIT -->
-<!-- Copyright (c) 2024 Dacade.org -->
+<!-- 저작권 (c) 2023 Dacade.org -->
 
-ICP Azle (Typescript) 개발 101 튜토리얼에 오신 것을 환영합니다! 
+이 ICP Azle 개발 101 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼은 Internet Computer Protocol (ICP) 플랫폼에서 개발을 시작하는 데 필요한 기본적인 내용을 제공하기 위해 설계되었습니다. 이 가이드를 통해 분산형 Azle 캐니스터를 구축하고 상호작용하는 방법을 배우게 됩니다. 이 가이드가 끝나면 ICP 플랫폼에서의 개발에 대한 확고한 이해를 갖추고, 분산형 애플리케이션의 기초를 구축할 수 있게 될 것입니다.
 
-이 튜토리얼은 인터넷 컴퓨터 프로토콜(ICP) 플랫폼 개발하는 방법을 소개합니다. 분산형 Azle 캐니스터를 구축하고 상호 작용하는 기본 사항을 배우게 됩니다. 이 가이드를 마치면 ICP 플랫폼에 대한 개발을 탄탄하게 이해하고 분산 애플리케이션의 기반을 만들 수 있게 될 것입니다.
+튜토리얼을 건너뛰고 코드를 바로 보고 싶다면 [코스 리포지토리](https://github.com/dacadeorg/icp-message-board-contract)에서 이 튜토리얼의 최종 코드를 확인할 수 있습니다.
 
-아래 튜토리얼을 건너뛰고 바로 코드로 들어가고 싶다면, [Course Repo](https://github.com/dacadeorg/icp-message-board-contract) 저장소에서 최종 코드를 확인하세요.
+## 1. 소개
 
-## **1. 소개**
-이 섹션은 튜토리얼 개요, 배울 내용, 필요한 사전 지식 및 사용할 기술 스택을 안내합니다. 또한, 캐니스터 구축에 사용할 TypeScript 프레임워크인 Azle을 소개합니다.
+이 섹션에서는 튜토리얼에서 배울 내용, 사전 요구사항, 사용 기술 스택에 대한 개요를 제공합니다. 또한, Azle에 대해 소개하고, 이 튜토리얼에서 사용될 TypeScript 프레임워크에 대해 설명하겠습니다.
 
-### **1.1 배울 내용**
-- 개발 환경 설정하기: Node.js, Node 버전 관리자(nvm), DFX와 같은 ICP 개발에 필요한 도구를 이해하고 설치 및 사용 방법을 배웁니다.
-- 보일러플레이트 코드 이해하기: **`tsconfig.json`**, **`dfx.json`**, **`package.json`** 파일을 포함하여 ICP 플랫폼에서 Azle 프로젝트를 시작하는 데 필요한 필수 파일과 구성에 익숙해집니다.
-- 메시징 캐니스터 구축 및 상호 작용하기: CRUD(생성, 읽기, 업데이트, 삭제) 작업을 수행하는 간단한 메시징 캐니스터를 구축하는 방법을 배웁니다. 또한 캐니스터의 메소드를 호출하고 응답을 처리하는 방법을 배워 사용자가 메시지를 생성, 업데이트, 삭제 및 조회할 수 있는 간단한 메시지 보드 애플리케이션을 구축할 수 있습니다.
+### 1.1 배울 내용
 
-### **1.2 캐니스터란?**
-캐니스터는 인터넷 컴퓨터 플랫폼(ICP)에서 사용되는 중요한 개념으로, 소프트웨어 어플리케이션 배포 및 실행을 위한 핵심 구성 요소이자 실행 환경입니다. 코드와 상태를 번들링하여 안전하고 효율적인 실행 환경을 제공합니다. 이러한 특성은 다른 블록체인 플랫폼의 스마트 계약과 유사합니다. 또한, DeFi 플랫폼, 소셜 미디어 애플리케이션, DAO 등과 같은 확장 및 탈중앙화 애플리케이션의 개발을 가능하게 합니다.
+- 개발 환경 설정: Node.js, Node Version Manager (nvm), DFX와 같은 ICP 개발에 필요한 도구를 이해하고 설치 및 사용하는 방법을 학습합니다​.
+- 기본 코드 이해: `tsconfig.json`, `dfx.json`, `package.json` 파일을 포함하여 ICP 플랫폼에서 Azle 프로젝트를 시작하는 데 필요한 필수 파일과 설정을 익힙니다.
+- 메시징 캐니스터 구축 및 상호작용: CRUD(생성, 읽기, 업데이트, 삭제) 작업을 수행하는 간단한 메시징 캐니스터를 구축하고, 캐니스터의 메서드를 호출하고 응답을 처리하는 방법을 배웁니다. 이를 통해 사용자가 메시지를 생성, 수정, 삭제 및 조회할 수 있는 간단한 메시지 게시판 애플리케이션을 구축할 수 있습니다​.
 
-### **1.3 Azle이란?**
-Azle은 인터넷 컴퓨터(IC)를 위한 TypeScript 캐니스터 개발 키트(CDK)입니다. IC 플랫폼에서 캐니스터를 쉽게 구축하고 배포할 수 있게끔 다양한 라이브러리와 도구를 제공합니다. Azle을 사용하면 개발자는 npm 패키지 및 VS Code 인텔리센스와 같은 TypeScript/JavaScript 기술을 IC에 적용할 수 있습니다. 이 튜토리얼은 Azle을 사용하여 캐니스터를 생성하고 배포하는 방법을 안내합니다.
+### 1.2 캐니스터란 무엇인가?
 
-주목할 만한 점은 Azle이 현재 베타 개발 단계에 있다는 것입니다. 즉, 강력하고 가치 있는 프레임워크를 제공하고 있지만 지속적인 발전으로 인해 상당한 변화를 겪을 수도 있습니다. 때때로 문제가 발생할 수 있으며, 성공적으로 배포되어 지속적으로 운영되고 있는 애플리케이션 사례가 많지 않습니다. 모든 사용자가 [면책 조항](https://demergent-labs.github.io/azle/azle.html#disclaimer)을 읽기를 권장합니다.
+캐니스터는 Internet Computer Protocol (ICP) 플랫폼에서 소프트웨어 애플리케이션을 배포하고 실행하는 기본 빌딩 블록 및 실행 환경입니다. 캐니스터는 코드와 상태를 함께 묶어 안전하고 효율적인 실행 환경을 만듭니다. 이는 다른 블록체인 플랫폼의 스마트 계약과 유사합니다. 캐니스터는 DeFi 플랫폼, 소셜 미디어 애플리케이션, DAO 등과 같은 확장 가능하고 분산된 애플리케이션 개발을 가능하게 합니다.
 
-Azle에 대해 더 알아보고 싶다면, [Azle 문서](https://demergent-labs.github.io/azle/the_azle_book.html)를 참고하세요.
+### 1.3 Azle이란?
 
-### **1.4 필수 사항**
-사전 코딩 경험은 이 튜토리얼을 따라가기 위해 필수적이지만, 블록체인 경험이 있을 필요는 없습니다. 아래 추천 사전 준비 사항을 참고하세요:
+Azle은 Internet Computer (IC)를 위한 TypeScript 캐니스터 개발 키트(CDK)입니다. IC 플랫폼에서 캐니스터를 쉽고 빠르게 빌드하고 배포할 수 있도록 지원하는 라이브러리 및 도구 세트를 제공합니다. Azle은 웹 개발자가 IC에서 자신의 TypeScript/JavaScript 기술을 활용하고 다양한 npm 패키지 및 VS Code 인텔리센스를 사용할 수 있게 합니다. 이 튜토리얼에서는 Azle을 사용하여 캐니스터를 만들고 배포할 것입니다.
 
-- **TypeScript 및 Node.js에 대한 지식**:  이 튜토리얼은 TypeScript와 Node.js로 애플리케이션을 개발하기 때문에 두 기술에 익숙해야 합니다. TypeScript, Node.js가 처음이라면, 두 기술 기본 튜토리얼을 고려해 보세요.
-- **텍스트 에디터**: 코드를 작성하고 편집하려면 텍스트 에디터가 필요합니다.  TypeScript와 Node.js 개발 지원면에서 뛰어나 Visual Studio Code를 추천하지만, 자유롭게 자신에게 맞는 텍스트 편집기를 선택해도 상관 없습니다.
-- **Node.js**: Node.js를 사전에 설치할 필요는 없지만 (nvm로 관리하는 방법을 설명 드릴겁니다)DFINITY SDK와 프로젝트 자체를 실행하기 위해서는 Node.js(버전 18 이상)가 필요하다는 점을 알아두세요.
+Azle은 현재 베타 개발 단계에 있으며, 이는 지속적인 변화와 개선이 이루어지고 있다는 것을 의미합니다. 따라서 가끔씩 문제가 발생할 수 있으며, 현재 IC에서 지속적으로 운영되는 많은 성공적인 애플리케이션이 배포되지 않았습니다. 모든 사용자에게 [면책 조항](https://demergent-labs.github.io/azle/azle.html#disclaimer)을 읽어볼 것을 권장합니다.
 
-### **1.5 기술 스택**
-다음은 우리가 사용할 주요 기술과 도구입니다:
+Azle에 대해 더 알고 싶다면 [Azle 문서](https://demergent-labs.github.io/azle/the_azle_book.html)를 확인해 보세요.
 
-1. 인터넷 컴퓨터 프로토콜(ICP): ICP는 공용 인터넷에서 실행될 수 있는 소프트웨어, 계산 및 데이터 생성을 용이하게 하는 분산 컴퓨팅 플랫폼입니다. 해당 플랫폼에 애플리케이션을 구축할 것입니다.
-2. Azle: Azle은 인터넷 컴퓨터 프로토콜(ICP)에서 스마트 계약 또는 "캐니스터"를 생성하고 관리하기 위한 TypeScript 프레임워크입니다.
-3. Node.js: Node.js는 웹 브라우저 외부에서 JavaScript를 실행할 수 있는 JavaScript 런타임입니다. 이 튜토리얼에서는 Node.js 버전 18을 사용할 것입니다.
-4. Node 버전 관리자(nvm): nvm은 다양한 Node.js 버전을 관리하고 전환할 수 있는 도구입니다. Node.js 환경을 관리하기 위해 사용합니다.
-5. DFX: DFX는 인터넷 컴퓨터를 위한 명령줄 인터페이스입니다. Azle 프로젝트를 생성하고 관리하기 위해 이를 사용합니다.
-6. TypeScript: TypeScript는 일반 JavaScript로 컴파일되는 JavaScript의 상위 집합입니다. 애플리케이션 코드를 작성하기 위해 이를 사용할 것이며, 프로젝트 구성 파일 중 TypeScript 컴파일러 옵션을 설정하기 위한 파일(**`tsconfig.json`**)이 제공 됩니다.
-7. Candid: Candid는 인터넷 컴퓨터가 서비스의 공개 인터페이스(메소드와 입력/출력 타입)를 정의하고 설명하는 데 사용하는 인터페이스 정의 언어(IDL)입니다. 캐니스터의 인터페이스를 정의하기 위해 프로젝트에서 Candid를 사용할 것입니다.
+### 1.4 사전 요구사항
 
-### **1.6 개요**
-1. [소개](https://chat.openai.com/c/1feb027a-c619-4d58-bab5-88dd2f8ed530#1-introduction) (5분) - 튜토리얼 개요, 배울 내용, 필수 사항 및 기술 스택을 안내합니다. 또한, 캐니스터를 구축하는 데 사용할 TypeScript 프레임워크인 Azle을 소개합니다.
-2. [개발 환경 세팅](https://chat.openai.com/c/1feb027a-c619-4d58-bab5-88dd2f8ed530#2-setup) (15분) - 프로젝트 개발 환경 세팅 과정을 단계별로 안내합니다.
-3. [메시징 캐니스터 구축](https://chat.openai.com/c/1feb027a-c619-4d58-bab5-88dd2f8ed530#3-constructing-the-messaging-canister) (45분) - 기본 CRUD(Create, Read, Update, Delete) 기능을 가진 메시징 캐니스터를 구축합니다.
-4. [캐니스터 배포 및 상호 작용](https://chat.openai.com/c/1feb027a-c619-4d58-bab5-88dd2f8ed530#4-deploying-and-interacting-with-our-canister) (15분) - 명령줄과 Candid 웹 인터페이스를 통해 메시징 캐니스터와 상호 작용합니다.
-5. [결론](https://chat.openai.com/c/1feb027a-c619-4d58-bab5-88dd2f8ed530#5-conclusion) (1분) - 마지막으로, 이 튜토리얼을 마무리하며 계속할 수 있는 몇 가지 아이디어를 제공합니다.
+이 튜토리얼을 따라가기 위해서는 코딩 경험이 필요하지만, 블록체인 경험은 필요하지 않습니다. 그러나 다음 사항을 권장합니다:
 
-## **2. 개발 환경 세팅**
-이 섹션은 프로젝트의 보일러플레이트 코드 세팅 방법을 안내합니다. 이 섹션을 참고하여 개발 환경에 필요한 도구와 의존성(dependencies), 즉 개발 환경 pre-configuration을 세팅 하세요. 섹션을 완료하면 캐니스터를 구축하기 시작할 준비가 될 것입니다.
+- **TypeScript 및 Node.js 지식**: 이 튜토리얼은 이러한 기술로 애플리케이션을 구축하기 때문에 TypeScript와 Node.js에 익숙해야 합니다. TypeScript나 Node.js가 처음이라면 기본 튜토리얼을 참고하세요.
+- **텍스트 편집기**: 코드를 작성하고 편집할 텍스트 편집기가 필요합니다. Visual Studio Code는 TypeScript와 Node.js 개발에 뛰어난 지원을 제공하므로 추천하지만, 원하는 편집기를 사용해도 괜찮습니다.
+- **Node.js**: Node.js가 사전에 설치되어 있지 않아도 됩니다(이 튜토리얼에서 nvm을 사용하여 관리하는 방법을 보여줄 것입니다). 그러나 DFINITY SDK와 프로젝트 실행에 필요한 Node.js(버전 20 이상)가 필수입니다.
 
-### **2.1 개발 환경 준비**
-개발 환경은 GitHub Codespaces를 사용한 클라우드에서, 또는 독자의 로컬 머신 에서 설정할 수 있습니다.
+### 1.5 기술 스택
+
+우리가 사용할 주요 기술과 도구는 다음과 같습니다:
+
+1.  Internet Computer Protocol (ICP): ICP는 소프트웨어, 연산, 데이터를 공용 인터넷에서 실행할 수 있도록 하는 분산형 컴퓨팅 플랫폼입니다. 우리는 이 플랫폼 위에 애플리케이션을 구축할 것입니다.
+2.  Azle: Azle은 Internet Computer Protocol (ICP)에서 "캐니스터" 또는 스마트 계약을 생성하고 관리하기 위한 TypeScript 프레임워크입니다.
+3.  Node.js: Node.js는 웹 브라우저 외부에서 JavaScript를 실행할 수 있게 하는 JavaScript 런타임입니다. 우리는 이 튜토리얼에서 Node.js 버전 20을 사용할 것입니다.
+4.  Node Version Manager (nvm): Nvm은 여러 Node.js 버전을 관리하고 전환할 수 있는 도구입니다. 이를 통해 Node.js 환경을 관리할 것입니다.
+5.  DFX: DFX는 Internet Computer용 명령줄 인터페이스로, Azle 프로젝트를 생성하고 관리할 때 사용할 것입니다.
+6.  TypeScript: TypeScript는 JavaScript의 상위 집합으로, JavaScript로 컴파일됩니다. 애플리케이션의 코드를 작성할 때 사용할 것이며, TypeScript 컴파일러 옵션을 설정하기 위한 구성 파일(`tsconfig.json`)이 포함될 것입니다.
+7.  Candid: Candid는 Internet Computer에서 서비스의 공개 인터페이스, 즉 메서드와 입력/출력 유형을 정의하고 설명하는 인터페이스 설명 언어(IDL)입니다. 우리 프로젝트에서 캐니스터의 인터페이스를 설명하기 위해 Candid를 사용할 것입니다.
+
+### 1.6 개요
+
+1. [소개](#1-introduction) (5분) - 이 섹션에서는 튜토리얼의 개요와 배울 내용, 사전 요구사항 및 기술 스택에 대해 설명합니다. 또한 Azle, TypeScript 프레임워크를 소개합니다.
+
+2. [설정](#2-setup) (15분) - 이 섹션에서는 프로젝트를 설정하는 데 필요한 단계에 대해 설명합니다.
+3. [메시징 캐니스터 구축](#3-constructing-the-messaging-canister) (45분) - 기본 CRUD(생성, 읽기, 업데이트, 삭제) 기능을 갖춘 메시징 캐니스터를 구축합니다.
+4. [캐니스터 배포 및 상호작용](#4-deploying-and-interacting-with-our-canister) (15분) - 커맨드 라인을 통해 메시징 캐니스터와 상호작용합니다.
+5. [결론](#5-conclusion) (1분) - 마지막으로 튜토리얼을 마무리하고, 이어서 진행할 수 있는 아이디어를 제시합니다.
+
+## 2. 설정
+
+이 섹션에서는 프로젝트의 기본 코드를 설정하는 방법을 안내합니다. 이 섹션이 끝나면 필요한 도구와 종속성을 사전 구성한 개발 환경을 갖추게 되며, 캐니스터 구축을 시작할 준비가 됩니다.
+
+### 2.1 개발 환경 준비
+
+개발 환경을 로컬 머신이나 GitHub Codespaces를 사용하여 클라우드에서 설정할 수 있습니다.
+
 
 ### 2.1.1 옵션 1: GitHub Codespaces 사용하기
 GitHub Codespaces는 브라우저에서 즉시 사용 가능한 완전한 개발 환경을 제공합니다. 로컬 설정의 필요성을 없애주어 학습과 빌딩에 집중할 수 있게 해줍니다.
@@ -129,7 +139,7 @@ brew install podman
 4. **DFX 설치**:
 
 ```bash
-DFX_VERSION=0.16.1 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+DFX_VERSION=0.22.0**** sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
 5. **DFX를 PATH에 추가**:
@@ -182,27 +192,27 @@ sudo apt-get install podman
 **2. DFX 구성 파일** (`dfx.json`): 루트 디렉토리에 위치한 이 파일은 DFX를 구성하고 다음과 같습니다:
 ```JSON
 {
-   "canisters": {
-      "message_board": {
-         "type": "custom",
-         "main": "src/index.ts",
-         "candid": "src/index.did",
-         "candid_gen": "http",
-         "build": "npx azle message_board",
-         "wasm": ".azle/message_board/message_board.wasm",
-         "gzip": true,
-         "metadata": [
-            {
-               "name": "candid:service",
-               "path": "src/index.did"
-            },
-            {
-               "name": "cdk:name",
-               "content": "azle"
-            }
-         ]
-      }
-   }
+  "canisters": {
+    "message_board": {
+      "type": "custom",
+      "main": "src/index.ts",
+      "candid": "src/index.did",
+      "candid_gen": "http",
+      "build": "npx azle message_board",
+      "wasm": ".azle/message_board/message_board.wasm",
+      "gzip": true,
+      "metadata": [
+        {
+          "name": "candid:service",
+          "path": "src/index.did"
+        },
+        {
+          "name": "cdk:name",
+          "content": "azle"
+        }
+      ]
+    }
+  }
 }
 ```
 
@@ -215,28 +225,28 @@ sudo apt-get install podman
 -   "candid": DFX를 우리의 Candid 파일 (`src/index.did`)로 가리킵니다. Candid 파일은 Internet Computer에서 사용하는 인터페이스 설명 언어 (IDL)입니다.
 -   "wasm": DFX를 우리의 컴파일된 WebAssembly (WASM) 파일 (`.azle/message_board/message_board.wasm.gz`)로 지시합니다. 이는 빠르고 효율적이며 안전한 이진 명령 형식입니다.
 -  "gzip": WASM 파일이 gzip을 사용하여 압축되어야 함을 나타냅니다.
-- "metadata": 캐니스터에 대한 추가 정보를 포함하고 있으며 DFX가 캐니스터와 상호 작용하는 데 사용됩니다. 예시로는, 캐니스터의 Candid 서비스와 사용된 CDK (Canister Development Kit)의 이름과 같은 정보가  있습니다. 
+-  "metadata": 캐니스터에 대한 추가 정보를 포함하고 있으며 DFX가 캐니스터와 상호 작용하는 데 사용됩니다. 예시로는, 캐니스터의 Candid 서비스와 사용된 CDK (Canister Development Kit)의 이름과 같은 정보가  있습니다. 
 
 **3. Package.json 파일**: 루트 디렉토리의 `package.json` 파일은 프로젝트의 메타데이터와 의존성을 관리합니다.
 
 ```JSON
-  {
-   "name": "message_board",
-   "version": "0.1.0",
-   "description": "Internet Computer message board application",
-   "dependencies": {
-      "@dfinity/agent": "^0.21.4",
-      "@dfinity/candid": "^0.21.4",
-      "azle": "^0.20.2",
-      "express": "^4.18.2",
-      "uuid": "^9.0.1"
-   },
-   "engines": {
-      "node": "^20"
-   },
-   "devDependencies": {
-      "@types/express": "^4.17.21"
-   }
+{
+  "name": "message_board",
+  "version": "0.1.0",
+  "description": "Internet Computer message board application",
+  "dependencies": {
+    "@dfinity/agent": "^0.21.4",
+    "@dfinity/candid": "^0.21.4",
+    "azle": "^0.24.1",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": "^20"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
 }
 
 ```
@@ -327,13 +337,9 @@ const messagesStorage = StableBTreeMap<string, Message>(0);
 다음 단계는 캐니스터에 대한 요청을 처리할 HTTP 서버를 생성하는 방법을 안내합니다. 이 서버는 들어오는 요청을 처리하고 적절한 응답을 하는 역할을 합니다. `index.ts` 파일속 `messageStorage` 정의 아래에 다음 코드를 추가하세요:
 
 ```JavaScript
-export default Server(() => {
    const app = express();
    app.use(express.json());
 ```
-
-Azle에서 `Server` 함수를 호출하여 서버를 초기화합니다. 이 함수는 `express` 앱의 인스턴스를 반환하는 콜백을 받습니다. 그런 다음 `express` 앱의 인스턴스를 생성하고 `express.json()` 미들웨어를 사용하여 JSON 페이로드가 있는 들어오는 요청을 파싱합니다.
-
 
 ### 3.6 메시지 추가 함수 생성
 
@@ -375,12 +381,25 @@ RESTful API에 대한 지식이 있다면, 이 함수가 `/messages` 엔드포�
 
 다음 단계는 고유 식별자를 통해 특정 메시지를 검색할 수 있는 함수를 생성하는 것입니다. 다음 코드를 `index.ts` 파일에 삽입하십시오:
 
+```JavaScript
+
+app.get("/messages/:id", (req, res) => {
+   const messageId = req.params.id;
+   const messageOpt = messagesStorage.get(messageId);
+   if (!messageOpt) {
+      res.status(404).send(`the message with id=${messageId} not found`);
+   } else {
+      res.json(messageOpt.Some);
+   }
+});
+```
+
 이 함수는 `/messages/:id` 엔드포인트로의 GET 요청을 위한 경로를 설정하며, 여기서 `:id`는 검색할 메시지의 고유 식별자를 나타내는 경로 매개변수입니다. 다음은 코드에대한 추가 설명 입니다:
 
 -   `app.get("/messages/:id", (req, res) => {`: 이 줄은 `/messages/:id` 엔드포인트로의 GET 요청을 위한 경로를 설정합니다. 이는 요청 (`req`)과 응답 (`res`) 객체를 받는 콜백 함수를 사용합니다.
 -  `const messageId = req.params.id;`: 이 줄은 경로 매개변수에서 메시지의 고유 식별자를 검색합니다.
 - `const messageOpt = messagesStorage.get(messageId);`: 이 줄은 고유 식별자를 통해 `messagesStorage` 맵에서 메시지를 검색합니다. `get` 메서드는 값이 존재 (`Some`)하거나 없음 (`None`)을 나타내는 `Opt` 타입을 반환합니다.
-- `if ("None" in messageOpt) {`: 이 줄은 메시지가 `messagesStorage` 맵에서 찾아졌는지 확인합니다. 찾지 못한 경우, 404 상태 코드와 제공된 ID의 메시지를 찾지 못했다는 메시지를 보냅니다.
+- `if (!messageOpt) {`: 이 줄은 메시지가 `messagesStorage` 맵에서 찾아졌는지 확인합니다. 찾지 못한 경우, 404 상태 코드와 제공된 ID의 메시지를 찾지 못했다는 메시지를 보냅니다.
 - `res.json(messageOpt.Some);`: 이 줄은 검색된 메시지를 포함하는 JSON 응답을 클라이언트에게 보냅니다.
 
 따라서 이 함수는 고유 식별자를 통해 특정 메시지를 검색할 수 있게 합니다.
@@ -389,17 +408,17 @@ RESTful API에 대한 지식이 있다면, 이 함수가 `/messages` 엔드포�
 다음 단계는 기존 메시지를 업데이트할 수 있는 함수를 생성하는 것입니다. 다음 코드를 `index.ts`에 추가하십시오:
 
 ```JavaScript
-  app.put("/messages/:id", (req, res) => {
-   const messageId = req.params.id;
-   const messageOpt = messagesStorage.get(messageId);
-   if ("None" in messageOpt) {
-      res.status(400).send(`couldn't update a message with id=${messageId}. message not found`);
-   } else {
-      const message = messageOpt.Some;
-      const updatedMessage = { ...message, ...req.body, updatedAt: getCurrentDate()};
-      messagesStorage.insert(message.id, updatedMessage);
-      res.json(updatedMessage);
-   }
+    app.put("/messages/:id", (req, res) => {
+    const messageId = req.params.id;
+    const messageOpt = messagesStorage.get(messageId);
+    if (!messageOpt) {
+        res.status(400).send(`couldn't update a message with id=${messageId}. message not found`);
+    } else {
+        const message = messageOpt.Some;
+        const updatedMessage = { ...message, ...req.body, updatedAt: getCurrentDate()};
+        messagesStorage.insert(message.id, updatedMessage);
+        res.json(updatedMessage);
+    }
 });
 ```
   
@@ -409,7 +428,7 @@ RESTful API에 대한 지식이 있다면, 이 함수가 `/messages` 엔드포�
 -   `app.put("/messages/:id", (req, res) => {`: 이 줄은 `/messages/:id` 엔드포인트로의 PUT 요청을 위한 경로를 설정합니다. 이는 요청 (`req`)과 응답 (`res`) 객체를 받는 콜백 함수를 사용합니다.
 - `const messageId = req.params.id;`: 이 줄은 경로 매개변수에서 메시지의 고유 식별자를 검색합니다.
 - `const messageOpt = messagesStorage.get(messageId);`: 이 줄은 고유 식별자를 통해 `messagesStorage` 맵에서 메시지를 검색합니다. `get` 메서드는 값이 존재 (`Some`)하거나 없음 (`None`)을 나타내는 `Opt` 타입을 반환합니다.
-- `if ("None" in messageOpt) {`: 이전 섹션과 마찬가지로, 이 줄은 메시지가 `messagesStorage` 맵에서 찾아졌는지 확인합니다. 찾지 못한 경우, 400 상태 코드와 제공된 ID의 메시지를 찾지 못했다는 메시지를 보냅니다.
+- `if (!messageOpt) {`: 이전 섹션과 마찬가지로, 이 줄은 메시지가 `messagesStorage` 맵에서 찾아졌는지 확인합니다. 찾지 못한 경우, 400 상태 코드와 제공된 ID의 메시지를 찾지 못했다는 메시지를 보냅니다.
 - `const message = messageOpt.Some;`: 이 줄은 `messageOpt` 객체에서 메시지를 검색합니다.
 - `const updatedMessage = { ...message, ...req.body, updatedAt: getCurrentDate()};`: 이 줄은 기존 메시지와 요청 본문 (`req.body`)에 전송된 데이터를 병합하고 현재 날짜와 시간을 `updatedAt` 속성으로 추가하여 업데이트된 메시지를 생성합니다. `...` 구문은 스프레드 연산자로, `req.body`의 속성을 기존 메시지에 병합할 수 있게 합니다.
 - `messagesStorage.insert(message.id, updatedMessage);`: 이 줄은 업데이트된 메시지를 원래 메시지의 고유 식별자와 연결하여 `messagesStorage` 맵에 삽입합니다.
@@ -420,13 +439,13 @@ RESTful API에 대한 지식이 있다면, 이 함수가 `/messages` 엔드포�
 캐니스터 개발의 마지막 단계는 메시지 삭제를 허용하는 함수를 생성하는 것입니다. `index.ts` 파일속 `updateMessage` 함수 아래에 다음 코드를 추가하세요:
 ```JavaScript
 app.delete("/messages/:id", (req, res) => {
-   const messageId = req.params.id;
-   const deletedMessage = messagesStorage.remove(messageId);
-   if ("None" in deletedMessage) {
-      res.status(400).send(`couldn't delete a message with id=${messageId}. message not found`);
-   } else {
-      res.json(deletedMessage.Some);
-   }
+    const messageId = req.params.id;
+    const deletedMessage = messagesStorage.remove(messageId);
+    if (!deletedMessage) {
+        res.status(400).send(`couldn't delete a message with id=${messageId}. message not found`);
+    } else {
+        res.json(deletedMessage.Some);
+    }
 });
 ```
 이전 섹션과 마찬가지로, 이 함수는 고유 식별자로 특정 메시지를 삭제하기 위해 `/messages/:id` 엔드포인트로 DELETE 요청을 위한 경로를 설정합니다.
@@ -435,7 +454,6 @@ app.delete("/messages/:id", (req, res) => {
 마지막으로, 서버가 들어오는 요청을 수신할 수 있도록 하려면, `index.ts` 파일의 끝에 다음 코드 줄을 추가해야 합니다:
 ```JavaScript
 return app.listen();
-}); // to close the Server function.
 ```
 
 ### 3.11 현재 날짜 가져오기 함수
@@ -457,9 +475,10 @@ function getCurrentDate() {
 이 단계를 완료하면, `index.ts` 파일은 다음과 같습니다:
 
 ```JavaScript
-import { v4 as uuidv4 } from 'uuid';
-import { Server, StableBTreeMap, ic } from 'azle';
-import express from 'express';
+import { v4 as uuidv4 } from "uuid";
+import { StableBTreeMap } from "azle";
+import express from "express";
+import { time } from "azle";
 
 /**
  * `messagesStorage` - it's a key-value datastructure that is used to store messages.
@@ -480,69 +499,84 @@ import express from 'express';
  This type represents a message that can be listed on a board.
  */
 class Message {
-   id: string;
-   title: string;
-   body: string;
-   attachmentURL: string;
-   createdAt: Date;
-   updatedAt: Date | null
+    id: string;
+    title: string;
+    body: string;
+    attachmentURL: string;
+    createdAt: Date;
+    updatedAt: Date | null;
 }
 
 const messagesStorage = StableBTreeMap<string, Message>(0);
 
-export default Server(() => {
-   const app = express();
-   app.use(express.json());
+const app = express();
+app.use(express.json());
 
-   app.post("/messages", (req, res) => {
-      const message: Message =  {id: uuidv4(), createdAt: getCurrentDate(), ...req.body};
-      messagesStorage.insert(message.id, message);
-      res.json(message);
-   });
-
-   app.get("/messages", (req, res) => {
-      res.json(messagesStorage.values());
-   });
-
-   app.get("/messages/:id", (req, res) => {
-      const messageId = req.params.id;
-      const messageOpt = messagesStorage.get(messageId);
-      if ("None" in messageOpt) {
-         res.status(404).send(`the message with id=${messageId} not found`);
-      } else {
-         res.json(messageOpt.Some);
-      }
-   });
-
-   app.put("/messages/:id", (req, res) => {
-      const messageId = req.params.id;
-      const messageOpt = messagesStorage.get(messageId);
-      if ("None" in messageOpt) {
-         res.status(400).send(`couldn't update a message with id=${messageId}. message not found`);
-      } else {
-         const message = messageOpt.Some;
-         const updatedMessage = { ...message, ...req.body, updatedAt: getCurrentDate()};
-         messagesStorage.insert(message.id, updatedMessage);
-         res.json(updatedMessage);
-      }
-   });
-
-   app.delete("/messages/:id", (req, res) => {
-      const messageId = req.params.id;
-      const deletedMessage = messagesStorage.remove(messageId);
-      if ("None" in deletedMessage) {
-         res.status(400).send(`couldn't delete a message with id=${messageId}. message not found`);
-      } else {
-         res.json(deletedMessage.Some);
-      }
-   });
-
-   return app.listen();
+app.post("/messages", (req, res) => {
+    const message: Message = {
+        id: uuidv4(),
+        createdAt: getCurrentDate(),
+        ...req.body,
+    };
+    messagesStorage.insert(message.id, message);
+    res.json(message);
 });
 
+app.get("/messages", (req, res) => {
+    res.json(messagesStorage.values());
+});
+
+app.get("/messages/:id", (req, res) => {
+    const messageId = req.params.id;
+    const messageOpt = messagesStorage.get(messageId);
+    if (!messageOpt) {
+        res.status(404).send(`the message with id=${messageId} not found`);
+    } else {
+        res.json(messageOpt);
+    }
+});
+
+app.put("/messages/:id", (req, res) => {
+    const messageId = req.params.id;
+    const messageOpt = messagesStorage.get(messageId);
+    if (!messageOpt) {
+        res
+            .status(400)
+            .send(
+                `couldn't update a message with id=${messageId}. message not found`
+            );
+    } else {
+        const message = messageOpt;
+
+        const updatedMessage = {
+            ...message,
+            ...req.body,
+            updatedAt: getCurrentDate(),
+        };
+        messagesStorage.insert(message.id, updatedMessage);
+        res.json(updatedMessage);
+    }
+});
+
+app.delete("/messages/:id", (req, res) => {
+    const messageId = req.params.id;
+    const deletedMessage = messagesStorage.remove(messageId);
+    if (!deletedMessage) {
+        res
+            .status(400)
+            .send(
+                `couldn't delete a message with id=${messageId}. message not found`
+            );
+    } else {
+        res.json(deletedMessage);
+    }
+});
+
+app.listen();
+
 function getCurrentDate() {
-   const timestamp = new Number(ic.time());
-   return new Date(timestamp.valueOf() / 1000_000);
+    const timestamp = new Number(time());
+    return new Date(timestamp.valueOf() / 1000_000);
 }
 ```
 
@@ -588,7 +622,11 @@ dfx start --host 127.0.0.1:8000 --clean
 Codespaces에서는 이미 준비된 'canister_urls.py' 스크립트를 실행하기만 하면 됩니다. 이 스크립트는 캐니스터를 배포하고 캐니스터의 URL을 출력합니다.
 다음 명령을 실행합니다:
 ```Bash
-./canister_urls.py
+./canister_urls.py 
+
+# or 
+
+node deploy.js
 ```
 
 마지막으로, 생성된 캐니스터의 URL 링크를 클릭하여 상호 작용합니다.
@@ -608,32 +646,36 @@ dfx deploy
 
 `dfx deploy` 명령을 실행하면 다음과 유사한 출력값이 나와야 합니다:
 ```Bash
-Creating the "default" identity.
-WARNING: The "default" identity is not stored securely. Do not use it to control a lot of cycles/ICP.
-To create a more secure identity, create and use an identity that is protected by a password using the following commands:
-    dfx identity new <my-secure-identity-name> # creates a password protected identity
-    dfx identity use <my-secure-identity-name> # uses this identity by default
+➜  icp-message-board-contract git:(main) dfx deploy
+Deploying all canisters.
+Creating canisters...
+Creating canister message_board...
+Creating a wallet canister on the local network.
+The wallet canister on the "local" network for user "mainnet_user" is "bnz7o-iuaaa-aaaaa-qaaaa-cai"
+message_board canister created with canister id: bkyz2-fmaaa-aaaaa-qaaaq-cai
+Building canisters...
+Executing 'node_modules/.bin/azle compile message_board'
 
-  - generating new key at /Users/alice/.config/dfx/identity/default/identity.pem
-Your seed phrase: 
+Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
+
+Installing canisters...
+Creating UI canister on the local network.
+The UI canister on the "local" network is "bd3sg-teaaa-aaaaa-qaaba-cai"
+Installing code for canister message_board, with canister ID bkyz2-fmaaa-aaaaa-qaaaq-cai
+Deployed canisters.
+URLs:
+  Backend canister via Candid interface:
+    message_board: http://127.0.0.1:8000/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
 ...
 ```
 
 참고: `dfx deploy` 명령을 처음 실행하는 경우, 애플리케이션을 등록, 빌드, 배포하는 데 시간이 걸릴 수 있습니다. 시스템이 작업을 수행하는 동안 휴식을 취하십시오.
 
 명령이 완료되면, 캐니스터의 성공적인 배포를 나타내는 메시지가 나타납니다. 출력값에는 Candid 인터페이스를 통해 백엔드 캐니스터와 상호 작용하는 URL이 포함됩니다. 예를 들면:
-```Bash
-Deployed canisters.
-URLs:
-  Backend canister via Candid interface:
-    message_board: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
+
+```bash
+Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
 ```
-
-제공된 URL (해당 경우: http://127.0.0.1:4943/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai)은 message_board 캐니스터의 엔드포인트입니다. 이 URL은 웹 기반 인터페이스를 제공하는 Candid 인터페이스에 연결됩니다.
-
-아래 이 과정을 보여주는 GIF를 살펴보세요:
-![](https://hackmd.io/_uploads/rk7ViLpL2.gif)
-
 
 **참고: 캐니스터가 변경 후 자동으로 리로딩되길 원한다면, 다음 명령을 실행하세요**
 
@@ -742,21 +784,14 @@ ID를 입력한 후 `Call` 버튼을 클릭합니다. 제대로 수행하면 다
 
 ```Bash
 (
-  variant {
-    Ok = record {
       id = "79daba82-18ce-4f69-afa1-7b3389368d1f";
       attachmentURL = "url/path/to/some/photo/attachment";
       title = "message list";
       updatedAt = null;
       body = "some important things";
       createdAt = 1_685_568_853_915_736_000 : nat64;
-    }
-  },
 )
 ```
-
-웹 인터페이스와 상호 작용하는 이 과정을 보여주는 GIF를 볼 수 있습니다:
-![](https://hackmd.io/_uploads/HJNcuITI3.gif)
 
 이제 CLI에서 사용한 것과 동일한 함수들을 웹 인터페이스를 통해 상호 작용할 수 있습니다.
 
