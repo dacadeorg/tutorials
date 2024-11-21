@@ -90,7 +90,7 @@ We will approach this task in 3 steps:
 
 ### 2.3 Setting up ICVR framework in Unity
 
-#### 📺 Video tutorial 👉 https://www.youtube.com/watch?v=z25VNuJPlNw
+#### 📺 Video tutorial 👉 https://www.youtube.com/watch?v=_vxppvPNZUI
 #### 📝 Written Tutorial 👇
 1.	Open Unity Hub.
 2.	Switch to the “Projects” tab and click “New Project”.
@@ -137,7 +137,7 @@ In this video tutorial, you'll discover how to quickly construct a basic VR scen
 This approach allows for quick asset placement and scene assembly and will help you to understand the fundamentals of building VR environments in Unity.
 
 
-#### 📺 Video tutorial 👉 https://www.youtube.com/watch?v=5cmZofpvEJo
+#### 📺 Video tutorial 👉 https://www.youtube.com/watch?v=WKcJfB_19QE
 
 <br clear>
 
@@ -365,7 +365,7 @@ npm start
 <br clear>
 
 ### 4.2 Deploy your VR project on the local network
-#### 📺 Video tutorial 👉 https://www.youtube.com/watch?v=NOnMglXYCII
+#### 📺 Video tutorial 👉 https://www.youtube.com/watch?v=SxIYyXZ0kec
 #### 📝 Written Tutorial 👇
 1.  Once you've thoroughly tested your scene in Unity and confirmed there are no significant errors appearing in the console, you can proceed with building your VR experience using a WebGL build.
 2. Navigate to "File" > "Build Settings".
@@ -394,7 +394,7 @@ npm start
 dfx --version
 ```
 ```bash
-node –-version
+node --version
 ```
 14.	Start DFX with the following command:
 ```bash
@@ -493,7 +493,7 @@ dfx wallet --network ic balance
 
 17.	To add more cycles (specify the amount in ICP, it doesn’t need to be 0.3) you can run the following command:
 ```bash
-dfx ledger –-network ic top-up --amount 0.3 “your canister ID”
+dfx ledger --network ic top-up --amount 0.3 “your canister ID”
 ```
 
 
