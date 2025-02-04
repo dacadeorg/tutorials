@@ -133,27 +133,19 @@ DFX is the command-line interface for the Internet Computer. It provides a set o
 xcode-select --install
 ```
 
-3. **Install Podman**:
-
-Next, install Podman, a container management tool that will be used by DFX. Run the following command in your terminal:
+3. **Install DFX**:
 
 ```bash
-brew install podman
+DFX_VERSION=0.24.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
-4. **Install DFX**:
-
-```bash
-DFX_VERSION=0.22.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
-```
-
-5. **Add DFX to your PATH**:
+4. **Add DFX to your PATH**:
 
 ```bash
 echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
 ```
 
-6. **Verify the installation**:
+5. **Verify the installation**:
 
 Restart your terminal and run the following command to verify that DFX has been installed:
 
