@@ -198,27 +198,20 @@ You can learn more about these options in the [TypeScript documentation](https:/
 
 ```JSON
 {
-   "canisters": {
-      "message_board": {
-         "type": "custom",
-         "main": "src/index.ts",
-         "candid": "src/index.did",
-         "candid_gen": "http",
-         "build": "npx azle message_board",
-         "wasm": ".azle/message_board/message_board.wasm",
-         "gzip": true,
-         "metadata": [
-            {
-               "name": "candid:service",
-               "path": "src/index.did"
-            },
-            {
-               "name": "cdk:name",
-               "content": "azle"
-            }
-         ]
+  "canisters": {
+    "message_board": {
+      "type": "azle",
+      "main": "src/index.ts",
+      "candid_gen": "http",
+      "declarations": {
+        "output": ".dfx/dfx_generated/message_board",
+        "node_compatibility": true
+      },
+      "custom": {
+        "experimental": true
       }
-   }
+    }
+  }
 }
 ```
 
@@ -226,12 +219,8 @@ This configuration file communicates vital aspects of your canister to the DFINI
 
 - "canisters": The parent property for defining our canister, `message_board` in this case.
 - "message_board": The name of our canister, used for interacting with it.
-- "type": Describes the framework/language that is used in this canister. It can be Rust, Motoko, or custom (for Azle).
-- "build": Instructs DFX to use the Azle CLI to build the `message_board` canister.
+- "type": Describes the framework/language that is used in this canister. It can be Rust, Motoko, or Azle since `Azle v0.24.0`.
 - "candid": Points DFX to our Candid file (`src/index.did`), an interface description language (IDL) used by Internet Computer.
-- "wasm": Directs DFX to our compiled WebAssembly (WASM) file (`.azle/message_board/message_board.wasm.gz`), a fast, efficient, and secure binary instruction format.
-- "gzip": Indicates that the WASM file should be compressed using gzip.
-- "metadata": Contains additional information about the canister, such as its Candid service and the name of the CDK (Canister Development Kit) used. This information is used by DFX to interact with the canister.
 
 **3. Package.json File**: The `package.json` file in the root directory manages the project's metadata and dependencies.
 
@@ -243,7 +232,7 @@ This configuration file communicates vital aspects of your canister to the DFINI
   "dependencies": {
     "@dfinity/agent": "^0.21.4",
     "@dfinity/candid": "^0.21.4",
-    "azle": "^0.24.1",
+    "azle": "0.25.0",
     "express": "^4.18.2",
     "uuid": "^9.0.1"
   },
@@ -254,7 +243,6 @@ This configuration file communicates vital aspects of your canister to the DFINI
     "@types/express": "^4.17.21"
   }
 }
-
 ```
 
 This file is crucial for managing the project's dependencies and scripts. It contains information about the project such as its name, version, and main file. It also lists the dependencies and devDependencies needed for the project, specifying their versions:
@@ -319,8 +307,8 @@ This code block defines the 'Message' type, where each message is characterized 
 
 Now that we've defined our message types, we need a place to store these messages. For this, we'll be creating a storage variable in our `index.ts` file below the definition of the message payload type:
 
-```
-const messagesStorage = StableBTreeMap<string, Message>(0);
+```js
+const messagesStorage = new StableBTreeMap<string, Message>(0);
 ```
 
 This line of code creates a new `StableBTreeMap` called `messagesStorage`. This map will store our messages, associating each message with a unique identifier. The `StableBTreeMap` is a data structure from Azle that provides a durable and efficient way to store and retrieve data within our canister. It's ideal for storing critical and long-term data, ensuring that our messages persist across canister redeployments.
@@ -668,14 +656,6 @@ The wallet canister on the "local" network for user "mainnet_user" is "bnz7o-iua
 message_board canister created with canister id: bkyz2-fmaaa-aaaaa-qaaaq-cai
 Building canisters...
 Executing 'node_modules/.bin/azle compile message_board'
-
-Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
-
-Installing canisters...
-Creating UI canister on the local network.
-The UI canister on the "local" network is "bd3sg-teaaa-aaaaa-qaaba-cai"
-Installing code for canister message_board, with canister ID bkyz2-fmaaa-aaaaa-qaaaq-cai
-Deployed canisters.
 URLs:
   Backend canister via Candid interface:
     message_board: http://127.0.0.1:8000/?canisterId=bd3sg-teaaa-aaaaa-qaaba-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
@@ -683,14 +663,6 @@ URLs:
 ```
 
 Note: If this is your first time running the `dfx deploy` command, it may take a moment to register, build, and deploy your application. Take this time to relax as the system does its work.
-
-Once the command completes, you should see a message indicating the successful deployment of your canisters. The output will include URLs for interacting with your backend canister through the Candid interface. For example:
-
-```Bash
-Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
-```
-
-The provided URL (in this case: Canister message_board serving HTTP requests at: http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000) is the endpoint for your message_board canister.
 
 **Note: if you would like your canister to auto reload after changes, you can run the command**
 
@@ -730,7 +702,7 @@ bkyz2-fmaaa-aaaaa-qaaaq-cai
 
 This output indicates that the unique identifier of your canister is `bkyz2-fmaaa-aaaaa-qaaaq-cai`. You will use this identifier to interact with your canister.
 
-With tha generated, the url of your canister will be:
+With that generated, the url of your canister will be:
 
 ```Bash
 http://<CANISTER_ID>.localhost:8000
