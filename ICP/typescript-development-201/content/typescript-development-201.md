@@ -4,25 +4,28 @@
 Welcome to the advanced ICP TypeScript Development 201 tutorial! Building upon the fundamentals you've learned in the ICP TypeScript Smart Contract 101 course, this guide will take you through the development of a decentralized marketplace on the Internet Computer Protocol (ICP) platform. By the end of this guide, you will not only have a deeper understanding of ICP canisters but also a functional decentralized marketplace application.
 
 ## 1. Introduction
+
 In this tutorial, we will build a Marketplace canister that allows users to add, view, update, delete, and buy products. We will also build a frontend that allows users to interact with the canister.
 
 ### 1.1 What you'll learn
+
 - **Creating a Marketplace Canister**: Dive into the details of creating a decentralized marketplace canister, covering smart contract development and establishing a secure execution environment.
 - **Canister Interaction**: Gain practical experience with canister interaction through the command line and Candid interface, essential for testing and ensuring canister functionality.
 - **Developing a React Frontend**: Step-by-step guidance on building a React frontend that integrates with your marketplace canister, providing a seamless user experience.
 - **Deploying your canister**: Learn how to deploy your canister.
 
 ### 1.2 Prerequisites
+
 While having prior coding experience is necessary, you do not need to have any prior blockchain experience to follow this tutorial. However, we do recommend that you have the following:
 
-- **Knowledge of Typescript 101 Course** -  This tutorial builds on the concepts taught in the [Typescript 101 Course](https://dacade.org/communities/icp/courses/typescript-smart-contract-101). If you haven't taken this course yet, we recommend you do so before starting this one.
+- **Knowledge of Typescript 101 Course** - This tutorial builds on the concepts taught in the [Typescript 101 Course](https://dacade.org/communities/icp/courses/typescript-smart-contract-101). If you haven't taken this course yet, we recommend you do so before starting this one.
 - **Knowledge of TypeScript and Node.js**: Familiarity with TypeScript and Node.js is vital, as the tutorial involves building an application using these technologies. If you're new to TypeScript or Node.js, consider going through basic tutorials for both.
 - **Text Editor**: You will need a text editor to write and edit code. Visual Studio Code is recommended due to its excellent support for TypeScript and Node.js development, but feel free to use a text editor of your choice.
 - **Node.js**: Although you don't need Node.js pre-installed (as we'll show you how to manage it using nvm), it's important to note that Node.js (version 18 or higher) will be necessary for running the DFINITY SDK and the project itself."all it on your machine.
 - **React**: You will need to have a basic understanding of React to follow this tutorial. If you're new to React, consider going through a basic tutorial first. You can also check out the [React documentation](https://react.dev/reference/react) for more information.
 
-
 ### 1.3 Tech Stack
+
 Here are the key technologies and tools we'll be using:
 
 1.  Internet Computer Protocol (ICP): ICP is a decentralized computing platform that facilitates the creation of software, computation, and data that can run on the public internet. It's the platform we'll be building our application on.
@@ -35,12 +38,15 @@ Here are the key technologies and tools we'll be using:
 8.  React: React is a JavaScript library for building user interfaces. We'll be using it to build the frontend of our application.
 
 ### 1.4 What is Ledger?
+
 The ledger on ICP is a canister running on the Internet Computer blockchain that records all ICP token transactions. It consists of account identifiers and balances for all ICP token holders. Each account identifier is a unique value derived from the identity of the principal, the identifier of someone performing a request or "call", that controls the account. The balance represents the quantity of ICP assigned to the principal of the account. The ledger allows for operations such as sending ICP to another account and notifying recipient canisters of incoming transfers.
 
 ### 1.5 What is Internet Identity?
+
 The Internet Identity is an advanced and secure method of cryptographic authentication on the Internet Computer blockchain. It is designed to replace traditional usernames and passwords, which can be difficult to manage and vulnerable to security breaches. Internet Identity allows users to create and manage anonymous, independent accounts for each website they visit, providing privacy and protection from data collection by websites.
 
 ### 1.6 Overview
+
 1. [Introduction](#1-introduction) (5 min) - This section will guide you through some key concepts and terminology that you will need to know in order to complete this tutorial.
 2. [Setup](#2-setup) (10 min) - This section will guide you through the necessary steps to set up your project, preparing the groundwork for your ICP Marketplace Canister development.
 3. [Building the Marketplace Canister](#3-building-the-marketplace-canister) (40 min) - In this section, we will construct a powerful Marketplace Canister, implementing functions for adding, viewing, updating, deleting, and buying products, along with a set of helper functions. These functionalities are at the core of your decentralized marketplace application.
@@ -50,9 +56,11 @@ The Internet Identity is an advanced and secure method of cryptographic authenti
 If you want to skip to the complete code, you can find the GitHub repository [here](https://github.com/dacadeorg/icp-azle-201/blob/main).
 
 ## 2. Setup
+
 In this initial section, we are going to set up our boilerplate code and run it on your local machine.
 
 ## 2.1 Preparing Your Local Development Environment
+
 Start by navigating to the [ICP-azle-boilerplate](https://github.com/dacadeorg/icp-azle-201-boilerplate.git) repository. Select the "Code" button, then the "Local" tab, and copy the repository's URL.
 
 In your terminal, navigate to the directory where you want to store your project, then clone the repository to your local machine by running:
@@ -76,29 +84,35 @@ npm install
 This command will install all the necessary dependencies for the project. Once the installation is complete, you're ready to start building your canisters!
 
 ### 2.2 Preparing Our Terminal
+
 In this section, we will prepare our terminal environment by installing key tools: Node Version Manager (nvm) and DFX. Please note that the following instructions are specifically for Unix-like systems such as Linux and macOS. If you're on a Windows system, you would need to set up the Windows Subsystem for Linux (WSL) to follow along, or alternatively, you could use GitHub Codespaces. Let's get started.
 
 1. **Install Node Version Manager (nvm)**: Nvm is a useful tool that allows for the management of multiple active Node.js versions. With nvm, switching between different Node.js versions is a breeze. For this tutorial, we'll utilize Node.js version 18. To install nvm, execute the following command in your terminal:
+
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
 
 2. **Switch to Node.js version 18**: Node.js is a JavaScript runtime that enables the execution of JavaScript outside of a browser environment, and it's necessary for running our Azle project. To switch to Node.js version 18 using nvm, use the following command:
+
 ```bash
 nvm use 18
 ```
 
 3. **Install DFX**: DFX is the command-line interface for the Internet Computer, and we'll use it to create our Azle project. To install DFX, execute this command:
+
 ```bash
-DFX_VERSION=0.15.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+DFX_VERSION=0.22.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
 4. **Add DFX to your path**: Add DFX to your PATH: Now that DFX is installed, we need to add it to our system's PATH. This allows us to execute DFX commands from any location within the terminal. Run this command to add DFX to your PATH:
+
 ```bash
 echo 'export PATH="$PATH:$HOME/bin"' >> "$HOME/.bashrc"
 ```
 
 ### 2.3 Understanding the Boilerplate Code
+
 The boilerplate code we've prepared serves as a basic Azle project. It is designed to help you get started quickly by providing the necessary configuration files and dependencies. This code also includes a simple canister that serves as a reference for constructing your own canisters. Let's explore its key components:
 
 The boilerplate code is structured as follows:
@@ -110,8 +124,8 @@ The boilerplate code is structured as follows:
 │   └── dfinity_js_frontend
 │   │   ├── .babelrc
 │   │   ├── src
-│   │   │   ├── components
 │   │   │   ├── utils
+│   │   │   ├── components
 │   │   │   ├── assets
 │   │   │   ├── App.js
 │   │   │   ├── index.js
@@ -119,9 +133,6 @@ The boilerplate code is structured as follows:
 ├── .gitignore
 ├── README.md
 ├── canister_urls.py
-|── deploy-local-backend-canister.sh
-├── deploy-local-icrc-ledger.sh
-├── deploy-local-identity.sh
 ├── deploy-local-ledger.sh
 ├── dfx.json
 ├── package-lock.json
@@ -145,10 +156,10 @@ Let us break down the scripts:
 - `deploy-local-ledger.sh`: This script is used to deploy the ledger canister to the local Internet Computer environment. The ledger canister is used to record all ICP token transactions.
 - `canister_urls.py`: This file contains the canister IDs for our canisters. We will use these IDs to interact with our canisters.
 
-
 We have gone more into the setup of the boilerplate code in the [ICP Typescript 101 Course](https://dacade.org/communities/icp/courses/typescript-smart-contract-101). If you haven't taken this course yet, we recommend you do so before starting this one.
 
 ## 3. Canister Development (Backend)
+
 Now that we have our boilerplate code set up, we can begin creating our Marketplace Dapp.
 
 In this section, we will create the Marketplace Canister, implementing functions for adding, viewing, updating, deleting, and buying products, along with a set of helper functions. These functionalities are at the core of your decentralized marketplace application.
@@ -156,19 +167,20 @@ In this section, we will create the Marketplace Canister, implementing functions
 The backend of our ICP Marketplace Canister is located in the `src/dfinity_js_backend` folder. The backend is responsible for storing the data and executing the logic of our ICP Marketplace Canister.
 
 ### 3.1 Importing Dependencies
+
 Firstly, let us navigate to the `src/dfinity_js_backend/src` folder. You will find a file called `index.ts`. This is where we will create our canister.
 
 Let us first import the necessary libraries.
 
 ```typescript
-import { v4 as uuidv4 } from 'uuid';
-import { Server, StableBTreeMap, ic, Principal, serialize, Result } from 'azle';
-import express from 'express';
-import cors from 'cors';
+import { v4 as uuidv4 } from "uuid";
+import { Server, StableBTreeMap, ic, Principal, serialize, Result } from "azle";
+import express from "express";
+import cors from "cors";
 import { hexAddressFromPrincipal } from "azle/canisters/ledger";
 ```
 
-The code begins with an import of the 'uuid' package which  is used to generate unique identifiers for products.
+The code begins with an import of the 'uuid' package which is used to generate unique identifiers for products.
 Next, we go ahead and import a bunch of modules from the 'Azle' library.
 These modules provide data structures and functions for working with various data types, including text, records, maps, variants, sequences, and more. They also provide functions for querying and updating data, interacting with the Internet Computer, and working with time durations.
 
@@ -177,21 +189,22 @@ We also import the 'express' and 'cors' modules. These modules are used to creat
 Finally, we import the 'hexAddressFromPrincipal' function from the 'ledger' module. This function is used to convert a principal to a hexadecimal address, which is necessary for addressing canister identities.
 
 ### 3.2 Defining Record and Variant Types
+
 In this section, we will define class types that we will be using in our marketplace smart contract to represent products, orders, and messages.
 
 First, we define the Product record type, which represents a product that can be listed on a marketplace.
+
 ```typescript
 class Product {
-    id: string;
-    title: string;
-    description: string;
-    location: string;
-    price: number;
-    seller: string;
-    attachmentURL: string;
-    soldAmount: number
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  price: number;
+  seller: string;
+  attachmentURL: string;
+  soldAmount: number;
 }
-
 ```
 
 The `Product` includes fields such as `id` for a unique identifier, `title` for the product's name, `description` for a detailed product description, `location` for the product's origin or shipping address, `price` for the product's price in natural numbers, seller for the `identity` of the product's seller, `attachmentURL` for optional URLs that provide additional product information or images, and `soldAmount` for the amount of the product that has been sold. This record type serves as the foundation for managing and representing products on the marketplace.
@@ -202,36 +215,34 @@ Let us go ahead and define the other record types that we will be using in our m
 
 ```typescript
 class ProductPayload {
-    title: string;
-    description: string;
-    location: string;
-    price: number;
-    attachmentURL: string
+  title: string;
+  description: string;
+  location: string;
+  price: number;
+  attachmentURL: string;
 }
 ```
 
 This class is used to represent the payload or data needed when creating a product listing. It includes similar fields to the Product record. However, it does not include fields such as `id`, `seller`, and `soldAmount`, which are not required when creating a product listing.
 The `ProductPayload` record will be used when users add new products to the marketplace.
 
-
 ```typescript
 enum OrderStatus {
-    PaymentPending,
-    Completed
+  PaymentPending,
+  Completed,
 }
 class Order {
-    productId: string;
-    price: number;
-    status: string;
-    seller: string;
+  productId: string;
+  price: number;
+  status: string;
+  seller: string;
 }
 ```
 
-The `OrderStatus` enum represents the possible states an order can have. It includes two states: "PaymentPending" and "Completed," which describe the status of an order. 
+The `OrderStatus` enum represents the possible states an order can have. It includes two states: "PaymentPending" and "Completed," which describe the status of an order.
 The Order class on the other hand, represents an order in the marketplace.
 It includes fields such as `productId` for the `ID` of the product being ordered, `price` for the order's price, `status` for the order's status (which is one of the variants defined in OrderStatus), and `seller` for the identity of the seller.
 The Order record and OrderStatus variant are essential for tracking and managing orders within the marketplace.
-
 
 Finally, let us define the product storage tree map
 
@@ -239,8 +250,8 @@ Finally, let us define the product storage tree map
 const productsStorage = StableBTreeMap<string, Product>(0);
 const orders = StableBTreeMap<string, Order>(1);
 
-/* 
-    initialization of the ICRC Ledger canister. The principal text value is hardcoded because 
+/*
+    initialization of the ICRC Ledger canister. The principal text value is hardcoded because
     we set it in the `dfx.json`
 */
 const ICRC_CANISTER_PRINCIPAL = "mxzaz-hqaaa-aaaar-qaada-cai";
@@ -253,41 +264,41 @@ Finally, we initialize the ICRC Ledger canister, which is used to manage financi
 At this point, our contract should look like this:
 
 ```typescript
-import { v4 as uuidv4 } from 'uuid';
-import { Server, StableBTreeMap, ic, Principal, serialize, Result } from 'azle';
-import express from 'express';
-import cors from 'cors';
+import { v4 as uuidv4 } from "uuid";
+import { Server, StableBTreeMap, ic, Principal, serialize, Result } from "azle";
+import express from "express";
+import cors from "cors";
 import { hexAddressFromPrincipal } from "azle/canisters/ledger";
 
 class Product {
-    id: string;
-    title: string;
-    description: string;
-    location: string;
-    price: number;
-    seller: string;
-    attachmentURL: string;
-    soldAmount: number
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  price: number;
+  seller: string;
+  attachmentURL: string;
+  soldAmount: number;
 }
 
 class ProductPayload {
-    title: string;
-    description: string;
-    location: string;
-    price: number;
-    attachmentURL: string
+  title: string;
+  description: string;
+  location: string;
+  price: number;
+  attachmentURL: string;
 }
 
 enum OrderStatus {
-    PaymentPending,
-    Completed
+  PaymentPending,
+  Completed,
 }
 
 class Order {
-    productId: string;
-    price: number;
-    status: string;
-    seller: string;
+  productId: string;
+  price: number;
+  status: string;
+  seller: string;
 }
 
 const productsStorage = StableBTreeMap<string, Product>(0);
@@ -306,26 +317,24 @@ export default Server(() => {
     // only for development purposes. For production-ready apps, one must configure CORS appropriately
     app.use(cors());
     app.use(express.json());
-    
+
 ```
 
 We create an instance of the `express` application and enable CORS by using the `cors` middleware. This allows our canister to handle requests from our frontend application, which may be hosted on a different domain. We also use the `express.json` middleware to parse incoming requests with JSON payloads.
 
-
 ### 3.4 Setting up canister CRUD endpoints
+
 Next, we define the routes for our canister. We will create routes for adding, viewing, updating, and deleting products, as well as creating and completing orders.
 
 ```typescript
-
 app.get("/products", (req, res) => {
-        res.json(productsStorage.values());
-    });
+  res.json(productsStorage.values());
+});
 
-    app.get("/orders", (req, res) => {
-        res.json(orders.values());
-    });
-    
- ```
+app.get("/orders", (req, res) => {
+  res.json(orders.values());
+});
+```
 
 The `/products` route is used to retrieve all products listed in the marketplace. It returns a JSON response containing the products stored in the `productsStorage` map.
 The `/orders` route is used to retrieve all orders in the marketplace. It returns a JSON response containing the orders stored in the `orders` map.
@@ -333,16 +342,15 @@ The `/orders` route is used to retrieve all orders in the marketplace. It return
 Next, we define the routes for getting a product by ID.
 
 ```typescript
- app.get("/products/:id", (req, res) => {
-        const productId = req.params.id;
-        const productOpt = productsStorage.get(productId);
-        if ("None" in productOpt) {
-            res.status(404).send(`the product with id=${productId} not found`);
-        } else {
-            res.json(productOpt.Some);
-        }
-    });
-
+app.get("/products/:id", (req, res) => {
+  const productId = req.params.id;
+  const productOpt = productsStorage.get(productId);
+  if ("None" in productOpt) {
+    res.status(404).send(`the product with id=${productId} not found`);
+  } else {
+    res.json(productOpt.Some);
+  }
+});
 ```
 
 It takes the product ID as a URL parameter and returns a JSON response containing the product details if the product is found. If the product is not found, it returns a 404 status code and an error message.
@@ -350,39 +358,55 @@ It takes the product ID as a URL parameter and returns a JSON response containin
 Next, we define the routes for adding, updating, and deleting products.
 
 ```typescript
+app.post("/products", (req, res) => {
+  const payload = req.body as ProductPayload;
+  const product = {
+    id: uuidv4(),
+    soldAmount: 0,
+    seller: ic.caller().toText(),
+    ...payload,
+  };
+  productsStorage.insert(product.id, product);
+  return res.json(product);
+});
 
- app.post("/products", (req, res) => {
-        const payload = req.body as ProductPayload;
-        const product = { id: uuidv4(), soldAmount: 0, seller: ic.caller().toText(), ...payload };
-        productsStorage.insert(product.id, product);
-        return res.json(product);
-    });
+app.put("/products/:id", (req, res) => {
+  const productId = req.params.id;
+  const payload = req.body as ProductPayload;
+  const productOpt = productsStorage.get(productId);
+  if ("None" in productOpt) {
+    res
+      .status(400)
+      .send(
+        `couldn't update a product with id=${productId}. product not found`
+      );
+  } else {
+    const product = productOpt.Some;
+    const updatedProduct = {
+      ...product,
+      ...payload,
+      updatedAt: getCurrentDate(),
+    };
+    productsStorage.insert(product.id, updatedProduct);
+    res.json(updatedProduct);
+  }
+});
 
-    app.put("/products/:id", (req, res) => {
-        const productId = req.params.id;
-        const payload = req.body as ProductPayload;
-        const productOpt = productsStorage.get(productId);
-        if ("None" in productOpt) {
-            res.status(400).send(`couldn't update a product with id=${productId}. product not found`);
-        } else {
-            const product = productOpt.Some;
-            const updatedProduct = { ...product, ...payload, updatedAt: getCurrentDate() };
-            productsStorage.insert(product.id, updatedProduct);
-            res.json(updatedProduct);
-        }
-    });
-
-    app.delete("/products/:id", (req, res) => {
-        const productId = req.params.id;
-        const deletedProductOpt = productsStorage.remove(productId);
-        if ("None" in deletedProductOpt) {
-            res.status(400).send(`couldn't delete a product with id=${productId}. product not found`);
-        } else {
-            res.json(deletedProductOpt.Some);
-        }
-    });
-    
+app.delete("/products/:id", (req, res) => {
+  const productId = req.params.id;
+  const deletedProductOpt = productsStorage.remove(productId);
+  if ("None" in deletedProductOpt) {
+    res
+      .status(400)
+      .send(
+        `couldn't delete a product with id=${productId}. product not found`
+      );
+  } else {
+    res.json(deletedProductOpt.Some);
+  }
+});
 ```
+
 The methods are pretty straight forward as we simply have three endpoints, one to add a product to the canister, second ti edit a product based on the ID, and lastly, to remove a product via its ID.
 
 We use a method called 'getCurrentDate' in the `/products/:id` which we haven't created yet. We would do that in the upcoming section.
@@ -392,35 +416,39 @@ We use a method called 'getCurrentDate' in the `/products/:id` which we haven't 
 Now let us implement the endpoint to allow users place an order for a particular product.
 
 ```typescript
- /*
+/*
         Before the order is received, the icrc2_approve is called - that's where we create
         an allowance entry for the canister to make a transfer of an ICRC token on behalf of the sender to the seller of the product.
         Here, we make an allowance transfer by calling icrc2_transfer_from.
     */
-    app.post("/orders", async (req, res) => {
-        const productOpt = productsStorage.get(req.body.productId);
-        if ("None" in productOpt) {
-            res.send(`cannot create the order: product=${req.body.productId} not found`);
-        } else {
-            const product = productOpt.Some;
-            const allowanceResponse = await allowanceTransfer(product.seller, BigInt(product.price));
-            if (allowanceResponse.Err) {
-                res.send(allowanceResponse.Err);
-                return;
-            }
-            const order: Order = {
-                productId: product.id,
-                price: product.price,
-                status: OrderStatus[OrderStatus.Completed],
-                seller: product.seller
-            };
-            orders.insert(uuidv4(), order);
-            product.soldAmount += 1;
-            productsStorage.insert(product.id, product);
-            res.json(order);
-        }
-    });
-
+app.post("/orders", async (req, res) => {
+  const productOpt = productsStorage.get(req.body.productId);
+  if ("None" in productOpt) {
+    res.send(
+      `cannot create the order: product=${req.body.productId} not found`
+    );
+  } else {
+    const product = productOpt.Some;
+    const allowanceResponse = await allowanceTransfer(
+      product.seller,
+      BigInt(product.price)
+    );
+    if (allowanceResponse.Err) {
+      res.send(allowanceResponse.Err);
+      return;
+    }
+    const order: Order = {
+      productId: product.id,
+      price: product.price,
+      status: OrderStatus[OrderStatus.Completed],
+      seller: product.seller,
+    };
+    orders.insert(uuidv4(), order);
+    product.soldAmount += 1;
+    productsStorage.insert(product.id, product);
+    res.json(order);
+  }
+});
 ```
 
 ### 3.5 Defining Order Management Functions
@@ -428,35 +456,39 @@ Now let us implement the endpoint to allow users place an order for a particular
 Next, let us create our `createOrder` function. This function is responsible for creating orders within the marketplace smart contract.
 
 ```typescript
- /*
+/*
         Before the order is received, the icrc2_approve is called - that's where we create
         an allowance entry for the canister to make a transfer of an ICRC token on behalf of the sender to the seller of the product.
         Here, we make an allowance transfer by calling icrc2_transfer_from.
     */
 app.post("/orders", async (req, res) => {
-    const productOpt = productsStorage.get(req.body.productId);
-    if ("None" in productOpt) {
-        res.send(`cannot create the order: product=${req.body.productId} not found`);
-    } else {
-        const product = productOpt.Some;
-        const allowanceResponse = await allowanceTransfer(product.seller, BigInt(product.price));
-        if (allowanceResponse.Err) {
-            res.send(allowanceResponse.Err);
-            return;
-        }
-        const order: Order = {
-            productId: product.id,
-            price: product.price,
-            status: OrderStatus[OrderStatus.Completed],
-            seller: product.seller
-        };
-        orders.insert(uuidv4(), order);
-        product.soldAmount += 1;
-        productsStorage.insert(product.id, product);
-        res.json(order);
+  const productOpt = productsStorage.get(req.body.productId);
+  if ("None" in productOpt) {
+    res.send(
+      `cannot create the order: product=${req.body.productId} not found`
+    );
+  } else {
+    const product = productOpt.Some;
+    const allowanceResponse = await allowanceTransfer(
+      product.seller,
+      BigInt(product.price)
+    );
+    if (allowanceResponse.Err) {
+      res.send(allowanceResponse.Err);
+      return;
     }
+    const order: Order = {
+      productId: product.id,
+      price: product.price,
+      status: OrderStatus[OrderStatus.Completed],
+      seller: product.seller,
+    };
+    orders.insert(uuidv4(), order);
+    product.soldAmount += 1;
+    productsStorage.insert(product.id, product);
+    res.json(order);
+  }
 });
-
 ```
 
 The `createOrder` function takes in a product `ID` as an argument and returns a Result type. If the product is found, it creates an order and returns it. Otherwise, it returns an error message.
@@ -485,46 +517,51 @@ Finally, we return the `app.listen()` method to start the HTTP server and listen
 Now let us go ahead and define our helper functions which we referenced in the previous sections.
 
 ```typescript
-
 function getCurrentDate() {
-    const timestamp = new Number(ic.time());
-    return new Date(timestamp.valueOf() / 1000_000);
+  const timestamp = new Number(ic.time());
+  return new Date(timestamp.valueOf() / 1000_000);
 }
 
-async function allowanceTransfer(to: string, amount: bigint): Promise<Result<any, string>> {
-    try {
-        const response = await fetch(`icp://${ICRC_CANISTER_PRINCIPAL}/icrc2_transfer_from`, {
-            body: serialize({
-                candidPath: "/src/icrc1-ledger.did",
-                args: [{
-                    // for optional values use an empty array notation [] instead of None is they should remain empty
-                    spender_subaccount: [],
-                    created_at_time: [],
-                    memo: [],
-                    amount,
-                    fee: [],
-                    from: { owner: ic.caller(), subaccount: [] },
-                    to: { owner: Principal.fromText(to), subaccount: [] }
-                }]
-            })
-        });
-        return Result.Ok(response);
-    } catch (err) {
-        let errorMessage = "an error occurred on approval";
-        if (err instanceof Error) {
-            errorMessage = err.message;
-        }
-        return Result.Err(errorMessage);
+async function allowanceTransfer(
+  to: string,
+  amount: bigint
+): Promise<Result<any, string>> {
+  try {
+    const response = await fetch(
+      `icp://${ICRC_CANISTER_PRINCIPAL}/icrc2_transfer_from`,
+      {
+        body: serialize({
+          candidPath: "/src/icrc1-ledger.did",
+          args: [
+            {
+              // for optional values use an empty array notation [] instead of None is they should remain empty
+              spender_subaccount: [],
+              created_at_time: [],
+              memo: [],
+              amount,
+              fee: [],
+              from: { owner: ic.caller(), subaccount: [] },
+              to: { owner: Principal.fromText(to), subaccount: [] },
+            },
+          ],
+        }),
+      }
+    );
+    return Result.Ok(response);
+  } catch (err) {
+    let errorMessage = "an error occurred on approval";
+    if (err instanceof Error) {
+      errorMessage = err.message;
     }
+    return Result.Err(errorMessage);
+  }
 }
-
 ```
 
 The `getCurrentDate` function returns the current date and time as a JavaScript Date object. It uses the `ic.time()` function to get the current time in nanoseconds, then converts it to seconds and creates a new Date object.
 
-The `allowanceTransfer` function is an asynchronous function that takes a recipient's address and an amount as arguments and returns a Result type. It makes an allowance transfer by calling the `icrc2_transfer_from` method on the ICRC Ledger canister. 
+The `allowanceTransfer` function is an asynchronous function that takes a recipient's address and an amount as arguments and returns a Result type. It makes an allowance transfer by calling the `icrc2_transfer_from` method on the ICRC Ledger canister.
 This function is used to create an allowance entry for the canister to make a transfer of an ICRC token on behalf of the sender to the seller of the product. It sends a POST request to the `icrc2_transfer_from` method, passing the necessary arguments such as the spender's subaccount, created at time, memo, amount, fee, from, and to. If the transfer is successful, it returns a Result with the response; otherwise, it returns an error message.
-
 
 At the end, our canister should look like [this](https://github.com/dacadeorg/icp-azle-201/blob/main/src/dfinity_js_backend/src/index.ts).
 
@@ -538,58 +575,62 @@ Let us start by navigating into our `src/dfinity_js_frontend/src/utils` folder. 
 If this folder does not exist, go ahead and create the utils folder inside the following path `src/dfinity_js_frontend/src/`.
 
 ### 4.1 Authentication utility functions
+
 Firstly, under the `utils` folder, create a file called `auth.js` with the following code:
+
 ```typescript
 import { AuthClient } from "@dfinity/auth-client";
 
-// that is the url of the webapp for the internet identity. 
+// that is the url of the webapp for the internet identity.
 const IDENTITY_PROVIDER = `http://${process.env.IDENTITY_CANISTER_ID}.${window.location.hostname}:4943`;
 const MAX_TTL = 7 * 24 * 60 * 60 * 1000 * 1000 * 1000;
 
 export async function getAuthClient() {
-    return await AuthClient.create();
+  return await AuthClient.create();
 }
 
 export async function getPrincipal() {
-    const authClient = await getAuthClient();
-    return authClient.getIdentity()?.getPrincipal();
+  const authClient = await getAuthClient();
+  return authClient.getIdentity()?.getPrincipal();
 }
 
 export async function getPrincipalText() {
-    return (await getPrincipal()).toText();
+  return (await getPrincipal()).toText();
 }
 
 export async function isAuthenticated() {
-    try {
-        const authClient = await getAuthClient();
-        return await authClient.isAuthenticated();
-    } catch (err) {
-        logout();
-    }
+  try {
+    const authClient = await getAuthClient();
+    return await authClient.isAuthenticated();
+  } catch (err) {
+    logout();
+  }
 }
 
 export async function login() {
-    const authClient = await getAuthClient();
-    const isAuthenticated = await authClient.isAuthenticated();
+  const authClient = await getAuthClient();
+  const isAuthenticated = await authClient.isAuthenticated();
 
-    if (!isAuthenticated) {
-        await authClient?.login({
-            identityProvider: IDENTITY_PROVIDER,
-            onSuccess: async () => {
-                window.location.reload();
-            },
-            maxTimeToLive: MAX_TTL,
-        });
-    }
+  if (!isAuthenticated) {
+    await authClient?.login({
+      identityProvider: IDENTITY_PROVIDER,
+      onSuccess: async () => {
+        window.location.reload();
+      },
+      maxTimeToLive: MAX_TTL,
+    });
+  }
 }
 
 export async function logout() {
-    const authClient = await getAuthClient();
-    authClient.logout();
-    window.location.reload();
+  const authClient = await getAuthClient();
+  authClient.logout();
+  window.location.reload();
 }
 ```
+
 The auth.js file contains functions for user authentication and logout using the DFINITY AuthClient. Here's an explanation of each part:
+
 - Import AuthClient: The file imports the AuthClient from the `@dfinity/auth-client` package, which is used for authentication.
 - Identity Provider URL: `IDENTITY_PROVIDER` is the URL of the webapp for the Internet Identity. This URL is used for user authentication. The canister ID might be different for you, rely on the output of the deploy command to get the correct canister ID.
 - Maximum Time to Live: `MAX_TTL` defines the maximum time to live for authentication in nanoseconds. It sets the maximum amount of time the authentication session is allowed to exist before it expires.
@@ -603,25 +644,26 @@ The auth.js file contains functions for user authentication and logout using the
 These functions provide a way for users to authenticate and log in to the application using the Internet Identity. They also allow users to log out of the application when they are done.
 
 ### 4.2 Canister Factory
+
 Next, let us create another file under the `utils` folder called `canisterFactory.js` with the following code:
 
 ```typescript
 import { HttpAgent, Actor } from "@dfinity/agent";
-import { getAuthClient } from "./auth.js"
+import { getAuthClient } from "./auth.js";
 
 const HOST = window.location.origin;
 
 export async function createCanisterActor(canisterId, idl) {
-    const authClient = await getAuthClient();
-    const agent = new HttpAgent({
-        host: HOST,
-        identity: authClient.getIdentity()
-    });
-    await agent.fetchRootKey(); // this line is needed for the local env only
-    return Actor.createActor(idl, {
-        agent,
-        canisterId,
-    });
+  const authClient = await getAuthClient();
+  const agent = new HttpAgent({
+    host: HOST,
+    identity: authClient.getIdentity(),
+  });
+  await agent.fetchRootKey(); // this line is needed for the local env only
+  return Actor.createActor(idl, {
+    agent,
+    canisterId,
+  });
 }
 ```
 
@@ -649,25 +691,25 @@ import { idlFactory as ledgerIDL } from "../../../declarations/ledger_canister/l
 const LEDGER_CANISTER_ID = "ryjl3-tyaaa-aaaaa-aaaba-cai";
 
 export async function icpBalance() {
-    const authenticated = await isAuthenticated();
-    if (!authenticated) {
-        return "0";
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    return "0";
+  }
+  const canister = await getLedgerCanister();
+  const principal = await getPrincipalText();
+  try {
+    const account = await getAddressFromPrincipal(principal);
+    const balance = await canister.account_balance_dfx(account);
+    return (balance.e8s / BigInt(10 ** 8)).toString();
+  } catch (err) {
+    if (err.name === "AgentHTTPResponseError") {
+      logout();
     }
-    const canister = await getLedgerCanister();
-    const principal = await getPrincipalText();
-    try {
-        const account = await getAddressFromPrincipal(principal);
-        const balance = await canister.account_balance_dfx(account);
-        return (balance.e8s / BigInt(10 ** 8)).toString();
-    } catch(err) {
-        if (err.name === 'AgentHTTPResponseError') {
-            logout();
-        }
-    }
+  }
 }
 
 async function getLedgerCanister() {
-    return createCanisterActor(LEDGER_CANISTER_ID, ledgerIDL);
+  return createCanisterActor(LEDGER_CANISTER_ID, ledgerIDL);
 }
 ```
 
@@ -681,47 +723,60 @@ The `ledger.js` file contains functions for interacting with the ledger canister
 - ICP Balance Function: The `icpBalance` function is responsible for retrieving the ICP balance of the currently authenticated user. It doesn't transfer ICP but rather queries the balance. It calls the `isAuthenticated` function to check if the user is authenticated. If the user is not authenticated, it returns a balance of "0." If the user is authenticated, it obtains an instance of the ledger canister using the `getLedgerCanister` function. It then retrieves the principal of the authenticated user and obtains the account address using the `getAddressFromPrincipal` function. Finally, it calls the `account_balance_dfx` method on the ledger canister to get the balance of the user's account. The result is then returned as a string, making it suitable for display in the user interface.
 - Get Ledger Canister Function: The `getLedgerCanister` function is a helper function that creates an instance of the ledger canister actor using the `createCanisterActor` function. It returns the actor instance, allowing interaction with the ledger canister's exposed functionality.
 
-
 ### 4.4 ICRC2 Ledger utility functions
+
 Go ahead and create a file under the `utils` folder called `icrc2_ledger.js` with the following code:
 
 ```javascript
 import { createCanisterActor } from "./canisterFactory";
 import { getPrincipal, getPrincipalText, isAuthenticated } from "./auth";
-import { idlFactory as icrcIDL } from "../../../declarations/icrc1-ledger/icrc1-ledger.did.js";
+import { idlFactory as icrcIDL } from "../../../declarations/ledger_canister/ledger_canister.did.js";
 import { Principal } from "@dfinity/principal";
 
 const ICRC_CANISTER_ID = "mxzaz-hqaaa-aaaar-qaada-cai";
 
 export async function approve(spender, amount) {
-    const canister = await getIcrc1Canister();
-    const currentPrincipal = await getPrincipal();
-    return await canister.icrc2_approve({ spender: { owner: Principal.fromText(spender), subaccount: [] }, from: { owner: currentPrincipal, subaccount: [] }, amount: BigInt(amount), fee: [], memo: [], from_subaccount: [], created_at_time: [], expected_allowance: [], expires_at: [] })
+  const canister = await getIcrc1Canister();
+  const currentPrincipal = await getPrincipal();
+  return await canister.icrc2_approve({
+    spender: { owner: Principal.fromText(spender), subaccount: [] },
+    from: { owner: currentPrincipal, subaccount: [] },
+    amount: BigInt(amount),
+    fee: [],
+    memo: [],
+    from_subaccount: [],
+    created_at_time: [],
+    expected_allowance: [],
+    expires_at: [],
+  });
 }
 
 export async function tokenBalance() {
-    const authenticated = await isAuthenticated();
-    if (!authenticated) {
-        return "";
-    }
-    const canister = await getIcrc1Canister();
-    const principal = await getPrincipalText();
-    const balance = await canister.icrc1_balance_of({ owner: Principal.fromText(principal), subaccount: [] });
-    return balance.toString();
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    return "";
+  }
+  const canister = await getIcrc1Canister();
+  const principal = await getPrincipalText();
+  const balance = await canister.icrc1_balance_of({
+    owner: Principal.fromText(principal),
+    subaccount: [],
+  });
+  return balance.toString();
 }
 
 export async function tokenSymbol() {
-    const authenticated = await isAuthenticated();
-    if (!authenticated) {
-        return "";
-    }
-    const canister = await getIcrc1Canister();
-    const symbol = await canister.icrc1_symbol();
-    return symbol;
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    return "";
+  }
+  const canister = await getIcrc1Canister();
+  const symbol = await canister.icrc1_symbol();
+  return symbol;
 }
 
 async function getIcrc1Canister() {
-    return createCanisterActor(ICRC_CANISTER_ID, icrcIDL);
+  return createCanisterActor(ICRC_CANISTER_ID, icrcIDL);
 }
 ```
 
@@ -735,82 +790,92 @@ The `icrc2_ledger.js` file contains functions for interacting with the ICRC2 led
 - Import ICRC1 Ledger IDL: The file imports the IDL factory for the ICRC1 ledger canister from the `icrc1-ledger.did.js` file. This IDL factory is used to create an instance of the ICRC1 ledger canister actor.
 
 ### 4.5 IC HTTP utility functions
+
 Next, let us create a file under the `utils` folder called `ichttp.js` with the following code:
 
 ```javascript
 import { logout } from "./auth";
 
 class IcHttp {
-    #agent;
-    #decoder;
-    #encoder;
+  #agent;
+  #decoder;
+  #encoder;
 
-    constructor(agent) {
-        this.#agent = agent;
-        this.#decoder = new TextDecoder('utf-8');
-        this.#encoder = new TextEncoder();
-    }
+  constructor(agent) {
+    this.#agent = agent;
+    this.#decoder = new TextDecoder("utf-8");
+    this.#encoder = new TextEncoder();
+  }
 
-    async GET(req) {
-        return await this.#doRequest(req.path, "GET", req.params);
-    }
+  async GET(req) {
+    return await this.#doRequest(req.path, "GET", req.params);
+  }
 
-    async POST(req) {
-        return await this.#doRequest(req.path, "POST", req.params, req.data);
-    }
+  async POST(req) {
+    return await this.#doRequest(req.path, "POST", req.params, req.data);
+  }
 
-    async #doRequest(path, method, params, data) {
-        try {
-            const queryParams = new URLSearchParams(params ? params : {});
-            const url = params ? `${path}?${queryParams}` : path;
-            let response;
-            switch (method) {
-                case "GET":
-                    response = await this.#agent.http_request({
-                        url,
-                        method,
-                        body: [],
-                        headers: [],
-                        certificate_version: [],
-                    });
-                    return this.#parseResponse(response);
-                case "POST":
-                case "PUT":
-                case "DELETE":
-                    const body = data ? this.#encoder.encode(JSON.stringify(data)) : [];
-                    response = await this.#agent.http_request_update({
-                        url,
-                        method,
-                        body,
-                        headers: [['Content-Type', 'application/json; charset=utf-8'], ['Content-Length', `${body.length}`]],
-                        certificate_version: [],
-                    });
-                    return this.#parseResponse(response);
-                default:
-                    throw new Error(`Unknown method: ${method}`);
-            }
-        } catch (err) {
-            if (err.name === 'AgentHTTPResponseError') {
-                logout();
-            }
-        }
+  async #doRequest(path, method, params, data) {
+    try {
+      const queryParams = new URLSearchParams(params ? params : {});
+      const url = params ? `${path}?${queryParams}` : path;
+      let response;
+      switch (method) {
+        case "GET":
+          response = await this.#agent.http_request({
+            url,
+            method,
+            body: [],
+            headers: [],
+            certificate_version: [],
+          });
+          return this.#parseResponse(response);
+        case "POST":
+        case "PUT":
+        case "DELETE":
+          const body = data ? this.#encoder.encode(JSON.stringify(data)) : [];
+          response = await this.#agent.http_request_update({
+            url,
+            method,
+            body,
+            headers: [
+              ["Content-Type", "application/json; charset=utf-8"],
+              ["Content-Length", `${body.length}`],
+            ],
+            certificate_version: [],
+          });
+          return this.#parseResponse(response);
+        default:
+          throw new Error(`Unknown method: ${method}`);
+      }
+    } catch (err) {
+      if (err.name === "AgentHTTPResponseError") {
+        logout();
+      }
     }
+  }
 
-    #parseResponse(response) {
-        try {
-            const body = this.#decoder.decode(response.body);
-            if (response.status_code !== 200) {
-                throw new Error(body);
-            }
-            const contentType = response.headers.filter(header => "content-type" === header[0].toLowerCase()).map(header => header[1]);
-            if (contentType && contentType.length === 1 && contentType[0].toLowerCase() === 'application/json; charset=utf-8') {
-                return JSON.parse(body);
-            }
-            return body;
-        } catch (err) {
-            throw err;
-        }
+  #parseResponse(response) {
+    try {
+      const body = this.#decoder.decode(response.body);
+      if (response.status_code !== 200) {
+        throw new Error(body);
+      }
+      const contentType = response.headers
+        .filter((header) => "content-type" === header[0].toLowerCase())
+        .map((header) => header[1]);
+      if (
+        contentType &&
+        contentType.length === 1 &&
+        contentType[0].toLowerCase() === "application/json; charset=utf-8"
+      ) {
+        return JSON.parse(body);
+      }
+      return body;
+    } catch (err) {
+      throw err;
     }
+  }
 }
 export default IcHttp;
 ```
@@ -818,6 +883,7 @@ export default IcHttp;
 For this section, you do not need to understand the entire code. The `ichttp.js` file contains a class called `IcHttp` that provides a simple HTTP client for making requests to the Internet Computer. It uses the `@dfinity/agent` package to send HTTP requests to canisters and handle responses. The class includes methods for making GET, POST, PUT, and DELETE requests, as well as a private method for parsing responses. The class also includes error handling to log out the user if an HTTP response error occurs.
 
 ### 4.6 Marketplace utility functions
+
 Next, let us create a file under the `utils` folder called `marketplace.js` with the following code:
 
 ```javascript
@@ -826,27 +892,31 @@ import { createCanisterActor } from "./canisterFactory";
 import { idlFactory as marketPlaceIDL } from "../../../declarations/dfinity_js_backend/dfinity_js_backend.did.js";
 import IcHttp from "./ichttp";
 
-const marketplaceAgentCanister = await createCanisterActor(process.env.BACKEND_CANISTER_ID, marketPlaceIDL);
+const marketplaceAgentCanister = await createCanisterActor(
+  process.env.BACKEND_CANISTER_ID,
+  marketPlaceIDL
+);
 const httpClient = new IcHttp(marketplaceAgentCanister);
 
 export async function createProduct(data) {
-    return httpClient.POST({path: "/products", data});
+  return httpClient.POST({ path: "/products", data });
 }
 
 export async function getAddressFromPrincipal(principalHex) {
-    return httpClient.GET({path: `/principal-to-address/${principalHex}`});
+  return httpClient.GET({ path: `/principal-to-address/${principalHex}` });
 }
 
 export async function getProducts() {
-    return httpClient.GET({path: "/products"});
+  return httpClient.GET({ path: "/products" });
 }
 
 export async function buyProduct(product) {
-    const { id, price } = { ...product };
-    await approve(process.env.BACKEND_CANISTER_ID, price);
-    return await httpClient.POST({path: "/orders", data: {productId: id}});
+  const { id, price } = { ...product };
+  await approve(process.env.BACKEND_CANISTER_ID, price);
+  return await httpClient.POST({ path: "/orders", data: { productId: id } });
 }
 ```
+
 This file provides functions to interact with the marketplace canister. These functions enable actions such as creating products, retrieving product listings, and buying products within your Internet Computer application.
 
 The `createProduct` function is responsible for creating a new product listing in the marketplace. It accepts product data as an argument and sends a POST request to the `/products` endpoint to create the product.
@@ -897,79 +967,79 @@ import { icpBalance } from "./utils/ledger";
 import { getAddressFromPrincipal } from "./utils/marketplace";
 
 const App = function AppWrapper() {
-    const [authenticated, setAuthenticated] = useState(false);
-    const [principal, setPrincipal] = useState('');
-    const [icrcBalance, setICRCBalance] = useState('');
-    const [balance, setICPBalance] = useState('');
-    const [symbol, setSymbol] = useState('');
-    const [address, setAddress] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
+  const [principal, setPrincipal] = useState("");
+  const [icrcBalance, setICRCBalance] = useState("");
+  const [balance, setICPBalance] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [address, setAddress] = useState("");
 
-    const getICRCBalance = useCallback(async () => {
-        if (authenticated) {
-            setICRCBalance(await tokenBalance());
-        }
-    });
+  const getICRCBalance = useCallback(async () => {
+    if (authenticated) {
+      setICRCBalance(await tokenBalance());
+    }
+  });
 
-    const getICPBalance = useCallback(async () => {
-        if (authenticated) {
-            setICPBalance(await icpBalance());
-        }
-    });
+  const getICPBalance = useCallback(async () => {
+    if (authenticated) {
+      setICPBalance(await icpBalance());
+    }
+  });
 
-    useEffect(async () => {
-        setSymbol(await tokenSymbol());
-    }, [setSymbol]);
+  useEffect(async () => {
+    setSymbol(await tokenSymbol());
+  }, [setSymbol]);
 
-    useEffect(async () => {
-        setAuthenticated(await isAuthenticated());
-    }, [setAuthenticated]);
+  useEffect(async () => {
+    setAuthenticated(await isAuthenticated());
+  }, [setAuthenticated]);
 
-    useEffect(async () => {
-        const principal = await getPrincipalText();
-        setPrincipal(principal);
-    }, [setPrincipal]);
+  useEffect(async () => {
+    const principal = await getPrincipalText();
+    setPrincipal(principal);
+  }, [setPrincipal]);
 
-    useEffect(async () => {
-        const principal = await getPrincipalText();
-        const account = await getAddressFromPrincipal(principal);
-        setAddress(account.account);
-    }, [setAddress]);
+  useEffect(async () => {
+    const principal = await getPrincipalText();
+    const account = await getAddressFromPrincipal(principal);
+    setAddress(account.account);
+  }, [setAddress]);
 
-    useEffect(() => {
-        getICRCBalance();
-    }, [getICRCBalance]);
+  useEffect(() => {
+    getICRCBalance();
+  }, [getICRCBalance]);
 
-    useEffect(() => {
-        getICPBalance();
-    }, [getICPBalance]);
+  useEffect(() => {
+    getICPBalance();
+  }, [getICPBalance]);
 
-    return (
-        <>
-            <Notification />
-            {authenticated ? (
-                <Container fluid="md">
-                    <Nav className="justify-content-end pt-3 pb-5">
-                        <Nav.Item>
-                            <Wallet
-                                address={address}
-                                principal={principal}
-                                icpBalance={balance}
-                                icrcBalance={icrcBalance}
-                                symbol={symbol}
-                                isAuthenticated={authenticated}
-                                destroy={destroy}
-                            />
-                        </Nav.Item>
-                    </Nav>
-                    <main>
-                        <Products tokenSymbol={symbol} />
-                    </main>
-                </Container>
-            ) : (
-                <Cover name="Street Food" login={login} coverImg={coverImg} />
-            )}
-        </>
-    );
+  return (
+    <>
+      <Notification />
+      {authenticated ? (
+        <Container fluid="md">
+          <Nav className="justify-content-end pt-3 pb-5">
+            <Nav.Item>
+              <Wallet
+                address={address}
+                principal={principal}
+                icpBalance={balance}
+                icrcBalance={icrcBalance}
+                symbol={symbol}
+                isAuthenticated={authenticated}
+                destroy={destroy}
+              />
+            </Nav.Item>
+          </Nav>
+          <main>
+            <Products tokenSymbol={symbol} />
+          </main>
+        </Container>
+      ) : (
+        <Cover name="Street Food" login={login} coverImg={coverImg} />
+      )}
+    </>
+  );
 };
 
 export default App;
@@ -991,7 +1061,6 @@ Here's a breakdown of the key elements within the `App` component:
 - Login and Logout Functions: The `login` and `destroy` functions are used to handle user authentication and logout. They are imported from the `auth` module and are used to manage the user's authentication status.
 - Utility Functions: The `getPrincipalText`, `isAuthenticated`, `tokenBalance`, `tokenSymbol`, `icpBalance`, and `getAddressFromPrincipal` functions are used to interact with the canister contracts and retrieve user information. They are imported from the `auth`, `icrc2_ledger`, and `marketplace` modules.
 - State Management: The component uses the `useState` hook to manage the state of the user's authentication status, principal, ICP balance, ICRC balance, token symbol, and address.
-
 
 ## 4. Deploying the Marketplace
 
@@ -1017,7 +1086,7 @@ Once you have installed the bash shell, you can run the following command:
 
 After running the command, you should see a similar output:
 
-```bash 
+```bash
 Your seed phrase for identity 'minter': similar dice when become trick promote talk afraid adjust crop mobile happy noble clump raise situate salute surge fee dynamic drive lazy change wrist
 This can be used to reconstruct your key in case of emergency, so write it down in a safe place.
 Created identity: "minter".
@@ -1047,6 +1116,7 @@ Run the following command:
 ```bash
 ./deploy-local-icrc-ledger.sh
 ```
+
 After running the command, you should see a similar output:
 
 ```bash
@@ -1056,13 +1126,15 @@ Creating canister icrc1_ledger_canister...
 icrc1_ledger_canister canister created with canister id: mxzaz-hqaaa-aaaar-qaada-cai
 Building canisters...
 Installing canisters...
-Installing code for 
+Installing code for
 ```
 
 With that done, we can run the 'deploy-local-identity' script. This script will deploy the Internet Identity canister to our local replica. This canister is responsible for managing user authentication and identity on the marketplace.
+
 ```bash
 ./deploy-local-identity.sh
 ```
+
 After running the command, you should see a similar output:
 
 ```bash
@@ -1087,6 +1159,7 @@ Generating type declarations for canister internet_identity:
   /Users/emmanuel/Desktop/work_folder/dacade_official/temporary/src/declarations/internet_identity/internet_identity.did.js
   src/declarations/internet_identity/internet_identity.did
 ```
+
 After running the command, your folder structure should look like this as it also generates the type declarations for the canister:
 
 ```bash
@@ -1107,6 +1180,7 @@ We are almost done. Go ahead and deploy the backend canister with the following 
 ```bash
 ./deploy-local-backend-canister.sh
 ```
+
 If running for the first time, this may take a while.
 After running the command, you should see a similar output:
 
@@ -1115,7 +1189,7 @@ Generating type declarations for canister dfinity_js_backend:
   src/declarations/dfinity_js_backend/dfinity_js_backend.did.d.ts
   src/declarations/dfinity_js_backend/dfinity_js_backend.did.js
   src/declarations/dfinity_js_backend/dfinity_js_backend.did
- ```
+```
 
 **Note: Do not forget to run dfx generate dfinity_js_backend anytime you add/remove functions in the canister or when you change the signatures. Otherwise, these changes won't be reflected in IDL's and won't work when called using the JS agent.**
 
@@ -1141,7 +1215,7 @@ Module hash 587d03a5e6a48c9047e2cf2e8dabc625fb9b999e1e3889b39cfc5fa37b52d9e5 is 
 Uploading assets to asset canister...
 Fetching properties for all assets in the canister.
 
-  /index.js.map 2/3 (1900000 bytes) sha 46da63c895057ec74ce5d4da8a4982e7b00af89b0fcfd992b5f7897bf5c9263c 
+  /index.js.map 2/3 (1900000 bytes) sha 46da63c895057ec74ce5d4da8a4982e7b00af89b0fcfd992b5f7897bf5c9263c
 Committing batch.
 Committing batch with 29 operations.
 Deployed canisters.
@@ -1164,15 +1238,16 @@ You can open the frontend in your browser by clicking on the localhost link prov
     dfinity_js_frontend: http://127.0.0.1:4943/?canisterId=br5f7-7uaaa-aaaaa-qaaca-cai
 ```
 
-
 **Note**: If you are on codespaces, you need to run the 'canister_urls.py' script with the following comamand
 
 ```
 ./canister_urls.py
 ```
+
 Then click the links it generates for you to view your deployed application
 
 ## 5. Conclusion
+
 In this tutorial, we've explored the process of building a decentralized marketplace on the Internet Computer. We've covered the basics of creating a marketplace canister, including the creation of products, listing products, and purchasing products. We've also explored the process of creating a frontend application that interacts with the marketplace canister. We've covered the basics of user authentication, product listing, and purchasing products.
 
 Now that you've completed this tutorial, you should have a solid understanding of how to build decentralized applications on the Internet Computer.
